@@ -1,3 +1,4 @@
+.cache_exists
 .idea
 build
 minishell
