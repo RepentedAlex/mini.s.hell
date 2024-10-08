@@ -14,5 +14,20 @@
 
 int	main(int argc, char *argv[], char *envp[])
 {
+	t_shell_env	data;
+
+	(void)argc;
+	(void)argv;
+	(void)envp;
+	(void)data;
+	while (1)
+	{
+		data.buffer = readline(PROMPT);
+		if (data.buffer[0] == '\0')
+			break ;
+
+		free(data.buffer);
+		data.buffer = NULL;
+	}
 	return (0);
 }
