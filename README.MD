@@ -9,7 +9,7 @@ C'est la branche de prod en résumé.
 > Si vous mergez en étant sur votre branche, vous mergerez le main sur votre branche !  
 > Donc il faut d'abord checkout sur la branche qui "recevra".
 ### develop (ici nommées llabonde & apetitco)
-Nos branches pour avancer les features sur lesquelles on travaille. Lorsque l
+Nos branches pour avancer les features sur lesquelles on travaille.
 Lorsque la feature sur laquelle on travaille est prête à être incorporée, on peut merge sur la main.
 Par PITIÉ avant de push, faire la Norme :,)
 ### Pourquoi deux branches ?
