@@ -4,6 +4,10 @@ Branche principale, elle ne doit recevoir que du code propre et prêt à l'usage
 Ça ne doit pas être la branche la plus active niveau commits.
 Par ailleurs ajouter un "tag" à chaque commit (ex: v1.0, v1.1...) permet de se repérer plus facilement.
 C'est la branche de prod en résumé.
+> [!warning]
+> Pour merge sur le main il faut bien penser à `git checkout main` !!!
+> Si vous mergez en étant sur votre branche, vous mergerez le main sur votre branche !
+> Donc il faut d'abord checkout sur la branche qui "recevra".
 ### develop (ici nommées llabonde & apetitco)
 Nos branches pour avancer les features sur lesquelles on travaille. Lorsque l
 Lorsque la feature sur laquelle on travaille est prête à être incorporée, on peut merge sur la main.
