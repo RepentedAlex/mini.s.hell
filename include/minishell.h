@@ -89,4 +89,13 @@ typedef struct s_command_table
 	t_io_redir			*redir;
 }						t_command_table;
 
+// == FONCTIONS ==
+int		count_leading_whitespace(const char *str);
+int		count_tokens(const char *str);
+bool	is_ifs(const char c);
+int		ft_strlen(const char *str);
+void	garbage_collect(t_shell_env *data);
+void	split_str(char *str, char **ret, int *nb_token, bool *in_word);
+void	trim_leading_whitespace(char *str, const int leading_whitespaces);
+
 #endif
