@@ -7,6 +7,7 @@ C'est la branche de prod en résumé.
 ### develop (ici nommées llabonde & apetitco)
 Nos branches pour avancer les features sur lesquelles on travaille. Lorsque l
 Lorsque la feature sur laquelle on travaille est prête à être incorporée, on peut merge sur la main.
+Par PITIÉ avant de push, faire la Norme :,)
 ### Pourquoi deux branches ?
 - Pour séparer notre travail en cours et les avancées.
 - On pourrait avoir une branche "feature" qui émane des "develop" et qui merge sur ces mêmes branches mais ça rajouterait de la complexité inutile.
