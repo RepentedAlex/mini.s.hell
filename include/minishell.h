@@ -47,11 +47,30 @@
 typedef bool	t_error;
 
 //	== STRUCTURES ==
+
+// Structure originelle
 typedef struct s_shell_data
 {
 	char	*prompt;
-	char	*input;
+	char	*buffer;
 	int		last_exit_status;
 }				t_shell_data;
+
+// Structure pour l'Abstract Syntax Tree
+typedef struct s_ast_node
+{
+	int					type;
+	char				*value;
+	struct s_ast_node	*left;
+	struct s_ast_node	*right;
+}						t_ast_node;
+
+// Structure pour une node de table de commandes
+typedef struct s_ct_node
+{
+	char	*command;
+	char	*option;
+	char	**arguments;
+}			t_ct_node;
 
 #endif
