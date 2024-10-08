@@ -53,6 +53,7 @@ typedef struct s_shell_env
 {
 	char	*prompt;
 	char	*buffer;
+	char	**tokens;
 	int		last_exit_status;
 }				t_shell_env;
 
