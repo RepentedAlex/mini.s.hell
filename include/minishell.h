@@ -11,22 +11,47 @@
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
-#include <curses.h>
-#include <fcntl.h>
-#include <sys/ioctl.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <term.h>
-#include <termios.h>
-#include <unistd.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+// == INCLUDES STD ==
+# include <curses.h>
+# include <fcntl.h>
+# include <sys/ioctl.h>
+# include <signal.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <term.h>
+# include <termios.h>
+# include <unistd.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+
+//	== MACROS ==
+// Utile pour t_error.
+# define ERROR 1
+# define NO_ERROR 0
+
+# define PROMPT "minishell-> "
+
+// IFS = Internal Fields Separator
+// Par défaut <space><tab><newline> sont utilisés pour délimiter chaque token.
+# define IFS " \t\n"
+
+//	== TYPEDEFS ==
+// t_error permet de faire remonter les erreurs de manière plus lisible.
+typedef bool	t_error;
+
+//	== STRUCTURES ==
+typedef struct s_shell_data
+{
+	char	*prompt;
+	char	*input;
+	int		last_exit_status;
+}				t_shell_data;
 
 #endif
