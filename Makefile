@@ -1,5 +1,5 @@
 ## SETTINGS
-NAME	= shellinho
+NAME	= minishell
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 DFLAGS	= -MMD -MP
