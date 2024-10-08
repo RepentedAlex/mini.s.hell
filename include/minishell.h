@@ -49,12 +49,12 @@ typedef bool	t_error;
 //	== STRUCTURES ==
 
 // Structure originelle
-typedef struct s_shell_data
+typedef struct s_shell_env
 {
 	char	*prompt;
 	char	*buffer;
 	int		last_exit_status;
-}				t_shell_data;
+}				t_shell_env;
 
 // Structure pour l'Abstract Syntax Tree
 typedef struct s_ast_node
@@ -66,11 +66,26 @@ typedef struct s_ast_node
 }						t_ast_node;
 
 // Structure pour une node de table de commandes
-typedef struct s_ct_node
+typedef struct s_simple_command
 {
 	char	*command;
 	char	*option;
 	char	**arguments;
-}			t_ct_node;
+	int		do_background;
+}			t_simple_command;
+
+typedef struct s_io_redir
+{
+	int	in;
+	int	out;
+	int	err;
+}		t_io_redir;
+
+// Structure pour la table de commandes
+typedef struct s_command_table
+{
+	t_simple_command	*table;
+	t_io_redir			*redir;
+}						t_command_table;
 
 #endif
