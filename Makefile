@@ -7,7 +7,7 @@ FFLAGS	= -fsanitize=address
 IFLAGS	= -Iinclude
 LFLAGS	= -lreadline
 DEBUG	= -g3
-FLAGS	= $(CFLAGS) $(DFLAGS) $(IFLAGS) $(LFLAGS)
+FLAGS	= $(CFLAGS) $(DFLAGS) $(IFLAGS)
 #FLAGS	+= $(FFLAGS)
 FLAGS	+= $(DEBUG)
 
@@ -22,7 +22,10 @@ SRC_DIR	= src/
 TES_DIR	= tests/
 
 ## SOURCES
-SRC_FIL	= 	minishell
+SRC_FIL	= 	minishell \
+			exit \
+			lexing \
+			utils1
 
 SRC		= $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FIL)))
 OBJ		= $(addprefix $(BUI_DIR), $(addsuffix .o, $(SRC_FIL)))
@@ -33,12 +36,12 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "Linking $(NAME)..."
-	@$(CC) $(FLAGS) $(OBJ) -o $(NAME)
+	@$(CC) $(FLAGS) $(LFLAGS) $(OBJ) -o $(NAME)
 	@echo "$(NAME) is born! :D"
 
 $(BUI_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
 	@echo "$(PENDING)Compiling $<..."
-	@$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(FLAGS)  -c $< -o $@
 
 $(OBJF):
 	@echo "Creating build directory"
