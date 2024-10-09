@@ -86,7 +86,11 @@ int ms_launch(char **args, char **envp)
 ```
 Bon, certains malandrins noteront que cette fonction s'appelle ms_launch()
 et non pas ms_execute(), la raison c'est les ~~protéines~~ **builtins**
-
+#### 1.2.1 Les builtins
+Dans un shell on peut soit exécuter des commandes en passant un nom de commande
+(qui sera ensuite cherchée dans le PATH), un chemin relatif ou un chemin absolu.  
+Mais pour certaines commandes qui sont utilisées souvent, il est d'usage de les
+incorporer directement au programme[^1].
 ---
 
 ```c
@@ -127,11 +131,17 @@ int main(int argc, char *argv[])
 }
 ```
 
+# Notes de bas de page
+[^1]: ["https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html"]
+\(https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html)
+
 # Sources
+
+## Git
 - [A successful git branching model](https://nvie.com/posts/a-successful-git-branching-model/)
-- [Normes POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/contents.html)
 
 ## Généralités
+- [Normes POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/contents.html)
 - [Write a shell in C](https://brennan.io/2015/01/16/write-a-shell-in-c/)
 
 ## Lexing / Parsing
