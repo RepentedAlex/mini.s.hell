@@ -90,7 +90,8 @@ et non pas ms_execute(), la raison c'est les ~~protéines~~ **builtins**
 Dans un shell on peut soit exécuter des commandes en passant un nom de commande
 (qui sera ensuite cherchée dans le PATH), un chemin relatif ou un chemin absolu.  
 Mais pour certaines commandes qui sont utilisées souvent, il est d'usage de les
-incorporer directement au programme.
+incorporer directement au programme[^1].
+
 ---
 
 ```c
@@ -132,7 +133,7 @@ int main(int argc, char *argv[])
 ```
 
 # Notes de bas de page
-[1]: ["https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html"](https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html)
+[^1]: ["https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html"](https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html)
 
 # Sources
 
