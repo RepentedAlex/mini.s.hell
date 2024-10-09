@@ -94,13 +94,43 @@ incorporer directement au programme[^1].
 
 > [!tip]
 > Dans notre cas voici les builtins qui doivent être inclus:
-> - `echo` avec l'option `-n`
 > - `cd` seulement avec un chemin relatif ou absolu
-> - `pwd` sans options
-> - `export` sans options
-> - `unset` sans options
+> - `echo` avec l'option `-n`
 > - `env` sans options ni arguments
 > - `exit` sans options
+> - `export` sans options
+> - `pwd` sans options
+> - `unset` sans options
+
+Ça peut donc être intéressant d'avoir un tableau  qui répertorie tous
+les builtins afin de pouvoir checker si on nous envoie une commande "externe" ou
+un builtin ! En parallèle avoir un 
+
+```C
+int (*builtin_func[]) (char **) = {&ms_cd, &ms_echo, &ms_env};
+```
+Je sais, je sais... cette ligne est HORRIBLE. Oui, moi aussi, j'ai cru faire un
+AVC au début. Pourtant, elle est sensée, je vais la décortiquer rien que pour
+vos beaux yeux !
+
+Bon déjà, qu'est-ce que l'on a sous les yeux ?
+↳ Ceci est un *tableau* de pointeurs de fonctions.
+> [!warning]
+> Oui, c'est bizarre de voir `int` au début de la déclaration, mais je
+> vais l'expliquer tout de suite ! :)
+
+`int` : le type de variable retournée par les fonctions
+`builtin_func[]` : Ça normalement, vous reconnaissez, c'est un tableau !
+`(*builtin_func[])` : Et cette étrangeté bah... ça signifie que chaque élément
+du tableau est un pointeur de fonction !
+`(char **)` : Et enfin ça, c'est pour préciser que chaque fonction prend un
+tableau de chaînes de caractères.
+
+> [!tip]
+> Pour les curieux, un tableau de tableaux de pointeurs de fonction aurait cette
+> syntaxe :  
+> `int  (*array_of_array[][]) (char **)` (évidemment les types d'arguments
+> et de return sont arbitraires ici)
 
 ---
 
