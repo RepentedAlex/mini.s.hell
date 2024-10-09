@@ -49,7 +49,12 @@ t_error	lexing(t_shell_env *data)
 	return (NO_ERROR);
 }
 
-int	main(int argc, char *argv[], char *envp[])
+/// @brief The main mini.s.hell function ! :D
+/// @param argc The number of arguments passed via the CLI.
+/// @param argv The arguments passed via the CLI.
+/// @param envp The environment variables.
+/// @return EXIT_FAILURE on error and EXIT_SUCCESS otherwise.
+int	mini_s_hell(int argc, char *argv[], char *envp[])
 {
 	t_shell_env	data;
 
@@ -62,8 +67,17 @@ int	main(int argc, char *argv[], char *envp[])
 		if (data.buffer[0] == '\0')
 			break ;
 		data.tokens = tokeniser(data.buffer);
+		if (data.tokens == NULL)
+			return (EXIT_FAILURE);
 		garbage_collect(&data);
 	}
 	garbage_collect(&data);
+	return (EXIT_SUCCESS);
+}
+
+int	main(const int argc, char *argv[], char *envp[])
+{
+	if (isatty(STDIN_FILENO) == 1)
+		return (mini_s_hell(argc, argv, envp));
 	return (0);
 }
