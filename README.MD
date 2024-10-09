@@ -90,7 +90,8 @@ et non pas ms_execute(), la raison c'est les ~~protéines~~ **builtins**
 Dans un shell on peut soit exécuter des commandes en passant un nom de commande
 (qui sera ensuite cherchée dans le PATH), un chemin relatif ou un chemin absolu.  
 Mais pour certaines commandes qui sont utilisées souvent, il est d'usage de les
-incorporer directement au programme [^1].
+incorporer directement au programme  
+[^1].
 ---
 
 ```c
