@@ -1,5 +1,6 @@
 ## SETTINGS
 NAME	= minishell
+VAL		= valgrind --leak-check=full --show-leak-kinds=all
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 DFLAGS	= -MMD -MP
@@ -61,6 +62,21 @@ re:
 	@$(MAKE) --no-print-directory fclean
 	@echo "Making $(NAME) again"
 	@$(MAKE) --no-print-directory all
+
+supression_file_readline:
+	@$(ECHO) -n $(GRAY) "Supression file readline ... " $(RESET)
+	@( $(ECHO) -en \
+	"{\n"\
+	"\tignore_libreadline_leaks\n"\
+	"\tMemcheck:Leak\n"\
+	"\t...\n"\
+	"\tobj:*/libreadline.so.*\n"\
+	"}\n" > supress_readline.valgrind && \
+	$(ECHO) $(GREEN) "Success" $(RESET) ) || \
+	$(ECHO) $(RED) "Failed" $(RESET)
+
+v:
+	@$(VAL) --suppressions=supress_readline.valgrind ./$(NAME)
 
 -include $(OBJ:.o=.d)
 
