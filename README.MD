@@ -119,11 +119,11 @@ Bon déjà, qu'est-ce que l'on a sous les yeux ?
 > Oui, c'est bizarre de voir `int` au début de la déclaration, mais je
 > vais l'expliquer tout de suite ! :)
 
-`int` : le type de variable retournée par les fonctions
-`builtin_func[]` : Ça normalement, vous reconnaissez, c'est un tableau !
-`(*builtin_func[])` : Et cette étrangeté bah... ça signifie que chaque élément
+- `int` : le type de variable retournée par les fonctions
+- `builtin_func[]` : Ça normalement, vous reconnaissez, c'est un tableau !
+- `(*builtin_func[])` : Et cette étrangeté bah... ça signifie que chaque élément
 du tableau est un pointeur de fonction !
-`(char **)` : Et enfin ça, c'est pour préciser que chaque fonction prend un
+- `(char **)` : Et enfin ça, c'est pour préciser que chaque fonction prend un
 tableau de chaînes de caractères.
 
 > [!tip]
