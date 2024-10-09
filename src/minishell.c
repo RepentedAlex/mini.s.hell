@@ -41,11 +41,7 @@ char	**tokeniser(char *str)
 /// @return ERROR on... error and NO_ERROR on... no error ! :)
 t_error	lexing(t_shell_env *data)
 {
-	char	**tokens;
-
-	tokens = tokeniser(data->buffer);
-	(void)tokens;
-	free(data->tokens);
+	data->tokens = tokeniser(data->buffer);
 	return (NO_ERROR);
 }
 
