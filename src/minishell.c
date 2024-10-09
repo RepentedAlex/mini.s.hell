@@ -33,9 +33,10 @@ char	**tokeniser(char *str)
 	return (ret);
 }
 
-/// @brief 
-/// @param data 
-/// @return 
+/// @brief Takes the input string and
+/// \ breaks it into tokens with lexical categories.
+/// @param data Pointer to the structure holding the shell local variables.
+/// @return ERROR on... error and NO_ERROR on... no error ! :)
 t_error	lexing(t_shell_env *data)
 {
 	char	**tokens;
