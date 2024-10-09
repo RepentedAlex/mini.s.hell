@@ -26,22 +26,48 @@ Malheureusement on ne peut pas expliquer le fonctionnement d'un shell au
 travers de la magie, des protéines ou encore de la matière noire...
 donc va falloir lire encore un peu !
 
-## 1. Le parsing
+## 0. Initialisation
+À son lancement, un shell exécute et lit ses fichiers de configuration.  
+Bon, pour notre mini.s.hell ça n'est pas demandé mais au moins vous avez l'info.
+
+## 1. L'interprétation
+### 1.1 Le parsing
 Avant de pouvoir s'amuser à exécuter des commandes, créer des fichiers,
 faire des redirections, il faut s'assurer que la ligne de commande.s envoyée
 est recevable. On effectue donc une analyse de ladite ligne de commande.
 
-### 1.1 L'analyse lexicale (lexing)
+#### 1.1.1 L'analyse lexicale (lexing)
 Le lexer va prendre notre chaîne de caractères et la découper en tokens
 (c'est-à-dire en mots).
 
-### 1.2 L'analyse syntaxique (parsing)
+#### 1.1.2 L'analyse syntaxique (parsing)
 Le parser va, quant à lui, prendre les tokens que le lexer a créé pour créer
 une table de commande selon une grammaire.
+
+## 2. Sortie du programme
+Une fois que l'utilisateur a fini d'utiliser le shell et qu'il souhaite le quitter,
+le programme exécute ses fonctions pour se finir, libérer la mémoire et se clore.
+
+```c
+int main(int argc, char *argv[])
+{
+    // Charger les fichiers de configuration si besoin.
+    
+    // Rentrer dans la boucle.
+    mini_s_hell();
+    
+    // Nettoyer avant de quitter.
+    
+    return (EXIT_SUCCESS);
+}
+```
 
 # Sources
 - [A successful git branching model](https://nvie.com/posts/a-successful-git-branching-model/)
 - [Normes POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/contents.html)
+
+## Généralités
+- [Write a shell in C](https://brennan.io/2015/01/16/write-a-shell-in-c/)
 
 ## Lexing / Parsing
 - [Writing your own shell](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
