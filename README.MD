@@ -28,7 +28,10 @@ donc va falloir lire encore un peu !
 
 ## 0. Initialisation
 À son lancement, un shell exécute et lit ses fichiers de configuration.  
-Bon, pour notre mini.s.hell ça n'est pas demandé mais au moins vous avez l'info.
+Bon, pour notre mini.s.hell ça n'est pas demandé, mais au moins, 
+vous avez l'info.  
+Accessoirement, c'est ici que l'on peut être amené à vérifier si l'on dispose
+d'un tty ou non.
 
 ## 1. L'interprétation
 ### 1.0 La lecture
@@ -203,7 +206,6 @@ int main(int argc, char *argv[])
 # include <fcntl.h>
 # include <sys/ioctl.h>
 # include <signal.h>
-# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -227,12 +229,14 @@ int main(int argc, char *argv[])
 - [A successful git branching model](https://nvie.com/posts/a-successful-git-branching-model/)
 
 ### Généralités
+- [42Docs - minishell](https://harm-smits.github.io/42docs/projects/minishell)
 - [Normes POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/contents.html)
 - [Write a shell in C](https://brennan.io/2015/01/16/write-a-shell-in-c/)
 
 ### Lexing / Parsing
 - [Writing your own shell](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
 - [Parsing expressions by precedence climbing](https://eli.thegreenplace.net/2012/08/02/parsing-expressions-by-precedence-climbing)
+- [Abstract Syntax Tree - Wikipedia](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
 
 [^1]: ["Any of the standard utilities may be implemented as regular built-in
 utilities within the command language interpreter. This is usually done
