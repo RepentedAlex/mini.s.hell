@@ -132,12 +132,6 @@ int main(int argc, char *argv[])
 }
 ```
 
-# Notes de bas de page
-[^1]: ["Any of the standard utilities may be implemented as regular built-in
-utilities within the command language interpreter. This is usually done 
-to increase the performance of frequently used utilities or to achieve 
-functionality that would be more difficult in a separate environment."](https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html)
-
 # Sources
 
 ## Git
@@ -150,3 +144,9 @@ functionality that would be more difficult in a separate environment."](https://
 ## Lexing / Parsing
 - [Writing your own shell](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
 - [Parsing expressions by precedence climbing](https://eli.thegreenplace.net/2012/08/02/parsing-expressions-by-precedence-climbing)
+
+# Notes de bas de page
+[^1]: ["Any of the standard utilities may be implemented as regular built-in
+utilities within the command language interpreter. This is usually done
+to increase the performance of frequently used utilities or to achieve
+functionality that would be more difficult in a separate environment."](https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html)
