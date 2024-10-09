@@ -219,7 +219,7 @@ int main(int argc, char *argv[])
 (Normalement la liste est exhaustive, je confirmerai à la fin du projet)
 > [!warning]
 > `stdio.h` doit être incluse avant `readline/readline.h` & `readline/history.h`
-> because FILE is defined in `stdio.h` ![^2]
+>car FILE est défini dans `stdio.h` ![^2]
 
 # Sources
 
