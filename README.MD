@@ -31,6 +31,8 @@ donc va falloir lire encore un peu !
 Bon, pour notre mini.s.hell ça n'est pas demandé mais au moins vous avez l'info.
 
 ## 1. L'interprétation
+### 1.0 La lecture
+Y'a vraiment besoin d'élaborer ?
 ### 1.1 Le parsing
 Avant de pouvoir s'amuser à exécuter des commandes, créer des fichiers,
 faire des redirections, il faut s'assurer que la ligne de commande.s envoyée
@@ -43,6 +45,29 @@ Le lexer va prendre notre chaîne de caractères et la découper en tokens
 #### 1.1.2 L'analyse syntaxique (parsing)
 Le parser va, quant à lui, prendre les tokens que le lexer a créé pour créer
 une table de commande selon une grammaire.
+### 1.2 L'exécution
+Une fois que la string a été parsée, on exécute les commandes avec les options
+et/ou arguments qui ont été fournis.
+
+```c
+void    mini.s.hell(void)
+{
+    char    *line;
+    char    **args;
+    int     status;
+    
+    status = 1;
+    while (status)
+    {
+        printf("%s", PROMPT);               // Afficher le prompt
+        line = ms_read_line();              // Lire la ligne
+        args = ms_split_line();             // Tokenisation
+        status = ms_execute(args);          // Exécution de.s commande.s
+        free(line);
+        free(args);
+    }
+}
+```
 
 ## 2. Sortie du programme
 Une fois que l'utilisateur a fini d'utiliser le shell et qu'il souhaite le quitter,
