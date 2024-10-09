@@ -17,5 +17,5 @@ void	garbage_collect(t_shell_env *data)
 	if (data->buffer)
 		(free(data->buffer), data->buffer = NULL);
 	if (data->tokens)
-		(free(data->tokens), data->tokens = NULL);
+		(free(data->tokens));
 }
