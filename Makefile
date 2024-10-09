@@ -64,16 +64,13 @@ re:
 	@$(MAKE) --no-print-directory all
 
 gen_sup:
-	@$(ECHO) -n $(GRAY) "Supression file readline ... " $(RESET)
-	@( $(ECHO) -en \
+	@echo -e \
 	"{\n"\
 	"\tignore_libreadline_leaks\n"\
 	"\tMemcheck:Leak\n"\
 	"\t...\n"\
 	"\tobj:*/libreadline.so.*\n"\
-	"}\n" > supress_readline.valgrind && \
-	$(ECHO) $(GREEN) "Success" $(RESET) ) || \
-	$(ECHO) $(RED) "Failed" $(RESET)
+	"}\n" > supress_readline.valgrind
 
 v:
 	@$(VAL) --suppressions=supress_readline.valgrind ./$(NAME)
