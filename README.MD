@@ -92,6 +92,16 @@ Dans un shell on peut soit exécuter des commandes en passant un nom de commande
 Mais pour certaines commandes qui sont utilisées souvent, il est d'usage de les
 incorporer directement au programme[^1].
 
+> [!tip]-
+> Dans notre cas voici les builtins qui doivent être inclus:
+> - `echo` avec l'option `-n`
+> - `cd` seulement avec un chemin relatif ou absolu
+> - `pwd` sans options
+> - `export` sans options
+> - `unset` sans options
+> - `env` sans options ni arguments
+> - `exit` sans options
+
 ---
 
 ```c
@@ -145,7 +155,6 @@ int main(int argc, char *argv[])
 - [Writing your own shell](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
 - [Parsing expressions by precedence climbing](https://eli.thegreenplace.net/2012/08/02/parsing-expressions-by-precedence-climbing)
 
-# Notes de bas de page
 [^1]: ["Any of the standard utilities may be implemented as regular built-in
 utilities within the command language interpreter. This is usually done
 to increase the performance of frequently used utilities or to achieve
