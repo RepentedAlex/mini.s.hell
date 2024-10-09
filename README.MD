@@ -92,7 +92,7 @@ Dans un shell on peut soit exécuter des commandes en passant un nom de commande
 Mais pour certaines commandes qui sont utilisées souvent, il est d'usage de les
 incorporer directement au programme[^1].
 
-> [!tip]-
+> [!tip]
 > Dans notre cas voici les builtins qui doivent être inclus:
 > - `echo` avec l'option `-n`
 > - `cd` seulement avec un chemin relatif ou absolu
