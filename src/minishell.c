@@ -54,18 +54,15 @@ int	mini_s_hell(int argc, char *argv[], char *envp[])
 {
 	t_shell_env	data;
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
+	(void)argc, (void)argv, (void)envp;
+	memset(&data, 0, sizeof(t_shell_env)); //TODO fonction interdite
 	while (1)
 	{
 		data.buffer = readline(PROMPT);
-		if (data.buffer[0] == '\0')
+		if (data.buffer == NULL || data.buffer[0] == '\0')
 			break ;
 		data.tokens = tokeniser(data.buffer);
-		if (data.tokens == NULL)
-			return (EXIT_FAILURE);
-		garbage_collect(&data);
+		free(data.buffer);
 	}
 	garbage_collect(&data);
 	return (EXIT_SUCCESS);
