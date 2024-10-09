@@ -116,7 +116,7 @@ Je sais, je sais... cette ligne est HORRIBLE. Oui, moi aussi, j'ai cru faire un
 AVC au début. Pourtant, elle est sensée, je vais la décortiquer rien que pour
 vos beaux yeux !
 
-Bon déjà, qu'est-ce que l'on a sous les yeux ?
+Bon déjà, qu'est-ce que l'on a sous les yeux ?  
 ↳ Ceci est un *tableau* de pointeurs de fonctions.
 > [!warning]
 > Oui, c'est bizarre de voir `int` au début de la déclaration, mais je

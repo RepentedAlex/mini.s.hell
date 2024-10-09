@@ -2,3 +2,4 @@
 .idea
 build
 minishell
+supress_readline.valgrind
