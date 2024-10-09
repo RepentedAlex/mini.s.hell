@@ -32,7 +32,13 @@ Bon, pour notre mini.s.hell ça n'est pas demandé mais au moins vous avez l'inf
 
 ## 1. L'interprétation
 ### 1.0 La lecture
-Y'a vraiment besoin d'élaborer ?
+> [!question]- Y'a vraiment besoin d'élaborer ?  
+> Bon, s'il y a besoin, voici quelques infos ! En vrai, lire une ligne ça peut  
+> paraître simple mais en C c'est une autre paire de manches.    
+> Pour les étudiants de 42 ça devrait très vite faire penser à un projet lorsque  
+> je parle de *lire des lignes*, suivez mon regard.
+> > [!tip]-
+> > Oui oui, je parle de ***get_next_line***
 ### 1.1 Le parsing
 Avant de pouvoir s'amuser à exécuter des commandes, créer des fichiers,
 faire des redirections, il faut s'assurer que la ligne de commande.s envoyée
