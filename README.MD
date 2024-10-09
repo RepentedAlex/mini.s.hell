@@ -132,8 +132,7 @@ int main(int argc, char *argv[])
 ```
 
 # Notes de bas de page
-[^1]: ["https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html"]
-\(https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html)
+[^1]: ["https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html"](https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html)
 
 # Sources
 
