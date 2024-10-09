@@ -13,7 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-// == INCLUDES STD ==
+// == == == LIBRAIRIES STANDARD == == ==
 # include <curses.h>
 # include <fcntl.h>
 # include <sys/ioctl.h>
@@ -31,7 +31,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
-//	== MACROS ==
+// == == == MACROS == == ==
 // Utile pour t_error.
 # define ERROR 1
 # define NO_ERROR 0
@@ -42,11 +42,12 @@
 // Par défaut <space><tab><newline> sont utilisés pour délimiter chaque token.
 # define IFS " \t\n"
 
-//	== TYPEDEFS ==
+// == == == TYPEDEFS == == ==
+
 // t_error permet de faire remonter les erreurs de manière plus lisible.
 typedef bool	t_error;
 
-//	== STRUCTURES ==
+// == == == STRUCTURES == == ==
 
 // Structure originelle
 typedef struct s_shell_env
@@ -89,10 +90,14 @@ typedef struct s_command_table
 	t_io_redir			*redir;
 }						t_command_table;
 
-// == FONCTIONS ==
+// == == == FONCTIONS == == ==
+
+// mini.s.hell
+int	mini_s_hell(int argc, char *argv[], char *envp[]);
+
 int		count_leading_whitespace(const char *str);
 int		count_tokens(const char *str);
-bool	is_ifs(const char c);
+bool	is_ifs(char c);
 void	free_tab(char **array);
 int		ft_strlen(const char *str);
 void	garbage_collect(t_shell_env *data);
