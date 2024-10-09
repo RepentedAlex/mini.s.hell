@@ -62,6 +62,7 @@ int		count_leading_whitespace(const char *str);
 int		count_tokens(const char *str);
 bool	is_ifs(char c);
 void	free_tab(char **array);
+int		strcmp(const char *s1, const char *s2);
 int		ft_strlen(const char *str);
 void	garbage_collect(t_shell_env *data);
 void	split_str(char *str, char **ret, int *nb_token, bool *in_word);
