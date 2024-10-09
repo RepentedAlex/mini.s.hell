@@ -32,13 +32,12 @@ Bon, pour notre mini.s.hell ça n'est pas demandé mais au moins vous avez l'inf
 
 ## 1. L'interprétation
 ### 1.0 La lecture
-> [!question]- Y'a vraiment besoin d'élaborer ?  
+> Y'a vraiment besoin d'élaborer ?  
 > Bon, s'il y a besoin, voici quelques infos ! En vrai, lire une ligne ça peut  
 > paraître simple mais en C c'est une autre paire de manches.    
 > Pour les étudiants de 42 ça devrait très vite faire penser à un projet lorsque  
-> je parle de *lire des lignes*, suivez mon regard.
-> > [!tip]-
-> > Oui oui, je parle de ***get_next_line***
+> je parle de *lire des lignes*, suivez mon regard.  
+>  Oui oui, je parle de ***get_next_line***
 ### 1.1 Le parsing
 Avant de pouvoir s'amuser à exécuter des commandes, créer des fichiers,
 faire des redirections, il faut s'assurer que la ligne de commande.s envoyée
@@ -54,6 +53,41 @@ une table de commande selon une grammaire.
 ### 1.2 L'exécution
 Une fois que la string a été parsée, on exécute les commandes avec les options
 et/ou arguments qui ont été fournis.
+```c
+int ms_launch(char **args, char **envp)
+{
+    pid_t   pid;
+    pid_t   wpid;
+    int     status;
+    
+    pid = fork();
+    if (pid == 0)
+    {
+        // Child process
+        if (execve(args[0], args, envp) == -1)
+        {
+            perror("mini.s.hell");
+            exit (EXIT_FAILURE);
+        }
+        else if (pid < 0)
+        {
+            // Error forking
+            perror("mini.s.hell");
+        }
+        else
+        {
+            // Parent process
+            while (!WIFEXITED(status) && !WIFSIGNALED(status))
+                wpid = waitpid(pid, &status, WUNTRACED);
+        }
+    }
+    return (1);
+}
+```
+Bon, certains malandrins noteront que cette fonction s'appelle ms_launch()
+et non pas ms_execute(), la raison c'est les ~~protéines~~ **builtins**
+
+---
 
 ```c
 void    mini.s.hell(void)
