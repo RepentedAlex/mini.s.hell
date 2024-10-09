@@ -93,7 +93,7 @@ typedef struct s_command_table
 // == == == FONCTIONS == == ==
 
 // mini.s.hell
-int	mini_s_hell(int argc, char *argv[], char *envp[]);
+int		mini_s_hell(int argc, char *argv[], char *envp[]);
 
 int		count_leading_whitespace(const char *str);
 int		count_tokens(const char *str);
