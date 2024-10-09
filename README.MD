@@ -134,6 +134,30 @@ tableau de chaînes de caractères.
 
 ---
 
+Bon avec tout ça on a de quoi écrire une fonction `ms_execute()` !  
+Alors, aux fourneaux !
+
+```C
+int ms_execute(char **args)
+{
+    int i;
+    
+    if (args[0] == NULL)
+        return (1);
+    while (i < ms_num_builtins())
+    {
+        if (ft_strcmp(args[0], builtin_str[i]) == 0)
+            return (*builtin_func[i](args));
+        i++;
+    }
+    return (ms_launch(args));
+}
+```
+Ce joli petit bout de code vérifie juste si l'on doit utiliser un builtin,
+sinon on utilise `ms_launch()` pour exécuter la commande.
+
+---
+
 ```c
 void    mini.s.hell(void)
 {
@@ -172,6 +196,31 @@ int main(int argc, char *argv[])
 }
 ```
 
+# Annexe
+## Liste des includes (parce que y'en a une floppée)
+```c
+# include <curses.h>
+# include <fcntl.h>
+# include <sys/ioctl.h>
+# include <signal.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <term.h>
+# include <termios.h>
+# include <unistd.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+```
+(Normalement la liste est exhaustive, je confirmerai à la fin du projet)
+> [!warning]
+> `stdio.h` doit être incluse avant `readline/readline.h` & `readline/history.h`
+> because FILE is defined in `stdio.h` ![^2]
+
 # Sources
 
 ## Git
@@ -189,3 +238,6 @@ int main(int argc, char *argv[])
 utilities within the command language interpreter. This is usually done
 to increase the performance of frequently used utilities or to achieve
 functionality that would be more difficult in a separate environment."](https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html)
+[^2]: ["if you encountered this error: error: unknown type name 'FILE' FILE *outf;
+In your header file! you need to put stdio.h file before readline/readline.h and readline/history.h file
+because FILE is defined in stdio.h"](https://github.com/achrafelkhnissi/minishell)
