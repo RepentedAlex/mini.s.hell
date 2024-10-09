@@ -223,14 +223,14 @@ int main(int argc, char *argv[])
 
 # Sources
 
-## Git
+### Git
 - [A successful git branching model](https://nvie.com/posts/a-successful-git-branching-model/)
 
-## Généralités
+### Généralités
 - [Normes POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/contents.html)
 - [Write a shell in C](https://brennan.io/2015/01/16/write-a-shell-in-c/)
 
-## Lexing / Parsing
+### Lexing / Parsing
 - [Writing your own shell](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
 - [Parsing expressions by precedence climbing](https://eli.thegreenplace.net/2012/08/02/parsing-expressions-by-precedence-climbing)
 
