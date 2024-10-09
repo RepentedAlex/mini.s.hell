@@ -239,9 +239,7 @@ int main(int argc, char *argv[])
 - [Abstract Syntax Tree - Wikipedia](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
 
 [^1]: ["Any of the standard utilities may be implemented as regular built-in
-utilities within the command language interpreter. This is usually done
-to increase the performance of frequently used utilities or to achieve
-functionality that would be more difficult in a separate environment."](https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html)
+utilities within the command language interpreter"](https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html)
 [^2]: ["if you encountered this error: error: unknown type name 'FILE' FILE *outf;
 In your header file! you need to put stdio.h file before readline/readline.h and readline/history.h file
 because FILE is defined in stdio.h"](https://github.com/achrafelkhnissi/minishell)
