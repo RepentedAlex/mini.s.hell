@@ -136,8 +136,7 @@ int main(int argc, char *argv[])
 [^1]: ["Any of the standard utilities may be implemented as regular built-in
 utilities within the command language interpreter. This is usually done 
 to increase the performance of frequently used utilities or to achieve 
-functionality that would be more difficult in a separate environment."]\
-(https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html)
+functionality that would be more difficult in a separate environment."](https://pubs.opengroup.org/onlinepubs/9799919799/nframe.html)
 
 # Sources
 
