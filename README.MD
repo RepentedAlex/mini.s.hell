@@ -104,7 +104,7 @@ incorporer directement au programme[^1].
 
 Ça peut donc être intéressant d'avoir un tableau  qui répertorie tous
 les builtins afin de pouvoir checker si on nous envoie une commande "externe" ou
-un builtin ! En parallèle avoir un 
+un builtin ! En parallèle avoir ceci :
 
 ```C
 int (*builtin_func[]) (char **) = {&ms_cd, &ms_echo, &ms_env};
