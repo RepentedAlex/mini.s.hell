@@ -93,6 +93,7 @@ typedef struct s_command_table
 int		count_leading_whitespace(const char *str);
 int		count_tokens(const char *str);
 bool	is_ifs(const char c);
+void	free_tab(char **array);
 int		ft_strlen(const char *str);
 void	garbage_collect(t_shell_env *data);
 void	split_str(char *str, char **ret, int *nb_token, bool *in_word);
