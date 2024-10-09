@@ -12,6 +12,9 @@
 
 #include "minishell.h"
 
+/// @brief Breaks a string in an array of tokens.
+/// @param str The input string.
+/// @return A 2D array holding all the tokens + NULL pointer at the end.
 char	**tokeniser(char *str)
 {
 	char	**ret;
@@ -33,8 +36,7 @@ char	**tokeniser(char *str)
 	return (ret);
 }
 
-/// @brief Takes the input string and
-/// \ breaks it into tokens with lexical categories.
+/// @brief Performs the lexical analysis.
 /// @param data Pointer to the structure holding the shell local variables.
 /// @return ERROR on... error and NO_ERROR on... no error ! :)
 t_error	lexing(t_shell_env *data)
