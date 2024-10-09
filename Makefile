@@ -63,7 +63,7 @@ re:
 	@echo "Making $(NAME) again"
 	@$(MAKE) --no-print-directory all
 
-supression_file_readline:
+gen_sup:
 	@$(ECHO) -n $(GRAY) "Supression file readline ... " $(RESET)
 	@( $(ECHO) -en \
 	"{\n"\
