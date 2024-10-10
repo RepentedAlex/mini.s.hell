@@ -82,7 +82,7 @@ Encore une fois, pour les étudiants de 42, si je parle d'une fonction qui prend
 > [!warning]
 > Alors `ft_split()` est certes super pratique, en revanche faites attention à pas faire les idiots lorsque vous rentrez dans des `"`ou des `'` !
 > Il ne faut pas prendre en compte les espaces qui sont compris dans une paire de guillemets, donc ça serait bête de perdre les espaces contenus dans :
-> `  il manque   "des   trucs  la,"    non????"  ` ! :)
+> `  il manque   "des   trucs  la,"    non????  ` ! :)
 > > Normalement vous devriez ressortir avec ces tokens là :
 > > - `il`
 > > - `manque`
