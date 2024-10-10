@@ -96,6 +96,9 @@ int	ms_unset(char **args)
 	return (i);
 }
 
+// apetitco
+// Bon le tableau peut pas être déclaré et initialisé en même temps donc faudra
+//faire autrement
 int	ms_builtin(char **args)
 {
 	t_builtin	builtins_array[] = {
@@ -107,4 +110,8 @@ int	ms_builtin(char **args)
 		{"pwd", ms_pwd},
 		{"unset", ms_unset}
 	};
+
+	(void)args;
+	(void)builtins_array;
+	return (0);
 }
