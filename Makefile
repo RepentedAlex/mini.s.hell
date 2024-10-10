@@ -28,6 +28,7 @@ SRC_FIL	= 	minishell \
 			check_quotes \
 			exit \
 			lexing \
+			lexing_nodes \
 			utils1
 
 SRC		= $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FIL)))
