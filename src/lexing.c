@@ -12,65 +12,49 @@
 
 #include "minishell.h"
 
-int	count_tokens(const char *str)
+//apetitco
+// TODO On peut se faire baiser parce que je regarde pas
+// ce qu'il y a derrière le token
+void	identify_tokens(t_token **head)
 {
-	int		i;
-	int		ret;
-	bool	in_word;
+	t_token	*nav;
 
-	i = 0;
-	ret = 0;
-	in_word = false;
-	while (str[i])
+	nav = *head;
+	if (!nav)
+		return ;
+	while (nav)
 	{
-		if (!is_ifs(str[i]) && !in_word)
-		{
-			in_word = true;
-			ret++;
-		}
-		else if (is_ifs(str[i]) && in_word)
-			in_word = false;
-		i++;
+		if (ft_strncmp(nav->str, "|", 1) == 0)
+			nav->type = PIPE;
+		if (ft_strncmp(nav->str, "<", 1) == 0)
+			nav->type = REDIR_I;
+		if (ft_strncmp(nav->str, ">", 1) == 0)
+			nav->type = REDIR_O;
+		if (ft_strncmp(nav->str, ">>", 2) == 0)
+			nav->type = APPEND;
+		if (ft_strncmp(nav->str, "<<", 2) == 0)
+			nav->type = HEREDOC;
+		nav = nav->next;
 	}
-	return (ret);
 }
 
-int	count_leading_whitespace(const char *str)
+/// @brief Breaks a string in an array of tokens.
+/// @param data_env The input string.
+/// @param data
+/// @return A 2D array holding all the tokens + NULL pointer at the end.
+void	tokeniser(t_shell_env *data)
 {
 	int	i;
-
+	//LL OR ARRAY ?
+	// apetitco: I guess LL is better because we might pop some
+	// elements (such as redir) so it would be more convenient
 	i = 0;
-	while (str[i])
-	{
-		if (!isspace(str[i]))
-			break ;
+	while (data->buffer && is_ifs(data->buffer[i]))
 		i++;
-	}
-	return (i);
-}
-
-void	split_str(char *str, char **ret, int *nb_token, bool *in_word)
-{
-	int	i;
-
-	i = ft_strlen(str) - 1;
-	while (str && i >= 0)
+	while (data->buffer && data->buffer[i])
 	{
-		if (i == 0 && !is_ifs(str[(i)]))
-		{
-			ret[(*nb_token)] = &str[(i)];
-			(*nb_token)--;
-		}
-		if (!is_ifs(str[(i)]) && !*in_word)
-			*in_word = true;
-		else if (is_ifs(str[(i)]) && *in_word)
-		{
-			ret[(*nb_token)] = &str[i + 1];
-			(*nb_token)--;
-			*in_word = false;
-		}
-		if (is_ifs(str[(i)]))
-			str[(i)] = '\0';
-		(i)--;
+		//TODO
+		get_next_token(data->tokens, data->buffer, &i);
+		i++;
 	}
 }
