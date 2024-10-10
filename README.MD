@@ -72,7 +72,7 @@ Avant de pouvoir s'amuser à exécuter des commandes, créer des fichiers, faire
 
 #### 1.1.1 Petites vérifications de base
 ##### Bon nombre de guillemets
-Dans la [Sainte-Bible](https://docs.google.com/spreadsheets/d/1uJHQu0VPsjjBkR4hxOeCMEt3AOM1Hp_SmUzPFhAH-nA/edit?gid=0#gid=0) il y a une teraflopée de tests ou on envoie des commandes avec un nombre impair de guillemets. Et bah bonne nouvelle, vu que nous ne sommes pas censés gérer ce cas (à date du 9/10/2024) et bien si l'on reçoit une ligne de commande qui n'est pas conforme de ce point de vue, c'est ciao !
+Dans la [Sainte-Bible](https://docs.google.com/spreadsheets/d/1uJHQu0VPsjjBkR4hxOeCMEt3AOM1Hp_SmUzPFhAH-nA/edit?gid=0#gid=0) il y a une teraflopée de tests ou on envoie des commandes avec des guillemets qui restent ouverts. Et bah bonne nouvelle, vu que nous ne sommes pas censés gérer ce cas (à date du 9/10/2024) et bien si l'on reçoit une ligne de commande qui n'est pas conforme de ce point de vue, c'est ciao !
 #### 1.1.2 L'analyse lexicale (lexing)
 Avant d'expliquer le fonctionnement de l'analyseur lexical, je vais rapidement définir ce qu'*est* une analyse lexicale.
 ##### Qu'est-ce que c'est ?
