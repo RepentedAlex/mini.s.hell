@@ -12,36 +12,15 @@
 
 #include "minishell.h"
 
-/// @brief Breaks a string in an array of tokens.
-/// @param str The input string.
-/// @return A 2D array holding all the tokens + NULL pointer at the end.
-char	**tokeniser(char *str)
-{
-	char	**ret;
-	int		leading_ws;
-	int		nb_token;
-	bool	in_word;
-
-	leading_ws = count_leading_whitespace(str);
-	if (leading_ws)
-		trim_leading_whitespace(str, leading_ws);
-	nb_token = count_tokens(str);
-	ret = (char **)malloc(sizeof(char *) * (nb_token + 1));
-	if (!ret)
-		return (NULL);
-	in_word = false;
-	ret[nb_token] = NULL;
-	nb_token --;
-	split_str(str, ret, &nb_token, &in_word);
-	return (ret);
-}
-
 /// @brief Performs the lexical analysis.
 /// @param data Pointer to the structure holding the shell local variables.
 /// @return ERROR on... error and NO_ERROR on... no error ! :)
 t_error	lexing(t_shell_env *data)
 {
-	data->tokens = tokeniser(data->buffer);
+	tokeniser(data);
+	if (data->tokens == NULL)
+		return (ERROR);
+	identify_tokens(data->tokens);
 	return (NO_ERROR);
 }
 
@@ -52,22 +31,25 @@ t_error	lexing(t_shell_env *data)
 /// @return EXIT_FAILURE on error and EXIT_SUCCESS otherwise.
 int	mini_s_hell(int argc, char *argv[], char *envp[])
 {
-	t_shell_env	data;
+	t_shell_env	shell_env;
 
 	(void)argc, (void)argv, (void)envp;
-	memset(&data, 0, sizeof(t_shell_env)); //TODO fonction interdite
+	memset(&shell_env, 0, sizeof(t_shell_env)); //TODO fonction interdite
+	shell_env.tokens = malloc(sizeof(t_token *));
 	while (1)
 	{
-		data.buffer = readline(PROMPT);
-		if (data.buffer == NULL || data.buffer[0] == '\0')
-			break ;
-		data.tokens = tokeniser(data.buffer);
-		free(data.buffer);
+		shell_env.buffer = readline(PROMPT);
+		if (check_quotes(shell_env.buffer) == ERROR)
+			printf("Error : Quotes are not closed.\n");
+		if (lexing(&shell_env))
+			printf("Eror : Couldn't perform lexical analysis.\n");
+		free(shell_env.buffer);
 	}
-	garbage_collect(&data);
+	garbage_collect(&shell_env);
 	return (EXIT_SUCCESS);
 }
 
+//TODO Might be a good idea to implement a non-interactive version.
 int	main(const int argc, char *argv[], char *envp[])
 {
 	if (isatty(STDIN_FILENO) == 1)
