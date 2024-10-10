@@ -34,7 +34,7 @@ int	mini_s_hell(int argc, char *argv[], char *envp[])
 	t_shell_env	shell_env;
 
 	(void)argc, (void)argv, (void)envp;
-	memset(&shell_env, 0, sizeof(t_shell_env)); //TODO fonction interdite
+	ft_bzero(&shell_env, sizeof(t_shell_env)); //TODO fonction interdite
 	shell_env.tokens = malloc(sizeof(t_token *));
 	while (1)
 	{
