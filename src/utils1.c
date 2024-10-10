@@ -32,6 +32,16 @@ void	ft_bzero(void *s, size_t n)
 		((char *)s)[i] = 0;
 }
 
+void	*ft_memset(void *s, int c, size_t n)
+{
+	size_t	i;
+
+	i = -1;
+	while (++i < n)
+		((char *)s)[i] = (char)c;
+	return (s);
+}
+
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	int	i;
@@ -60,19 +70,4 @@ int	ft_strlen(const char *str)
 	while (str && str[len])
 		len++;
 	return (len);
-}
-
-void	trim_leading_whitespace(char *str, const int leading_whitespaces)
-{
-	int	i;
-
-	i = 0;
-	while (is_ifs(str[i]))
-		i++;
-	while (str[i])
-	{
-		str[i - leading_whitespaces] = str[i];
-		i++;
-	}
-	str[i - leading_whitespaces] = '\0';
 }

@@ -68,6 +68,7 @@ bool	is_ifs(char c);
 void	free_tab(char **array);
 int		strcmp(const char *s1, const char *s2);
 void	ft_bzero(void *s, size_t n);
+void	*ft_memset(void *s, int c, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strlen(const char *str);
