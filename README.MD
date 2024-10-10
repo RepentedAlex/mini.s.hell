@@ -119,7 +119,7 @@ char    *split_no_malloc(char *str, int *index)  //index = macro-itérateur de l
 }
 ```
 
-> [! warning]
+> [! warning]  
 > Faites pas les idiots non plus en manipulant la string originelle, vous ne pourrez pas la rallonger. De plus, n'oubliez pas de décaler le macro-itérateur d'un cran encore (nous le faisons dans la fonction qui appelle split_no_malloc()), sinon vous arrêterez d'itérer sur la boucle vu que vous serez sur un null-byte (qui ne sera pas celui qui marque la fin de la string dans la mémoire).
 
 ---
