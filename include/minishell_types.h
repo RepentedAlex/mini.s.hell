@@ -13,14 +13,38 @@
 #ifndef MINISHELL_TYPES_H
 #define MINISHELL_TYPES_H
 
+// == == == LIBRAIRIES == == ==
+
+// Librairies perso
+#include "minishell_lexing.h"
+
+// LEXING
+typedef enum e_lexcat
+{
+	PIPE = 1,
+	REDIR_I,
+	REDIR_O,
+	APPEND,
+	HEREDOC
+}			t_lexcat;
+
 // == == == STRUCTURES == == ==
+
+//
+typedef struct s_token
+{
+	char			*str;
+	struct s_token	*next;
+	struct s_token	*prev;
+	t_lexcat		type;
+}			t_token;
 
 // Structure originelle
 typedef struct s_shell_env
 {
 	char	*prompt;
 	char	*buffer;
-	char	**tokens;
+	t_token	**tokens;
 	int		last_exit_status;
 }				t_shell_env;
 

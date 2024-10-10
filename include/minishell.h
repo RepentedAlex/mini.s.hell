@@ -35,6 +35,7 @@
 
 // Libraires persos
 #include "minishell_builtins.h"
+#include "minishell_lexing.h"
 #include "minishell_types.h"
 
 // == == == MACROS == == ==
@@ -53,6 +54,8 @@
 // t_error permet de faire remonter les erreurs de manière plus lisible.
 typedef bool	t_error;
 
+
+
 // == == == FONCTIONS == == ==
 
 // mini.s.hell
@@ -64,6 +67,8 @@ int		count_tokens(const char *str);
 bool	is_ifs(char c);
 void	free_tab(char **array);
 int		strcmp(const char *s1, const char *s2);
+int		ft_strcmp(const char *s1, const char *s2);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strlen(const char *str);
 void	garbage_collect(t_shell_env *data);
 void	split_str(char *str, char **ret, int *nb_token, bool *in_word);
