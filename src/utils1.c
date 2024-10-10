@@ -23,6 +23,15 @@ bool	is_ifs(const char c)
 	return (false);
 }
 
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	i;
+
+	i = -1;
+	while (++i < n)
+		((char *)s)[i] = 0;
+}
+
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	int	i;
