@@ -31,7 +31,6 @@ t_error	check_quotes(const char *str)
 		else if ((quotes == 1 && str[i] == '\'') || \
 			(quotes == 2 && str[i] == '\"'))
 			quotes = 0;
-		i++;
 	}
 	if (!quotes)
 		return (NO_ERROR);
