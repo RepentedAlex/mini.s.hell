@@ -40,7 +40,7 @@ Malheureusement on ne peut pas expliquer le fonctionnement d'un shell seulement 
 Y a-t-il vraiment *vraiiiiment* besoin d'élaborer ? Évidemment ! Voici donc quelques informations !
 En soi, lire une ligne ça peut paraître simple, mais *en C*, c'est une autre paire de manches. Pour les étudiants de 42 vous devriez très vite penser à un projet lorsque je parle de *lire des lignes*...
 
-Oui oui, je parle bien de ***get_next_line***. Pourtant, même si ça peut être tentant, il y a quelque chose que `readline()` a que `get_next_line()` n'a pas ~~à part les leaks~~, c'est la possibilité d'avoir un historique. Ça tombe bien, c'est une exigence du sujet !
+Oui oui, je parle bien de ***get_next_line***. Pourtant, même si ça peut être tentant, il y a quelque chose que `readline()` a, que `get_next_line()` n'a pas ~~à part les leaks~~, c'est la possibilité d'avoir un historique. Ça tombe bien, c'est une exigence du sujet !
 #### 1.0.1 readline() et les fuites
 ```C
 #include <stdio.h>
