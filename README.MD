@@ -33,15 +33,14 @@ Malheureusement on ne peut pas expliquer le fonctionnement d'un shell seulement 
 > Vous vous demandez donc sûrement dans quel cas on *n'utilise pas* de TTY et bien dans le cas d'un script qui exécute des tâches en arrière plan par exemple ! L'entrée viendra dans ce cas d'un fichier (le script) et non pas d'un TTY qui aurait traité vos entrées au clavier ! Dans d'autres cas il peut y avoir le lancement de notre shell via un pipe ou encore un session SSH sans terminal.
 
 > [!tip]
-> Non mais vraiment, c'est quoi un TTY ?
 > La confusion autour des TTY vient du fait qu'à la base, les TeleTYpewriter (TTY) étaient des terminaux physiques permettant la communication à distance. Aujourd'hui on utilise des terminaux virtuels pour émuler les TTY, ce qui rend bien plus abstrait leur concept. Mais concrètement si vous disposez d'un port série, vous pouvez recréer un système de TTY physique !
 
 ## 1. L'interprétation
 ### 1.0 La lecture
-Y a-t-il vraiment vraiment besoin d'élaborer ? Évidemment, voici donc quelques informations !
-En soit, lire une ligne ça peut paraître simple, mais *en C* c'est une autre paire de manches. Pour les étudiants de 42 vous devriez très vite penser à un projet lorsque je parle de *lire des lignes*...
+Y a-t-il vraiment *vraiiiiment* besoin d'élaborer ? Évidemment ! Voici donc quelques informations !
+En soi, lire une ligne ça peut paraître simple, mais *en C*, c'est une autre paire de manches. Pour les étudiants de 42 vous devriez très vite penser à un projet lorsque je parle de *lire des lignes*...
 
-Oui oui, je parle bien de ***get_next_line***. Pourtant même si ça peut être tentant, il y a quelque chose que `readline()` a que `get_next_line()` n'a pas ~~à part les leaks~~, c'est la possibilité d'avoir un historique. Ça tombe bien, c'est une exigence du sujet !
+Oui oui, je parle bien de ***get_next_line***. Pourtant, même si ça peut être tentant, il y a quelque chose que `readline()` a que `get_next_line()` n'a pas ~~à part les leaks~~, c'est la possibilité d'avoir un historique. Ça tombe bien, c'est une exigence du sujet !
 #### 1.0.1 readline() et les fuites
 ```C
 #include <stdio.h>
