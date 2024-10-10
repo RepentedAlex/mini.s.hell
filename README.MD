@@ -27,11 +27,13 @@ Malheureusement on ne peut pas expliquer le fonctionnement d'un shell seulement 
 ## 0. Initialisation
 À son lancement, un shell lit et exécute ses fichiers de configuration. Bon, pour notre mini.s.hell ça n'est pas demandé, mais au moins, vous avez l'info. Accessoirement, c'est ici que l'on peut aussi être amené à vérifier si l'on dispose d'un TTY ou non.
 
-> [!warning] C'est quoi un TTY ?
+> [!warning]
+> C'est quoi un TTY ?
 > Pour faire très simple, lorsque vous donnez "à la main" vos commande au shell, vous utilisez le mode interactif de celui-ci au travers d'un [TTY](https://fr.wikipedia.org/wiki/Téléscripteur).
 > Vous vous demandez donc sûrement dans quel cas on *n'utilise pas* de TTY et bien dans le cas d'un script qui exécute des tâches en arrière plan par exemple ! L'entrée viendra dans ce cas d'un fichier (le script) et non pas d'un TTY qui aurait traité vos entrées au clavier ! Dans d'autres cas il peut y avoir le lancement de notre shell via un pipe ou encore un session SSH sans terminal.
 
-> [!tip]+ Non mais vraiment, c'est quoi un TTY ?
+> [!tip]
+> Non mais vraiment, c'est quoi un TTY ?
 > La confusion autour des TTY vient du fait qu'à la base, les TeleTYpewriter (TTY) étaient des terminaux physiques permettant la communication à distance. Aujourd'hui on utilise des terminaux virtuels pour émuler les TTY, ce qui rend bien plus abstrait leur concept. Mais concrètement si vous disposez d'un port série, vous pouvez recréer un système de TTY physique !
 
 ## 1. L'interprétation
