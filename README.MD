@@ -61,8 +61,8 @@ De toute évidence je n'ai pas écrit ce code car il était utile. Enfin, si, il
 Mais vraiment, rien que ce simple programme va faire fuire une quantité **astronomique** de mémoire pour le (très) peu qu'il fait. Alors imaginez si vous appelez `readline()` *plusieurs* fois. :)
 
 Vous devrez donc apprendre à faire des [suppression files](https://valgrind.org/docs/manual/manual-core.html#manual-core.suppress) pour Valgrind. <sub><sup>o:) (Oui, c'est un ange).</sup></sub>
-> [!tip] Suppression files
-> Ces fichiers permettent de demander à Valgrind de ne pas afficher certains warnings en suivant un certain set de règles.
+> [!tip]
+> Les suppression files permettent de demander à Valgrind de ne pas afficher certains warnings en suivant un certain set de règles.
 
 Si `readline()` noie les fuites de mémoires qui seraient de *votre* faute et que, donc, vous ne corrigez pas ces fuites, **la faute sera sur vous**. Alors faites en sorte d'avoir un suppression file carré.
 ### 1.1 Le parsing
