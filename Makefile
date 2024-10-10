@@ -25,6 +25,7 @@ TES_DIR	= tests/
 ## SOURCES
 SRC_FIL	= 	minishell \
 			builtins \
+			check_quotes \
 			exit \
 			lexing \
 			utils1
