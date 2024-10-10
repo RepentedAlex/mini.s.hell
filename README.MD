@@ -107,7 +107,7 @@ Doit être découpée comme suit :
 
 En guise d'exemple, la première node du lexer devrait ressembler à cela :
 - `char *str` = "whereis"
-- `t_tokens token` = 0
+- `t_tokens token` = 0 <- choix perso, mais si vous comptez identifier les commandes vous pouvez très bien assigner une autre valeur ici.
 - `struct s_lexer *prev` = NULL
 - - `struct s_lexer *next` = NULL (pointera sur le `ls`)
 #### 1.1.3 L'analyse syntaxique (parsing)
