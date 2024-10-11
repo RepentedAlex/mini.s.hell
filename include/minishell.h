@@ -61,7 +61,7 @@ typedef bool	t_error;
 // mini.s.hell
 int		mini_s_hell(int argc, char *argv[], char *envp[]);
 
-t_error	check_quotes(const char *str);
+t_error	check_open_quotes(const char *str);
 int		count_leading_whitespace(const char *str);
 int		count_tokens(const char *str);
 bool	is_ifs(char c);
