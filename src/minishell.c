@@ -48,30 +48,30 @@ void	expand_variables(char *src)
 /// @return EXIT_FAILURE on error and EXIT_SUCCESS otherwise.
 int	mini_s_hell(int argc, char *argv[], char *envp[])
 {
-	t_mo_shell	shell_env;
+	t_mo_shell	mo_shell;
 
 	(void)argc, (void)argv, (void)envp;
-	ft_bzero(&shell_env, sizeof(t_mo_shell));
+	ft_bzero(&mo_shell, sizeof(t_mo_shell));
 	while (1)
 	{
 		//0. Read input
-		shell_env.og_input = readline(PROMPT);
+		mo_shell.og_input = readline(PROMPT);
 
 		//1. Check for open quotes
-		if (check_open_quotes(shell_env.og_input) == ERROR)
+		if (check_open_quotes(mo_shell.og_input) == ERROR)
 			return (printf("mini.s.hell: quotes are not closed\n"), ERROR);
 
 		//2. Expand variables
-		expand_variables(shell_env.og_input);						// TODO
+		expand_variables(mo_shell.og_input);						// TODO
 
-		//2,5 ft_strdup og_input into a new t_list node to set up future splits
-
+		//2,5 ft_strdup og_input into a new t_token node to set up future splits
+		// TODO
 
 		//3. Check for pipes
-		if (look_for_pipes(shell_env.og_input) == true)			// TODO
+		if (look_for_pipes(mo_shell.og_input) == true)			// TODO
 		{
 			//3.1 If pipes, check they are syntactically valid
-			if (check_pipes_syntax(shell_env.og_input) == ERROR)	// TODO
+			if (check_pipes_syntax(mo_shell.og_input) == ERROR)	// TODO
 				return (printf("mini.s.hell: syntax error near unexpected token '|'\n"), ERROR);
 
 			//3.1.1 Create blocks, separated by pipes
@@ -79,19 +79,19 @@ int	mini_s_hell(int argc, char *argv[], char *envp[])
 		}
 
 		// 4. Check redirections < , <<, >>, >
-		if (look_for_redir(shell_env.og_input) == true)			// TODO
+		if (look_for_redir(mo_shell.og_input) == true)			// TODO
 		{
 			// 4.1 If redirections, check they are syntactically valid
-			if (check_redir_syntax(shell_env.og_input) == ERROR)	// TODO
+			if (check_redir_syntax(mo_shell.og_input) == ERROR)	// TODO
 				return (printf("mini.s.hell: \n"), ERROR);
 		}
 
 		//
-		if (lexing(&shell_env) == ERROR)
+		if (lexing(&mo_shell) == ERROR)
 			break ;
-		free(shell_env.og_input);
+		free(mo_shell.og_input);
 	}
-	garbage_collect(&shell_env);
+	garbage_collect(&mo_shell);
 	return (EXIT_SUCCESS);
 }
 
