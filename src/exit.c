@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	garbage_collect(t_shell_env *data)
+void	garbage_collect(t_mo_shell *data)
 {
 	if (data->og_input)
 		(free(data->og_input), data->og_input = NULL);
