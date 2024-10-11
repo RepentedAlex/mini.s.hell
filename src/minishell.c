@@ -14,39 +14,31 @@
 
 t_error	check_redir_syntax(char *str)
 {
-
+	(void)str;
+	return (ERROR);
 }
 
 bool	look_for_redir(char *str)
 {
 	(void)str;
+	return (true);
 }
 
 t_error	check_pipes_syntax(char *str)
 {
 	(void)str;
+	return (ERROR);
 }
 
 bool	look_for_pipes(char *str)
 {
 	(void)str;
+	return (true);
 }
 
 void	expand_variables(char *src)
 {
 	(void)src;
-}
-
-/// @brief Performs the lexical analysis.
-/// @param data Pointer to the structure holding the shell local variables.
-/// @return ERROR on... error and NO_ERROR on... no error ! :)
-t_error	lexing(t_mo_shell *data)
-{
-	tokeniser(data);
-	if (!data->tokens)
-		return (ERROR);
-	identify_tokens(data->tokens);
-	return (NO_ERROR);
 }
 
 /// @brief The main mini.s.hell function ! :D
@@ -60,7 +52,6 @@ int	mini_s_hell(int argc, char *argv[], char *envp[])
 
 	(void)argc, (void)argv, (void)envp;
 	ft_bzero(&shell_env, sizeof(t_mo_shell));
-	shell_env.tokens = malloc(sizeof(t_token *));
 	while (1)
 	{
 		//0. Read input
