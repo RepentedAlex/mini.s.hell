@@ -60,3 +60,13 @@ int	ft_strlen(const char *str)
 		len++;
 	return (len);
 }
+
+void	check_in_quotes(const char c, int *quotes)
+{
+	if (*quotes == 0 && c == '\'')
+		*quotes = 1;
+	if (*quotes == 0 && c == '"')
+		*quotes = 2;
+	else if ((*quotes == 1 && c == '\'') || (*quotes == 2 && c == '"'))
+		*quotes = 0;
+}
