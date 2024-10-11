@@ -25,11 +25,12 @@ TES_DIR	= tests/
 ## SOURCES
 SRC_FIL	= 	minishell \
 			builtins \
-			check_quotes \
+			parsing/check_quotes \
 			exit \
-			lexing \
-			lexing_nodes \
-			utils1
+			parsing/lexing \
+			parsing/lexing_nodes \
+			utilitaries/ft_is \
+			utilitaries/utils1
 
 SRC		= $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FIL)))
 OBJ		= $(addprefix $(BUI_DIR), $(addsuffix .o, $(SRC_FIL)))
@@ -49,8 +50,7 @@ $(BUI_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
 
 $(OBJF):
 	@echo "Creating build directory"
-	@mkdir -p $(BUI_DIR)
-	@mkdir -p $(BUI_DIR)
+	@mkdir -p $(BUI_DIR) $(BUI_DIR)/parsing $(BUI_DIR)/utilitaries
 	@touch $(OBJF)
 
 clean:
