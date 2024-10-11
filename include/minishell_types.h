@@ -39,8 +39,7 @@ typedef struct s_token
 	t_lexcat		type;
 }			t_token;
 
-// Structure originelle
-typedef struct s_shell_env
+typedef struct s_block
 {
 	char	*str;
 	struct s_block	*next;
