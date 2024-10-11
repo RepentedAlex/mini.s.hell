@@ -42,11 +42,25 @@ typedef struct s_token
 // Structure originelle
 typedef struct s_shell_env
 {
-	char	*prompt;
-	char	*buffer;
-	t_token	**tokens;
+	char	*str;
+	struct s_block	*next;
+	struct s_block	*prev;
+	// struct s_block	*child[128];
+	t_lexcat		type;
+}				t_block;
+
+// Structure mère
+/// @brief
+/// @param og_input Stocks readline's input.
+/// @param
+typedef struct s_mo_shell
+{
+	char	*og_input;
+	t_block	**splitted_input;
+
+	// t_token	**tokens;
 	int		last_exit_status;
-}				t_shell_env;
+}				t_mo_shell;
 
 typedef struct s_builtin
 {
