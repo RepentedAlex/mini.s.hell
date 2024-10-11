@@ -42,19 +42,19 @@ void	identify_tokens(t_token **head)
 /// @param data_env The input string.
 /// @param data
 /// @return A 2D array holding all the tokens + NULL pointer at the end.
-void	tokeniser(t_shell_env *data)
+void	tokeniser(t_mo_shell *data)
 {
 	int	i;
 	//LL OR ARRAY ?
 	// apetitco: I guess LL is better because we might pop some
 	// elements (such as redir) so it would be more convenient
 	i = 0;
-	while (data->buffer && is_ifs(data->buffer[i]))
+	while (data->og_input && ft_is_ifs(data->og_input[i]))
 		i++;
-	while (data->buffer && data->buffer[i])
+	while (data->og_input && data->og_input[i])
 	{
 		//TODO
-		get_next_token(data->tokens, data->buffer, &i);
+		get_next_token(data->tokens, data->og_input, &i);
 		i++;
 	}
 }
