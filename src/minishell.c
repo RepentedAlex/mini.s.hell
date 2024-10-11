@@ -12,13 +12,38 @@
 
 #include "minishell.h"
 
+t_error	check_redir_syntax(char *str)
+{
+
+}
+
+bool	look_for_redir(char *str)
+{
+	(void)str;
+}
+
+t_error	check_pipes_syntax(char *str)
+{
+	(void)str;
+}
+
+bool	look_for_pipes(char *str)
+{
+	(void)str;
+}
+
+void	expand_variables(char *src)
+{
+	(void)src;
+}
+
 /// @brief Performs the lexical analysis.
 /// @param data Pointer to the structure holding the shell local variables.
 /// @return ERROR on... error and NO_ERROR on... no error ! :)
-t_error	lexing(t_shell_env *data)
+t_error	lexing(t_mo_shell *data)
 {
 	tokeniser(data);
-	if (data->tokens == NULL)
+	if (!data->tokens)
 		return (ERROR);
 	identify_tokens(data->tokens);
 	return (NO_ERROR);
