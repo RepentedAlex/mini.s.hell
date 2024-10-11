@@ -24,7 +24,7 @@
 
 // == == == FONCTIONS == == ==
 
-void tokeniser(t_shell_env *data);
+void tokeniser(t_mo_shell *data);
 
 // Linked list
 t_token	*new_lex_token(char *str);
