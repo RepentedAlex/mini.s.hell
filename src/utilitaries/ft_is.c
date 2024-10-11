@@ -26,7 +26,7 @@ bool	ft_is_ifs(const char c)
 
 //apetitco :
 // On peut sûrement tirer parti de l'enum t_lexcat pour identifier le symbole
-//plus précisément lorsque l'on return.
+//plus précisément lorsque l'on retourne.
 int	ft_is_symbol(const char *str)
 {
 	int	i;

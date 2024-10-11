@@ -12,9 +12,8 @@
 
 #include "minishell.h"
 
-//apetitco
-// TODO On peut se faire baiser parce que je regarde pas
-// ce qu'il y a derrière le token
+//apetitco:
+// TODO On peut se faire baiser parce que je regarde pas ce qu'il y a derrière le token
 void	identify_tokens(t_token **head)
 {
 	t_token	*nav;
@@ -35,26 +34,5 @@ void	identify_tokens(t_token **head)
 		if (ft_strncmp(nav->str, "<<", 2) == 0)
 			nav->type = HEREDOC;
 		nav = nav->next;
-	}
-}
-
-/// @brief Breaks a string in an array of tokens.
-/// @param data_env The input string.
-/// @param data
-/// @return A 2D array holding all the tokens + NULL pointer at the end.
-void	tokeniser(t_mo_shell *data)
-{
-	int	i;
-	//LL OR ARRAY ?
-	// apetitco: I guess LL is better because we might pop some
-	// elements (such as redir) so it would be more convenient
-	i = 0;
-	while (data->og_input && ft_is_ifs(data->og_input[i]))
-		i++;
-	while (data->og_input && data->og_input[i])
-	{
-		//TODO
-		get_next_token(data->tokens, data->og_input, &i);
-		i++;
 	}
 }

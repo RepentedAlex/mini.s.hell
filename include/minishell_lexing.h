@@ -28,7 +28,7 @@ void tokeniser(t_mo_shell *data);
 
 // Linked list
 t_token	*new_lex_token(char *str);
-void	get_next_token(t_token **head, char *str, int *i);
+void	get_next_token(t_token **head, const char *str, const int *i);
 void	identify_tokens(t_token **head);
 
 #endif
