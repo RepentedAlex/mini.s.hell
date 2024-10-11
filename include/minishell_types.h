@@ -16,7 +16,6 @@
 // == == == LIBRAIRIES == == ==
 
 // Librairies perso
-#include "minishell_lexing.h"
 
 // LEXING
 typedef enum e_lexcat

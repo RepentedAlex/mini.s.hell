@@ -34,8 +34,6 @@
 # include <sys/wait.h>
 
 // Libraires persos
-#include "minishell_builtins.h"
-#include "minishell_lexing.h"
 #include "minishell_types.h"
 
 // == == == MACROS == == ==
@@ -67,7 +65,6 @@ int		count_tokens(const char *str);
 bool	ft_is_ifs(char c);
 int		ft_is_symbol(const char *str);
 void	free_tab(char **array);
-int		strcmp(const char *s1, const char *s2);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
