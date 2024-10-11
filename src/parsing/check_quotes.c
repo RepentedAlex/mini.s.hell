@@ -15,7 +15,7 @@
 /// @brief Checks if quotes are closed if there are some in the string.
 /// @param str The line of command.
 /// @return NO_ERROR if quotes are closed, ERROR if they are left open.
-t_error	check_quotes(const char *str)
+t_error	check_open_quotes(const char *str)
 {
 	int	i;
 	int	quotes;
