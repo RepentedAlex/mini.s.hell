@@ -55,8 +55,8 @@ t_error	lex_add_back(t_token **head, t_token *node)
 
 int	get_token_len(char *str)
 {
-	int		i;
-	int		quotes;
+	int	i;
+	int	quotes;
 
 	quotes = 0;
 	i = -1;
@@ -127,15 +127,21 @@ char	*split_tok(char *str, int *index)
 	// return (str);
 }
 
-void	get_next_token(t_token **head, char *str, int *i)
+/// @brief 
+/// @param head 
+/// @param str
+/// @param index
+/// @param i
+void	get_next_token(t_token **head, char *str, int *index)
 {
+	int		i;
 	t_token	*nav;
 	char	*tmp;
 
-	// nav = *head;
-	while (str && is_ifs(str[*i]))
-		*i += 1;
-	tmp = split_tok(&str[*i], i);
+	i = 0;
+	while (str && ft_is_ifs(str[*index]))
+		i += 1;
+	tmp = split_tok(&str[*index], index);
 	nav = new_lex_token(tmp);
 	if (nav == NULL)
 		return ;
