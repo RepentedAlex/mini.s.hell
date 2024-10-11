@@ -76,15 +76,6 @@ typedef struct s_ast_node
 	struct s_ast_node	*right;
 }						t_ast_node;
 
-// Structure pour une node de table de commandes
-typedef struct s_simple_command
-{
-	char	*command;
-	char	*option;
-	char	**arguments;
-	int		do_background;
-}			t_simple_command;
-
 typedef struct s_io_redir
 {
 	int	in;
@@ -92,12 +83,14 @@ typedef struct s_io_redir
 	int	err;
 }		t_io_redir;
 
-// Structure pour la table de commandes
-typedef struct s_command_table
-{
-	t_simple_command	*table;
-	t_io_redir			*redir;
-}						t_command_table;
-
+//
+// // Structure pour une node de table de commandes
+// typedef struct s_command
+// {
+// 	char			*command;
+// 	char			**arguments;
+// 	// int				do_background;
+// 	t_io_redir		*redir;
+// }			t_command;
 
 #endif
