@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ft_bzero(void *s, size_t n)
+void	ft_bzero(void *s, const size_t n)
 {
 	size_t	i;
 
@@ -21,7 +21,7 @@ void	ft_bzero(void *s, size_t n)
 		((char *)s)[i] = 0;
 }
 
-void	*ft_memset(void *s, int c, size_t n)
+void	*ft_memset(void *s, const int c, const size_t n)
 {
 	size_t	i;
 
@@ -41,7 +41,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (s1[i] - s2[i]);
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp(const char *s1, const char *s2, const size_t n)
 {
 	size_t	i;
 

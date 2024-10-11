@@ -16,6 +16,4 @@ void	garbage_collect(t_mo_shell *data)
 {
 	if (data->og_input)
 		(free(data->og_input), data->og_input = NULL);
-	if (data->tokens)
-		(free(data->tokens), data->tokens = NULL);
 }
