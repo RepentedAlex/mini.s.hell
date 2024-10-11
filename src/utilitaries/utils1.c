@@ -12,17 +12,6 @@
 
 #include "minishell.h"
 
-bool	is_ifs(const char c)
-{
-	int	i;
-
-	i = -1;
-	while (IFS[++i])
-		if (IFS[i] == c)
-			return (true);
-	return (false);
-}
-
 void	ft_bzero(void *s, size_t n)
 {
 	size_t	i;
