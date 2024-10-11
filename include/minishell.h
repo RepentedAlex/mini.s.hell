@@ -72,6 +72,7 @@ void	ft_bzero(void *s, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void	check_in_quotes(char c, int *quotes);
 int		ft_strlen(const char *str);
 void	garbage_collect(t_shell_env *data);
 void	split_str(char *str, char **ret, int *nb_token, bool *in_word);
