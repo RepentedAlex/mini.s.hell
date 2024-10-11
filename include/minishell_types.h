@@ -54,7 +54,7 @@ typedef struct s_block
 typedef struct s_mo_shell
 {
 	char	*og_input;
-	t_block	**splitted_input;
+	t_block	*splitted_input;
 
 	// t_token	**tokens;
 	int		last_exit_status;
