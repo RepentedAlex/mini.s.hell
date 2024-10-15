@@ -99,19 +99,35 @@ int	ms_unset(char **args)
 // apetitco
 // Bon le tableau peut pas être déclaré et initialisé en même temps donc faudra
 //faire autrement
-int	ms_builtin(char **args)
+t_builtin *get_builtin_array(char *cmd)
 {
-	t_builtin	builtins_array[] = {
+	static t_builtin	builtins_array[] = {
 		{"cd", ms_cd},
 		{"echo", ms_echo},
 		{"env", ms_env},
 		{"exit", ms_exit},
 		{"export", ms_export},
 		{"pwd", ms_pwd},
-		{"unset", ms_unset}
+		{"unset", ms_unset},
+		{NULL, NULL}
 	};
+	return (builtins_array);
+}
 
-	(void)args;
-	(void)builtins_array;
-	return (0);
+/// @brief Check if the command block is a builtin or not
+/// @param block The block.
+/// @return true if it's a builtin, false if not in the builtins_array.
+int (*launch_builtins(t_block *block))(char **)
+{
+	t_builtin	*builtins_array;
+	int			i;
+
+	if (!block)
+		return (false);
+	builtins_array = get_builtin_array(block->str);
+	i = -1;
+	while (builtins_array[++i].name != NULL)
+		if (ft_strcmp(block->str, builtins_array[i].name) == 0)
+			return (builtins_array[i].builtin_func);
+	return (NULL);
 }
