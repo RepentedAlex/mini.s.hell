@@ -29,7 +29,10 @@ SRC_FIL	= 	minishell \
 			exit \
 			parsing/lexing \
 			parsing/lexing_nodes \
+			parsing/variable_expansion \
 			utilitaries/ft_is \
+			utilitaries/ft_str \
+			utilitaries/ft_strnjoin \
 			utilitaries/utils1
 
 SRC		= $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FIL)))
