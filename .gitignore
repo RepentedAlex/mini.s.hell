@@ -1,6 +1,6 @@
 .cache_exists
 .idea
 build
-examples
+examples/*
 minishell
 supress_readline.valgrind
