@@ -12,19 +12,20 @@
 
 #include "minishell.h"
 
-t_block *setup_first_block(const char *src)
+t_block *setup_first_block(t_mo_shell *mo_shell)
 {
 	t_block *block;
 
 	block = malloc(sizeof(t_block));
 	if (!block)
 		return (NULL);
-	block->str = strdup(src);	//TODO ft_strdup
+	block->str = strdup(mo_shell->expanded_input);	//TODO ft_strdup
 	if (!block->str)
 		return (NULL);
 	block->next = NULL;
 	block->prev = NULL;
 	block->type = 0;
-	//free(src)
+	free(mo_shell->expanded_input);
+	mo_shell->expanded_input = NULL;
 	return (block);
 }
