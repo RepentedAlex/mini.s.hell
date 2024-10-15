@@ -99,7 +99,7 @@ int	ms_unset(char **args)
 // apetitco
 // Bon le tableau peut pas être déclaré et initialisé en même temps donc faudra
 //faire autrement
-t_builtin *get_builtin_array(char *cmd)
+t_builtin *get_builtin_array(void)
 {
 	static t_builtin	builtins_array[] = {
 		{"cd", ms_cd},
@@ -124,7 +124,7 @@ int (*launch_builtins(t_block *block))(char **)
 
 	if (!block)
 		return (false);
-	builtins_array = get_builtin_array(block->str);
+	builtins_array = get_builtin_array();
 	i = -1;
 	while (builtins_array[++i].name != NULL)
 		if (ft_strcmp(block->str, builtins_array[i].name) == 0)
