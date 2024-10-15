@@ -27,40 +27,41 @@ int	mini_s_hell(int argc, char *argv[], char *envp[])
 	{
 		//0. Read input
 		mo_shell.og_input = readline(PROMPT);
+		// TODO Remove readline's printing the line read
 
-		//1. Check for open quotes
 		if (check_open_quotes(mo_shell.og_input) == ERROR)
 			return (printf("mini.s.hell: quotes are not closed\n"), ERROR);
 
-		//2. Expand variables
-		expand_variables(mo_shell.og_input, envp);						// TODO
+		mo_shell.expanded_input = expand_variables(mo_shell.og_input, envp);	// TODO Verif pour variables inexistantes
+		printf("1%s\n", mo_shell.expanded_input);	// TODO REMOVE
 
-		//2,5 ft_strdup og_input into a new t_token node to set up future splits
-		// TODO
+		mo_shell.splitted_input = setup_first_block(mo_shell.expanded_input);
+		printf("2%s\n", mo_shell.splitted_input->str);					//TODO REMOVE
 
-		//3. Check for pipes
-		if (look_for_pipes(mo_shell.og_input) == true)			// TODO
+		if (look_for_pipes(&mo_shell.splitted_input) == true)					// TODO
 		{
-			//3.1 If pipes, check they are syntactically valid
-			if (check_pipes_syntax(mo_shell.og_input) == ERROR)	// TODO
+			if (check_pipes_syntax(&mo_shell.splitted_input) == ERROR)			// TODO
 				return (printf("mini.s.hell: syntax error near unexpected token '|'\n"), ERROR);
 
-			//3.1.1 Create blocks, separated by pipes
-			// ft_split(shell_env.buffer, '|');					// TODO + define in which field to assign
+			split_pipes(&mo_shell.splitted_input);								// TODO + define in which field to assign
 		}
 
-		// 4. Check redirections < , <<, >>, >
-		if (look_for_redir(mo_shell.og_input) == true)			// TODO
+		if (look_for_redir(&mo_shell.splitted_input) == true)					// TODO
 		{
-			// 4.1 If redirections, check they are syntactically valid
-			if (check_redir_syntax(mo_shell.og_input) == ERROR)	// TODO
-				return (printf("mini.s.hell: \n"), ERROR);
+			if (check_redir_syntax(&mo_shell.splitted_input) == ERROR)			// TODO
+				return (printf("mini.s.hell: \n"), ERROR);				// TODO Specify character
+
+			split_redir(&mo_shell.splitted_input);
 		}
 
-		//
-		if (lexing(&mo_shell) == ERROR)
-			break ;
-		free(mo_shell.og_input);
+		//TODO SPLIT SPACES TO CLEAN BLOCKS
+		split_spaces(&mo_shell.splitted_input);
+
+
+		// == == == TRANSITION VERS l'EXEC == == ==
+
+		launch_builtins(mo_shell.splitted_input);
+
 	}
 	garbage_collect(&mo_shell);
 	return (EXIT_SUCCESS);
