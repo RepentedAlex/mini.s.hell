@@ -56,7 +56,7 @@ int main(void)
     return (0);
 }  
 ```  
-De toute évidence je n'ai pas écrit ce code car il était utile. Enfin, si, il *est* utile dans un sens. Si vous compilez ce programme éminemment basique (vous pourriez même enlever le printf()) et que vous le lancez sous Valgrind, préparez vous.  
+De toute évidence, je n'ai pas écrit ce code, car il était utile. Enfin, si, il *est* utile dans un sens. Si vous compilez ce programme éminemment basique (vous pourriez même enlever le printf()) et que vous le lancez sous Valgrind, préparez vous.  
 Mais vraiment, rien que ce simple programme va faire fuire une quantité **astronomique** de mémoire pour le (très) peu qu'il fait. Alors imaginez si vous appelez `readline()` *plusieurs* fois. :)
 
 Vous devrez donc apprendre à faire des [suppression files](https://valgrind.org/docs/manual/manual-core.html#manual-core.suppress) pour Valgrind. <sub><sup>o:) (Oui, c'est un ange).</sup></sub>
@@ -215,9 +215,9 @@ incorporer directement au programme[^4].
 > - `pwd` sans options
 > - `unset` sans options
 
-Ça peut donc être intéressant d'avoir un tableau  qui répertorie tous  
-les builtins afin de pouvoir checker si on nous envoie une commande "externe" ou  
-un builtin ! En parallèle avoir ceci :
+Ça peut donc être intéressant d'avoir un tableau qui répertorie tous
+les builtins afin de pouvoir checker si on nous envoie une commande "externe"
+ou un builtin ! En parallèle avoir ceci :
 
 ```C  
 int (*builtin_func[]) (char **) = {&ms_cd, &ms_echo, &ms_env};  
@@ -240,14 +240,79 @@ Bon déjà, qu'est-ce que l'on a sous les yeux ?
   tableau de chaînes de caractères.
 
 > [!tip]  
-> Pour les curieux, un tableau de tableaux de pointeurs de fonction aurait cette  
-> syntaxe :    
-> `int  (*array_of_array[][]) (char **)` (évidemment les types d'arguments  
+> Pour les curieux, un tableau de tableaux de pointeurs de fonction aurait cette
+> syntaxe :  
+> `int  (*array_of_array[][]) (char **)` (évidemment les types d'arguments
 > et de return sont arbitraires ici)
-  
+
+---
+
+```C
+/// @brief Runs the corresponding builtin, if `cmd` is not a builtin, does nothing
+/// @param cmd The command we are checking.
+/// @return The function pointer of the corresponding builtin, NULL otherwise.
+t_builtin *get_builtin_array_singleton(char *cmd)
+{
+	static t_builtin	builtins_array[] =
+	{
+		{"cd", ms_cd},
+		{"echo", ms_echo},
+		{"env", ms_env},
+		{"exit", ms_exit},
+		{"export", ms_export},
+		{"pwd", ms_pwd},
+		{"unset", ms_unset},
+		{NULL, NULL}
+	};
+	return (builtins_array);
+}
+
+/// @brief Check if the command block is a builtin or not
+/// @param block The block.
+/// @return true if it's a builtin, false if not in the builtins_array.
+int (*launch_builtins(t_block *block))(char **)
+{
+	t_builtin	*builtins_array;
+	int			i;
+
+	if (!block)
+		return (NULL);
+	builtins_array = get_builtin_array(block->str);
+	i = -1;
+	while (builtins_array[++i].name != NULL)
+		if (ft_strcmp(block->str, builtins_array[i].name) == 0)
+			return (builtins_array[i].builtin_func);
+	return (NULL);
+}
+```
+Alors, pour ceux qui ne sont pas familiers, ce que vous voyez ici est un emprunt
+de CPP en C <sub><sup>(et accessoirement, un moyen de gruger la norme)</sup></sub>.
+La fonction `get_builtin_array_singleton()` permet, au travers d'une variable statique,
+d'accéder à notre tableau de builtins depuis <ins>n'importe où</ins>.  
+Ce qui permet donc d'avoir une vraie-fausse variable globale (sans qu'elle ne le soit).
+Pourquoi faire ça ? Parce que les consignes du sujet recommandent d'éviter d'utiliser
+plus d'une variable globale. De cette manière en appelant cette fonction, vous
+pourrez accéder depuis n'importe où à ce tableau retourné par le singleton !  
+
+Pour expliquer un peu plus l'utilité de ce tableau, nous fonctionnons par un
+système de dictionnaire, c'est-à-dire que chaque clé à une valeur : pour la clé
+"cd", la valeur est le pointeur de fonction vers ms_cd() ! Ainsi, nous pouvons
+vérifier que le builtin existe puis le lancer dans la foulée ! :)
+
+Ensuite, en ce qui concerne ceci `int (*launch_builtins(t_block *block))(char **)`
+, je fais un rapide topo:
+- `launch_builtins(t_block *block)` est la fonction
+- `int (*)(char **)` indique que cette fonction renvoie un pointeur de fonction.
+La fonction pointée retournera un `int` et prendra un `char **` en argument.  
+
+Vu comme cela, c'est moins effrayant. Juste au-dessus, je parlais d'appeler
+`get_builtin_array_singleton()` pour récupérer notre tableau de builtins et
+éventuellement pouvoir lancer un builtin si on le trouvait dans ce tableau...
+et bien cette fonction `launch_builtins()` fait tout juste cela !
+
 ---  
 
-Bon avec tout ça on a de quoi écrire une fonction `ms_execute()` !    
+Bon avec tout ça on a de quoi écrire une fonction `ms_execute()` !  
 Alors, aux fourneaux !
 
 ```C  
@@ -268,10 +333,10 @@ int ms_execute(char **args)
 ```  
 Ce joli petit bout de code vérifie juste si l'on doit utiliser un builtin,  
 sinon on utilise `ms_launch()` pour exécuter la commande.
-  
----  
 
-```c  
+---
+
+```C  
 void    mini.s.hell(void)  
 {  
   char    *line;
