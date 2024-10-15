@@ -60,7 +60,8 @@ int	get_token_len(const char *str)
 
 	quotes = 0;
 	i = -1;
-	while (str[++i] && (quotes == 0 && (ft_is_ifs(str[i]) || ft_is_symbol(&str[i]))))
+	while (str[++i] && (quotes == 0 && (ft_is_ifs(str[i]) || \
+		ft_is_symbol(&str[i]))))
 	{
 		check_in_quotes(str[i], &quotes);
 		if (quotes == 0 && (ft_is_ifs(str[i]) || ft_is_symbol(&str[i])))		//Si on a un whitespace ou |, <, <<, >>, > hors quotes
