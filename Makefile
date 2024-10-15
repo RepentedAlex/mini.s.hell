@@ -28,9 +28,13 @@ SRC_FIL	= 	minishell \
 			parsing/check_quotes \
 			exit \
 			parsing/lexing \
+			parsing/blocks \
 			parsing/lexing_nodes \
+			parsing/pipe_inspection \
+			parsing/redir_inspection \
 			parsing/variable_expansion \
 			utilitaries/ft_is \
+			utilitaries/ft_split \
 			utilitaries/ft_str \
 			utilitaries/ft_strnjoin \
 			utilitaries/utils1
