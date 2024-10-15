@@ -52,6 +52,43 @@ Accessoirement, c'est ici que l'on peut aussi être amené à vérifier si l'on 
 > bien plus abstrait leur concept. Mais concrètement si vous disposez d'un port
 > série, vous pouvez recréer un système de TTY physique !
 
+```C
+int mini.s.hell()
+{
+    while (1)
+    {
+        // Read input
+        
+        // Check for open quotes
+            // If there are open quotes -> return ERROR
+        
+        // Get rid of unnecessary spaces in input
+        
+        // Expand variables if necessary
+        
+        // Transcribe the input string into a block node for future operations
+        
+        // Check if there are pipes
+        {
+            // Check for correct pipe syntax
+                // If incorrect syntax -> return ERROR
+            // Split at each pipe
+        }
+        
+        // Check if there are redirections
+        {
+            // Check for correct redirection syntax
+                // If incorrect syntax -> return ERROR
+            // Split at each redirection
+        }
+        
+        // Split at each space
+        
+        //... EXECUTION ...
+    }
+}
+```
+
 ## 1. L'interprétation
 ### 1.0 La lecture
 Y a-t-il vraiment *vraiiiiment* besoin d'élaborer ? Évidemment !
