@@ -11,7 +11,11 @@
 /* ************************************************************************** */
 
 #ifndef MINISHELL_BUILTINS_H
-#define MINISHELL_BUILTINS_H
+# define MINISHELL_BUILTINS_H
+
+#include <stdbool.h>
+
+# include "minishell_types.h"
 
 // == == == BUILTINS == == ==
 int	ms_cd(char **args);
@@ -23,6 +27,7 @@ int	ms_pwd(char **args);
 int	ms_unset(char **args);
 
 // == == == FONCTIONS SUBSIDIAIRES == == ==
-int	ms_num_builtins(void);
+t_builtin	get_builtin_array(void);
+int			(*launch_builtins(t_block *block))(char **);
 
 #endif

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef MINISHELL_TYPES_H
-#define MINISHELL_TYPES_H
+# define MINISHELL_TYPES_H
 
 // == == == LIBRAIRIES == == ==
 
@@ -20,7 +20,8 @@
 // LEXING
 typedef enum e_lexcat
 {
-	PIPE = 1,
+	RAW = 0,
+	PIPE,
 	REDIR_I,
 	REDIR_O,
 	APPEND,
@@ -29,7 +30,7 @@ typedef enum e_lexcat
 
 // == == == STRUCTURES == == ==
 
-//
+
 typedef struct s_token
 {
 	char			*str;
@@ -40,7 +41,7 @@ typedef struct s_token
 
 typedef struct s_block
 {
-	char	*str;
+	char			*str;
 	struct s_block	*next;
 	struct s_block	*prev;
 	// struct s_block	*child[128];
@@ -50,10 +51,12 @@ typedef struct s_block
 // Structure mère
 /// @brief
 /// @param og_input Stocks readline's input.
-/// @param
+/// @param expanded_input Stocks to og output with its variable expanded
+/// @param splitted_input The splitted og_input
 typedef struct s_mo_shell
 {
 	char	*og_input;
+	char	*expanded_input;
 	t_block	*splitted_input;
 
 	// t_token	**tokens;

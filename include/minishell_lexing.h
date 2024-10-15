@@ -11,20 +11,16 @@
 /* ************************************************************************** */
 
 #ifndef MINISHELL_LEXING_H
-#define MINISHELL_LEXING_H
-#include <minishell_types.h>
+# define MINISHELL_LEXING_H
+# include "minishell_types.h"
 
 // == == == ENUMS == == ==
 
-
-
 // == == == == STRUCTURES == == ==
-
-
 
 // == == == FONCTIONS == == ==
 
-void tokeniser(t_mo_shell *data);
+void	tokeniser(t_mo_shell *data);
 
 // Linked list
 t_token	*new_lex_token(char *str);

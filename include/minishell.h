@@ -34,9 +34,11 @@
 # include <sys/wait.h>
 
 // Libraires persos
-#include "minishell_types.h"
+#include "minishell_builtins.h"
+# include "minishell_types.h"
 
 // == == == MACROS == == ==
+
 // Utile pour t_error.
 # define ERROR 1
 # define NO_ERROR 0
@@ -52,8 +54,6 @@
 // t_error permet de faire remonter les erreurs de manière plus lisible.
 typedef bool	t_error;
 
-
-
 // == == == FONCTIONS == == ==
 
 // mini.s.hell
@@ -63,17 +63,41 @@ int		check_if_var_exists(char *var, char *envp[]);
 t_error	check_open_quotes(const char *str);
 int		count_leading_whitespace(const char *str);
 int		count_tokens(const char *str);
-bool	ft_is_ifs(char c);
-int		ft_is_symbol(const char *str);
 void	free_tab(char **array);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
-int		ft_strcmp(const char *s1, const char *s2);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	check_in_quotes(char c, int *quotes);
-int		ft_strlen(const char *str);
 void	garbage_collect(t_mo_shell *data);
 void	split_str(char *str, char **ret, int *nb_token, bool *in_word);
 void	trim_leading_whitespace(char *str, const int leading_whitespaces);
+
+// blocks
+t_block *setup_first_block(const char *src);
+
+// ft_is
+bool	ft_is_alpha(const char c);
+bool	ft_is_ifs(char c);
+int		ft_is_symbol(const char *str);
+
+// ft_str
+t_error	split_spaces(t_block **head);
+char	*ft_strchr(const char *s, const int c);
+int		ft_strcmp(const char *s1, const char *s2);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_strnjoin(char *src, char *dst, size_t n);
+int		ft_strlen(const char *str);
+
+// pipe inspection
+t_error	check_pipes_syntax(t_block **head);
+bool	look_for_pipes(t_block **head);
+t_error	split_pipes(t_block **head);
+
+// redir inspection
+t_error	check_redir_syntax(t_block **head);
+bool	look_for_redir(t_block **head);
+t_error	split_redir(t_block **head);
+
+// variables expansion
+char	*expand_variables(char *src, char *envp[]);
 
 #endif
