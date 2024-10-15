@@ -32,7 +32,6 @@ int	mini_s_hell(int argc, char *argv[], char *envp[])
 		if (check_open_quotes(mo_shell.og_input) == ERROR)
 			return (printf("mini.s.hell: quotes are not closed\n"), ERROR);
 
-		//TODO Clean spaces
 		mo_shell.clean_input = string_tidyer(mo_shell.og_input);
 
 		//TODO UNDEFINED SPLIT POUR SEQUENCE D'ESPACE ENTRE GUILLEMETS COLLE A UN MOT
@@ -43,9 +42,9 @@ int	mini_s_hell(int argc, char *argv[], char *envp[])
 		mo_shell.splitted_input = setup_first_block(&mo_shell);
 		printf("2%s\n", mo_shell.splitted_input->str);					//TODO REMOVE
 
-		if (look_for_pipes(&mo_shell.splitted_input) == true)					// TODO
+		if (look_for_pipes(&mo_shell.splitted_input) == true)
 		{
-			if (check_pipes_syntax(&mo_shell.splitted_input) == ERROR)			// TODO
+			if (check_pipes_syntax(&mo_shell.splitted_input) == ERROR)
 				return (printf("mini.s.hell: syntax error near unexpected token '|'\n"), ERROR);
 
 			split_pipes(&mo_shell.splitted_input);								// TODO + define in which field to assign
