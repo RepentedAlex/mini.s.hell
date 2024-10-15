@@ -56,6 +56,7 @@ typedef struct s_block
 typedef struct s_mo_shell
 {
 	char	*og_input;
+	char	*clean_input;
 	char	*expanded_input;
 	t_block	*splitted_input;
 
