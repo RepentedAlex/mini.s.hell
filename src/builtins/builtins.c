@@ -123,7 +123,7 @@ int (*launch_builtins(t_block *block))(char **)
 	int			i;
 
 	if (!block)
-		return (false);
+		return (NULL);
 	builtins_array = get_builtin_array();
 	i = -1;
 	while (builtins_array[++i].name != NULL)
