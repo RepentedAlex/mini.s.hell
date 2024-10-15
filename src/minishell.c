@@ -35,7 +35,7 @@ int	mini_s_hell(int argc, char *argv[], char *envp[])
 		mo_shell.expanded_input = expand_variables(mo_shell.og_input, envp);	// TODO Verif pour variables inexistantes
 		printf("1%s\n", mo_shell.expanded_input);	// TODO REMOVE
 
-		mo_shell.splitted_input = setup_first_block(mo_shell.expanded_input);
+		mo_shell.splitted_input = setup_first_block(&mo_shell);
 		printf("2%s\n", mo_shell.splitted_input->str);					//TODO REMOVE
 
 		if (look_for_pipes(&mo_shell.splitted_input) == true)					// TODO
