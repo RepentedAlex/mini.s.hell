@@ -27,7 +27,7 @@ int	ms_pwd(char **args);
 int	ms_unset(char **args);
 
 // == == == FONCTIONS SUBSIDIAIRES == == ==
-t_builtin	get_builtin_array(void);
+t_builtin *get_builtin_array(void);
 int			(*launch_builtins(t_block *block))(char **);
 
 #endif
