@@ -18,14 +18,23 @@ t_error	check_pipes_syntax(t_block **head)
 	return (ERROR);
 }
 
-/// @brief
-/// @param head
-/// @return
+/// @brief Looks for pipes.
+/// @param head The head of the t_block list.
+/// @return True if there is a match for a '|', false otherwise.
 bool	look_for_pipes(t_block **head)
 {
-	if (*head == NULL)
+	t_block	*nav;
+
+	nav = *head;
+	if (nav == NULL)
 		return (false);
-	return (true);
+	while (nav != NULL)
+	{
+		if (ft_strchr(nav->str, '|') != NULL)
+			return (true);
+		nav = nav->next;
+	}
+	return (false);
 }
 
 /// @brief Takes a list of t_block and create new nodes when it finds a '|'.
