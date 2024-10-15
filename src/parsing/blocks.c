@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_block *setup_first_block(t_mo_shell *mo_shell)
+t_block *block_setup_first(t_mo_shell *mo_shell)
 {
 	t_block *block;
 

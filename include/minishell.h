@@ -72,7 +72,11 @@ void	split_str(char *str, char **ret, int *nb_token, bool *in_word);
 void	trim_leading_whitespace(char *str, const int leading_whitespaces);
 
 // blocks
-t_block *setup_first_block(t_mo_shell *mo_shell);
+t_error	block_add_back(t_block **head, t_block *node);
+t_error	block_add_front(t_block **head, t_block *node);
+t_block	*block_goto_last(t_block *head);
+t_block	*block_new(char *str);
+t_block *block_setup_first(t_mo_shell *mo_shell);
 
 // ft_is
 bool	ft_is_alpha(const char c);

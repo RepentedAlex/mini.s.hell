@@ -89,11 +89,31 @@ bool	look_for_pipes(t_block **head)
 }
 
 /// @brief Takes a list of t_block and create new nodes when it finds a '|'.
-/// @param head
-/// @return
+/// @param head Head of the t_block list.
+/// @return ERROR if an error is encountered, NO_ERROR otherwise.
 t_error	split_pipes(t_block **head)
 {
-	if (!*head)
+	t_block	*nav;
+	t_block	*tmp;
+	int		i;
+
+	nav = *head;
+	if (!nav)
 		return (ERROR);
+	while (nav != NULL)
+	{
+		if (ft_strchr(nav->str, '|') == NULL)
+			break ;
+		tmp = block_new("|");
+		block_add_back(head, tmp);
+		tmp = block_new(strdup(ft_strchr(nav->str, '|') + 1));	//TODO ft_strdup
+		block_add_back(head, tmp);
+		i = 0;
+		while (nav->str[i] && nav->str[i] != '|')
+			i++;
+		nav->str[i] = '\0';
+		nav = nav->next;
+		nav = nav->next;
+	}
 	return (NO_ERROR);
 }

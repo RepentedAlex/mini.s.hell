@@ -33,6 +33,7 @@ SRC_FIL	= 	minishell \
 			parsing/pipe_inspection \
 			parsing/redir_inspection \
 			parsing/variable_expansion \
+			utilitaries/block_nodes \
 			utilitaries/ft_is \
 			utilitaries/ft_split \
 			utilitaries/ft_str \
