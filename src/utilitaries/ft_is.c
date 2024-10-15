@@ -12,6 +12,16 @@
 
 #include "minishell.h"
 
+bool	ft_is_alpha(const char c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (true);
+	return (false);
+}
+
+/// @brief
+/// @param c
+/// @return
 bool	ft_is_ifs(const char c)
 {
 	int	i;
@@ -22,7 +32,6 @@ bool	ft_is_ifs(const char c)
 			return (true);
 	return (false);
 }
-
 
 //apetitco :
 // On peut sûrement tirer parti de l'enum t_lexcat pour identifier le symbole

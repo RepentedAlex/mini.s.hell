@@ -36,9 +36,55 @@ bool	look_for_pipes(char *str)
 	return (true);
 }
 
-void	expand_variables(char *src)
+/// @brief Takes a string and check if there are variables that
+/// should be expanded
+/// @param src The source string.
+/// @param envp The environment variables.
+void	expand_variables(char *src, char *envp[])
 {
-	(void)src;
+	int		i;
+	int		j;
+	int		quotes;
+	char	current_var[1024];
+	char	*ret;
+	int		env_i;
+
+	ret = malloc(sizeof(char));
+	if (!ret)
+		return ;
+	ft_memset(current_var, 0, sizeof(char) * 1024);
+	ft_memset(ret, 0, sizeof(char));
+	env_i = -1;
+	quotes = 0;
+	i = 0;
+	while (src[i])
+	{
+		check_in_quotes(src[i], &quotes);
+		if (quotes != 1 && src[i] == '$')
+		{
+			j = 1;
+			while (src[i + j] && ft_is_alpha(src[i + j]))
+			{
+				current_var[j - 1] = src[i + j];
+				j++;
+			}
+			current_var[j] = '\0';
+			env_i = check_if_var_exists(current_var, envp);
+			if (env_i > -1)
+			{
+				ret = ft_strnjoin(&envp[env_i][j], ret, \
+					ft_strlen(&envp[env_i][j]));
+				i++;
+				while (ft_is_alpha(src[i]))
+					i++;
+				env_i = -1;
+				continue ;
+			}
+		}
+		else
+			ret = ft_strnjoin(&src[i], ret, sizeof(char));
+		i++;
+	}
 }
 
 /// @brief The main mini.s.hell function ! :D
@@ -62,7 +108,7 @@ int	mini_s_hell(int argc, char *argv[], char *envp[])
 			return (printf("mini.s.hell: quotes are not closed\n"), ERROR);
 
 		//2. Expand variables
-		expand_variables(mo_shell.og_input);						// TODO
+		expand_variables(mo_shell.og_input, envp);						// TODO
 
 		//2,5 ft_strdup og_input into a new t_token node to set up future splits
 		// TODO
