@@ -52,6 +52,7 @@ Accessoirement, c'est ici que l'on peut aussi être amené à vérifier si l'on 
 > bien plus abstrait leur concept. Mais concrètement si vous disposez d'un port
 > série, vous pouvez recréer un système de TTY physique !
 
+## 1. L'interprétation
 ```C
 int mini.s.hell()
 {
@@ -88,8 +89,6 @@ int mini.s.hell()
     }
 }
 ```
-
-## 1. L'interprétation
 ### 1.0 La lecture
 Y a-t-il vraiment *vraiiiiment* besoin d'élaborer ? Évidemment !
 Voici donc quelques informations !  
