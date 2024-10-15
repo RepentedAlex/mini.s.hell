@@ -32,7 +32,12 @@ int	mini_s_hell(int argc, char *argv[], char *envp[])
 		if (check_open_quotes(mo_shell.og_input) == ERROR)
 			return (printf("mini.s.hell: quotes are not closed\n"), ERROR);
 
-		mo_shell.expanded_input = expand_variables(mo_shell.og_input, envp);	// TODO Verif pour variables inexistantes
+		//TODO Clean spaces
+		mo_shell.clean_input = string_tidyer(mo_shell.og_input);
+
+		//TODO UNDEFINED SPLIT POUR SEQUENCE D'ESPACE ENTRE GUILLEMETS COLLE A UN MOT
+
+		mo_shell.expanded_input = expand_variables(mo_shell.clean_input, envp);	// TODO Verif pour variables inexistantes
 		printf("1%s\n", mo_shell.expanded_input);	// TODO REMOVE
 
 		mo_shell.splitted_input = setup_first_block(&mo_shell);
