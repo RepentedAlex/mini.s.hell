@@ -12,10 +12,30 @@
 
 #include "minishell.h"
 
+/// @brief
+/// @param head
+/// @return Returns ERROR if syntax isn't correct, NO_ERROR otherwise.
 t_error	check_pipes_syntax(t_block **head)
 {
-	(void)head;
-	return (ERROR);
+	int		i;
+	t_block	*nav;
+
+	//pipe + 1 != '|' -> BON
+	//pipe until EOF || '|' -> exist ou != ifs -> BON
+
+	nav = *head;
+	if (!nav)
+		return (ERROR);
+	while (nav != NULL)
+	{
+		i = 0;
+		while (nav->str[i])
+		{
+			i++;
+		}
+		nav = nav->next;
+	}
+	return (NO_ERROR);
 }
 
 /// @brief Looks for pipes.
