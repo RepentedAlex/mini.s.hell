@@ -12,8 +12,30 @@
 
 #include "minishell.h"
 
-/// @brief
-/// @param head
+bool	check_after_pipe(char *str, int i)
+{
+	while (str[i])
+	{
+		if (ft_is_alpha(str[i]))
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+bool	check_before_pipe(char *str, int i)
+{
+	while (i >= 0 && str[i] != '|')
+	{
+		if (ft_is_alpha(str[i]))
+			return (true);
+		i--;
+	}
+	return (false);
+}
+
+/// @brief Check if all pipes' syntax is correct
+/// @param head Head of the t_block list.
 /// @return Returns ERROR if syntax isn't correct, NO_ERROR otherwise.
 t_error	check_pipes_syntax(t_block **head)
 {
@@ -31,6 +53,15 @@ t_error	check_pipes_syntax(t_block **head)
 		i = 0;
 		while (nav->str[i])
 		{
+			if (nav->str[i] == '|')
+			{
+				// Check word.s before pipe
+				if (check_before_pipe(nav->str, i - 1) == false)
+					return (ERROR);
+				// Check word.s after pipe
+				if (check_after_pipe(nav->str, i + 1) == false)
+					return (ERROR);
+			}
 			i++;
 		}
 		nav = nav->next;
