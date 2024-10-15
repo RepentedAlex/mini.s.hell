@@ -24,7 +24,7 @@ TES_DIR	= tests/
 
 ## SOURCES
 SRC_FIL	= 	minishell \
-			builtins \
+			builtins/builtins \
 			parsing/check_quotes \
 			exit \
 			parsing/lexing \
