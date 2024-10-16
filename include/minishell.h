@@ -72,7 +72,9 @@ void	split_str(char *str, char **ret, int *nb_token, bool *in_word);
 void	trim_leading_whitespace(char *str, const int leading_whitespaces);
 
 // blocks
+t_error	block_add_after(t_block *ref, t_block *to_insert);
 t_error	block_add_back(t_block **head, t_block *node);
+t_error	block_add_before(t_block **ref, t_block *to_insert);
 t_error	block_add_front(t_block **head, t_block *node);
 t_block	*block_goto_last(t_block *head);
 t_block	*block_new(char *str);
