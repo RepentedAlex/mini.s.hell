@@ -58,7 +58,7 @@ $(BUI_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
 
 $(OBJF):
 	@echo "Creating build directory"
-	@mkdir -p $(BUI_DIR) $(BUI_DIR)/parsing $(BUI_DIR)/utilitaries
+	@mkdir -p $(BUI_DIR) $(BUI_DIR)/builtins $(BUI_DIR)/parsing $(BUI_DIR)/utilitaries
 	@touch $(OBJF)
 
 clean:
