@@ -55,15 +55,19 @@ t_error	check_redir_syntax(t_block **head)
 					if (check_before_redir(nav->str, i - 1) == false)
 						return (ERROR);
 					// Check word.s after append redir
+					if (check_after_redir(nav->str, i + 2) == false)
+						return (ERROR);
+					i++;
+				}
+				else
+				{
+					// Check word.s before output redir
+					if (check_before_redir(nav->str, i - 1) == false)
+						return (ERROR);
+					// Check word.s after output redir
 					if (check_after_redir(nav->str, i + 1) == false)
 						return (ERROR);
 				}
-				// Check word.s before output redir
-				if (check_before_redir(nav->str, i - 1) == false)
-					return (ERROR);
-				// Check word.s after output redir
-				if (check_after_redir(nav->str, i + 1) == false)
-					return (ERROR);
 			}
 			else if (nav->str[i] == '<')
 			{
@@ -73,15 +77,19 @@ t_error	check_redir_syntax(t_block **head)
 					if (check_before_redir(nav->str, i - 1) == false)
 						return (ERROR);
 					// Check word.s after heredoc
+					if (check_after_redir(nav->str, i + 2) == false)
+						return (ERROR);
+					i++;
+				}
+				else
+				{
+					// Check word.s before input redir
+					if (check_before_redir(nav->str, i - 1) == false)
+						return (ERROR);
+					// Check word.s after input redir
 					if (check_after_redir(nav->str, i + 1) == false)
 						return (ERROR);
 				}
-				// Check word.s before input redir
-				if (check_before_redir(nav->str, i - 1) == false)
-					return (ERROR);
-				// Check word.s after input redir
-				if (check_after_redir(nav->str, i + 1) == false)
-					return (ERROR);
 			}
 			i++;
 		}
