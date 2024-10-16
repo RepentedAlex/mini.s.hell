@@ -12,6 +12,22 @@
 
 #include "minishell.h"
 
+t_error	block_add_after(t_block *ref, t_block *to_insert)
+{
+	t_block	*tmp;
+
+	if (ref == NULL)
+		ref = to_insert;
+	else
+	{
+		tmp = ref->next;
+		to_insert->next = tmp;
+		to_insert->prev = ref;
+		ref->next = to_insert;
+	}
+	return (NO_ERROR);
+}
+
 t_error	block_add_back(t_block **head, t_block *node)
 {
 	t_block	*tail;
@@ -23,6 +39,24 @@ t_error	block_add_back(t_block **head, t_block *node)
 	{
 		tail->next = node;
 		node->prev = tail;
+	}
+	return (NO_ERROR);
+}
+
+t_error	block_add_before(t_block **ref, t_block *to_insert)
+{
+	t_block	*nav;
+	t_block	*tmp;
+
+	nav = *ref;
+	if (nav == NULL)
+		*ref = to_insert;
+	else
+	{
+		tmp = nav->prev;
+		nav->prev = to_insert;
+		to_insert->prev = tmp;
+		to_insert->next = nav;
 	}
 	return (NO_ERROR);
 }
