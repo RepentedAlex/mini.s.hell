@@ -14,7 +14,7 @@
 
 bool	check_after_redir(char *str, int i)
 {
-	while (str[i])
+	while (str[i] && str[i] != '<' && str[i] != '>' && str[i] != '|')
 	{
 		if (ft_is_alpha(str[i]))
 			return (true);
@@ -25,7 +25,7 @@ bool	check_after_redir(char *str, int i)
 
 bool	check_before_redir(char *str, int i)
 {
-	while (i >= 0 && (str[i] != '<' || str[i] != '>'))
+	while (i >= 0 && str[i] != '<' && str[i] != '>' && str[i] != '|')
 	{
 		if (ft_is_alpha(str[i]))
 			return (true);
