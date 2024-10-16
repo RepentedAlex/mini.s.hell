@@ -23,9 +23,12 @@ typedef enum e_lexcat
 	RAW = 0,
 	PIPE,
 	REDIR_I,
+	INFILE,
 	REDIR_O,
+	OUTFILE,
 	APPEND,
-	HEREDOC
+	HEREDOC,
+	EOFHD
 }			t_lexcat;
 
 // == == == STRUCTURES == == ==

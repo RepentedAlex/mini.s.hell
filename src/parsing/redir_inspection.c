@@ -141,6 +141,7 @@ t_error	split_redir(t_block **head)
 			tmp->type = HEREDOC;
 			block_add_after(nav, tmp);
 			tmp = block_new(strdup(ft_strchr(nav->str, '<') + 2));	//TODO ft_strdup
+			tmp->type = EOFHD;
 			block_add_after(nav->next, tmp);
 			i = 0;
 			while (nav->str[i] && nav->str[i] != '<')
@@ -157,6 +158,7 @@ t_error	split_redir(t_block **head)
 			tmp->type = APPEND;
 			block_add_after(nav, tmp);
 			tmp = block_new(strdup(ft_strchr(nav->str, '>') + 2));	//TODO ft_strdup
+			tmp->type = OUTFILE;
 			block_add_after(nav->next, tmp);
 			i = 0;
 			while (nav->str[i] && nav->str[i] != '>')
@@ -172,6 +174,7 @@ t_error	split_redir(t_block **head)
 			tmp->type = REDIR_O;
 			block_add_after(nav, tmp);
 			tmp = block_new(strdup(ft_strchr(nav->str, '>') + 1));	//TODO ft_strdup
+			tmp->type = OUTFILE;
 			block_add_after(nav->next, tmp);
 			i = 0;
 			while (nav->str[i] && nav->str[i] != '>')
@@ -187,6 +190,7 @@ t_error	split_redir(t_block **head)
 			tmp->type = REDIR_I;
 			block_add_after(nav, tmp);
 			tmp = block_new(strdup(ft_strchr(nav->str, '<') + 1));	//TODO ft_strdup
+			tmp->type = INFILE;
 			block_add_after(nav->next, tmp);
 			i = 0;
 			while (nav->str[i] && nav->str[i] != '<')
