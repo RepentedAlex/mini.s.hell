@@ -142,7 +142,7 @@ char	*string_tidyer(char *s)
 	(void)ret;
 	unnecessary_spaces = get_num_unnec_spaces(s);
 	if (unnecessary_spaces == 0)
-		return (NULL);
+		return (s);
 	ret = (char *)malloc(sizeof(char) * ((ft_strlen(s) - unnecessary_spaces) + 1));
 	if (!ret)
 		return (NULL);
