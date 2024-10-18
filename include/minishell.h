@@ -78,7 +78,8 @@ t_error	block_add_before(t_block **ref, t_block *to_insert);
 t_error	block_add_front(t_block **head, t_block *node);
 t_block	*block_goto_last(t_block *head);
 t_block	*block_new(char *str);
-t_block *block_setup_first(t_mo_shell *mo_shell);
+t_block	*block_setup_first(t_mo_shell *mo_shell);
+void	block_string_tidyer(t_block **head);
 
 // ft_is
 bool	ft_is_alpha(const char c);

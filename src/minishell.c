@@ -59,7 +59,7 @@ int	mini_s_hell(int argc, char *argv[], char *envp[])
 		}
 
 		//TODO SPLIT SPACES TO CLEAN BLOCKS
-		split_spaces(&mo_shell.splitted_input);
+		block_string_tidyer(&mo_shell.splitted_input);
 
 
 		// == == == TRANSITION VERS l'EXEC == == ==
