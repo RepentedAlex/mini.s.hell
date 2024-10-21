@@ -107,10 +107,10 @@ t_error	split_pipes(t_block **head)
 			nav = nav->next;
 			continue ;
 		}
-		tmp = block_new("|");
+		tmp = block_new(strdup("|"));										// TODO ft_strdup
 		tmp->type = PIPE;
 		block_add_back(head, tmp);
-		tmp = block_new(strdup(ft_strchr(nav->str, '|') + 1));	//TODO ft_strdup
+		tmp = block_new(strdup(ft_strchr(nav->str, '|') + 1));			//TODO ft_strdup
 		block_add_back(head, tmp);
 		i = 0;
 		while (nav->str[i] && nav->str[i] != '|')

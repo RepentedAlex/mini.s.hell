@@ -137,7 +137,7 @@ t_error	split_redir(t_block **head)
 		// Check for heredoc
 		if (ft_strncmp(ft_strchr(nav->str, '<'), "<<", 2) == 0)
 		{
-			tmp = block_new("<<");
+			tmp = block_new(strdup("<<"));									//TODO ft_strdup
 			tmp->type = HEREDOC;
 			block_add_after(nav, tmp);
 			tmp = block_new(strdup(ft_strchr(nav->str, '<') + 2));	//TODO ft_strdup
@@ -154,10 +154,10 @@ t_error	split_redir(t_block **head)
 		// Check for append
 		if (ft_strncmp(ft_strchr(nav->str, '>'), ">>", 2) == 0)
 		{
-			tmp = block_new(">>");
+			tmp = block_new(strdup(">>"));									//TODO ft_strdup
 			tmp->type = APPEND;
 			block_add_after(nav, tmp);
-			tmp = block_new(strdup(ft_strchr(nav->str, '>') + 2));	//TODO ft_strdup
+			tmp = block_new(strdup(ft_strchr(nav->str, '>') + 2));		//TODO ft_strdup
 			tmp->type = OUTFILE;
 			block_add_after(nav->next, tmp);
 			i = 0;
@@ -170,10 +170,10 @@ t_error	split_redir(t_block **head)
 		}
 		if (ft_strncmp(ft_strchr(nav->str, '>'), ">", 1) == 0)
 		{
-			tmp = block_new(">");
+			tmp = block_new(strdup(">"));									// TODO ft_strdup
 			tmp->type = REDIR_O;
 			block_add_after(nav, tmp);
-			tmp = block_new(strdup(ft_strchr(nav->str, '>') + 1));	//TODO ft_strdup
+			tmp = block_new(strdup(ft_strchr(nav->str, '>') + 1));		//TODO ft_strdup
 			tmp->type = OUTFILE;
 			block_add_after(nav->next, tmp);
 			i = 0;
@@ -186,10 +186,10 @@ t_error	split_redir(t_block **head)
 		}
 		if (ft_strncmp(ft_strchr(nav->str, '<'), "<", 1) == 0)
 		{
-			tmp = block_new("<");
+			tmp = block_new(strdup("<"));									// TODO ft_strdup
 			tmp->type = REDIR_I;
 			block_add_after(nav, tmp);
-			tmp = block_new(strdup(ft_strchr(nav->str, '<') + 1));	//TODO ft_strdup
+			tmp = block_new(strdup(ft_strchr(nav->str, '<') + 1));		//TODO ft_strdup
 			tmp->type = INFILE;
 			block_add_after(nav->next, tmp);
 			i = 0;
