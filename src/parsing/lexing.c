@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
 
 void	identify_tokens(t_token **head)
 {

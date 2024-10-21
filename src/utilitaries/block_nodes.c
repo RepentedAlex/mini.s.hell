@@ -43,24 +43,6 @@ t_error	block_add_back(t_block **head, t_block *node)
 	return (NO_ERROR);
 }
 
-t_error	block_add_before(t_block **ref, t_block *to_insert)
-{
-	t_block	*nav;
-	t_block	*tmp;
-
-	nav = *ref;
-	if (nav == NULL)
-		*ref = to_insert;
-	else
-	{
-		tmp = nav->prev;
-		nav->prev = to_insert;
-		to_insert->prev = tmp;
-		to_insert->next = nav;
-	}
-	return (NO_ERROR);
-}
-
 t_error	block_add_front(t_block **head, t_block *node)
 {
 	t_block	*nav;
@@ -102,7 +84,3 @@ t_block	*block_new(char *str)
 	node->type = 0;
 	return (node);
 }
-
-
-
-

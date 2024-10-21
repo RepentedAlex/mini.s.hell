@@ -17,7 +17,8 @@ t_error	splitter(t_mo_shell *mo_shell)
 	if (look_for_pipes(&mo_shell->splitted_input) == true)
 	{
 		if (check_pipes_syntax(&mo_shell->splitted_input) == ERROR)
-			return (printf("mini.s.hell: syntax error near unexpected token '|'\n"), ERROR);
+			return (printf("mini.s.hell: syntax error near unexpected \
+token '|'\n"), ERROR);
 		split_pipes(&mo_shell->splitted_input);
 	}
 	if (look_for_redir(&mo_shell->splitted_input) == true)
@@ -37,7 +38,8 @@ t_error	parsing(t_mo_shell *mo_shell)
 	if (check_open_quotes(mo_shell->og_input) == ERROR)
 		return (printf("mini.s.hell: quotes are not closed\n"), ERROR);
 	mo_shell->clean_input = string_tidyer(mo_shell->og_input);
-	mo_shell->expanded_input = expand_variables(mo_shell->clean_input, mo_shell->shell_env);
+	mo_shell->expanded_input = expand_variables(mo_shell->clean_input, \
+		mo_shell->shell_env);
 	mo_shell->splitted_input = block_setup_first(mo_shell);
 	if (splitter(mo_shell))
 		return (ERROR);

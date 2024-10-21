@@ -31,16 +31,37 @@ t_block	*block_setup_first(t_mo_shell *mo_shell)
 	return (block);
 }
 
-t_error	split_spaces(t_block **head)
+void	for_space(t_block *nav)
 {
-	t_block	*nav;
 	t_block	*tmp;
-	// char	*strchr_tmp;
 	int		i;
 	int		quotes;
 
-	// strchr_tmp = NULL;
+	i = 0;
 	quotes = 0;
+	while (nav->str[i])
+	{
+		check_in_quotes(nav->str[i], &quotes);
+		if (!quotes && ft_is_ifs(nav->str[i]))
+		{
+			tmp = block_new(&nav->str[i + 1]);
+			tmp->type = RAW;
+			block_add_after(nav, tmp);
+			i = 0;
+			while (nav->str[i] && nav->str[i] != ' ' && nav->str[i] != '\t' \
+				&& nav->str[i] != '\n')
+				i++;
+			nav->str[i] = '\0';
+			break ;
+		}
+		i++;
+	}
+}
+
+t_error	split_spaces(t_block **head)
+{
+	t_block	*nav;
+
 	nav = *head;
 	if (!nav)
 		return (ERROR);
@@ -51,23 +72,7 @@ t_error	split_spaces(t_block **head)
 			nav = nav->next;
 			continue ;
 		}
-		i = 0;
-		while (nav->str[i])
-		{
-			check_in_quotes(nav->str[i], &quotes);
-			if (!quotes && ft_is_ifs(nav->str[i]))
-			{
-				tmp = block_new(&nav->str[i + 1]);
-				tmp->type = RAW;
-				block_add_after(nav, tmp);
-				i = 0;
-				while (nav->str[i] && nav->str[i] != ' ' && nav->str[i] != '\t' && nav->str[i] != '\n')
-					i++;
-				nav->str[i] = '\0';
-				break ;
-			}
-			i++;
-		}
+		for_space(nav);
 		nav = nav->next;
 	}
 	return (NO_ERROR);

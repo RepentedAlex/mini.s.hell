@@ -27,13 +27,17 @@ SRC_FIL	= 	minishell \
 			exit \
 			init \
 			builtins/builtins \
+			builtins/builtins_part1 \
+			builtins/builtins_part2 \
 			parsing/check_quotes \
 			parsing/lexing \
 			parsing/blocks \
-			parsing/lexing_nodes \
 			parsing/parsing \
+			parsing/pipe_check \
 			parsing/pipe_inspection \
+			parsing/redir_check \
 			parsing/redir_inspection \
+			parsing/redir_splitter \
 			parsing/variable_expansion \
 			utilitaries/block_nodes \
 			utilitaries/ft_is \
@@ -52,6 +56,7 @@ all: $(NAME)
 $(NAME): $(OBJ) Libft/libtoolbox.a
 	@echo "Linking $(NAME)..."
 	$(CC) $(FLAGS) $(OBJ) Libft/libtoolbox.a $(LFLAGS) -o $(NAME)
+	rm Libft/libtoolbox.a
 	@echo "$(NAME) is born! :D"
 
 Libft/libtoolbox.a:

@@ -11,113 +11,32 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/// @brief
-/// @param args
-/// @return
-int	ms_cd(char **args)
-{
-	int	i;
-
-	(void)args;
-	i = 0;
-	return (i);
-}
-
-/// @brief
-/// @param args
-/// @return
-int	ms_echo(char **args)
-{
-	int	i;
-
-	(void)args;
-	i = 0;
-	return (i);
-}
-
-/// @brief
-/// @param args
-/// @return
-int	ms_env(char **args)
-{
-	int	i;
-
-	(void)args;
-	i = 0;
-	return (i);
-}
-
-/// @brief
-/// @param args
-/// @return
-int	ms_exit(char **args)
-{
-	int	i;
-
-	(void)args;
-	i = 0;
-	return (i);
-}
-
-/// @brief
-/// @param args
-/// @return
-int	ms_export(char **args)
-{
-	int	i;
-
-	(void)args;
-	i = 0;
-	return (i);
-}
-
-/// @brief
-/// @param args
-/// @return
-int	ms_pwd(char **args)
-{
-	int	i;
-
-	(void)args;
-	i = 0;
-	return (i);
-}
-
-/// @brief
-/// @param args
-/// @return
-int	ms_unset(char **args)
-{
-	int	i;
-
-	(void)args;
-	i = 0;
-	return (i);
-}
+#include "minishell_builtins.h"
+#include "libft.h"
 
 // apetitco
 // Bon le tableau peut pas être déclaré et initialisé en même temps donc faudra
 //faire autrement
-t_builtin *get_builtin_array(void)
+t_builtin	*get_builtin_array(void)
 {
-	static t_builtin	builtins_array[] = {
-		{"cd", ms_cd},
-		{"echo", ms_echo},
-		{"env", ms_env},
-		{"exit", ms_exit},
-		{"export", ms_export},
-		{"pwd", ms_pwd},
-		{"unset", ms_unset},
+	static t_builtin	builtins_array[] = {\
+		{"cd", ms_cd}, \
+		{"echo", ms_echo}, \
+		{"env", ms_env}, \
+		{"exit", ms_exit}, \
+		{"export", ms_export}, \
+		{"pwd", ms_pwd}, \
+		{"unset", ms_unset}, \
 		{NULL, NULL}
 	};
+
 	return (builtins_array);
 }
 
 /// @brief Check if the command block is a builtin or not
 /// @param block The block.
 /// @return true if it's a builtin, false if not in the builtins_array.
-int (*launch_builtins(t_block *block))(char **)
+int	(*launch_builtins(t_block *block))(char **str)
 {
 	t_builtin	*builtins_array;
 	int			i;

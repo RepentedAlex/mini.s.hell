@@ -64,12 +64,9 @@ char	*expand_variables(char *src, char *envp[])
 				i += 2;
 				continue ;
 			}
-			j = 1;
-			while (src[i + j] && ft_is_alpha(src[i + j]))
-			{
+			j = 0;
+			while (src[i + ++j] && ft_is_alpha(src[i + j]))
 				current_var[j - 1] = src[i + j];
-				j++;
-			}
 			current_var[j] = '\0';
 			if (check_if_var_exists(current_var, envp) > -1)
 			{
@@ -80,16 +77,12 @@ char	*expand_variables(char *src, char *envp[])
 					i++;
 				continue ;
 			}
-			else
-			{
+			i++;
+			while (ft_is_alpha(src[i]) || ft_is_ifs(src[i]))
 				i++;
-				while (ft_is_alpha(src[i]) || ft_is_ifs(src[i]))
-					i++;
-				continue ;
-			}
+			continue ;
 		}
-		else
-			ret = ft_strnjoin(&src[i], ret, sizeof(char));
+		ret = ft_strnjoin(&src[i], ret, sizeof(char));
 		i++;
 	}
 	return (ret);

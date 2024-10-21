@@ -12,14 +12,14 @@
 
 #include "minishell.h"
 
-void block_string_tidyer(t_block **head)
+void	block_string_tidyer(t_block **head)
 {
 	t_block	*nav;
 	char	*tmp;
 
 	nav = *head;
 	if (!nav)
-		return;
+		return ;
 	while (nav)
 	{
 		tmp = string_tidyer(nav->str);
