@@ -24,12 +24,14 @@ TES_DIR	= tests/
 
 ## SOURCES
 SRC_FIL	= 	minishell \
+			exit \
+			init \
 			builtins/builtins \
 			parsing/check_quotes \
-			exit \
 			parsing/lexing \
 			parsing/blocks \
 			parsing/lexing_nodes \
+			parsing/parsing \
 			parsing/pipe_inspection \
 			parsing/redir_inspection \
 			parsing/variable_expansion \

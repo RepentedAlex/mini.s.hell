@@ -60,6 +60,7 @@ typedef struct s_mo_shell
 	char	*clean_input;
 	char	*expanded_input;
 	t_block	*splitted_input;
+	char	**shell_env;
 	int		last_exit_status;
 }				t_mo_shell;
 

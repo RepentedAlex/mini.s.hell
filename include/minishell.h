@@ -57,10 +57,16 @@ typedef bool	t_error;
 // == == == FONCTIONS == == ==
 
 // mini.s.hell
-int		mini_s_hell(int argc, char *argv[], char *envp[]);
+int		mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell);
+
+t_error parsing(t_mo_shell *mo_shell);
+
+// parsing
+t_error	splitter(t_mo_shell *mo_shell);
 
 int		check_if_var_exists(char *var, char *envp[]);
 t_error	check_open_quotes(const char *str);
+char	**copy_env(char **envp);
 int		count_leading_whitespace(const char *str);
 int		count_tokens(const char *str);
 void	free_tab(char **array);
