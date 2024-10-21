@@ -80,6 +80,7 @@ t_block	*block_goto_last(t_block *head);
 t_block	*block_new(char *str);
 t_block	*block_setup_first(t_mo_shell *mo_shell);
 void	block_string_tidyer(t_block **head);
+void	block_split_spaces(t_block *head);
 
 // ft_is
 bool	ft_is_alpha(const char c);
@@ -94,6 +95,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strnjoin(char *src, char *dst, size_t n);
 int		ft_strlen(const char *str);
 char	*string_tidyer(char *s);
+bool	ft_string_is_ifs(char *str);
 
 // pipe inspection
 t_error	check_pipes_syntax(t_block **head);
