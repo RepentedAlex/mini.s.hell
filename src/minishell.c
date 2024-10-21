@@ -58,6 +58,7 @@ int	mini_s_hell(int argc, char *argv[], char *envp[])
 
 		block_string_tidyer(&mo_shell.splitted_input);
 
+		split_spaces(&mo_shell.splitted_input);
 
 		// == == == TRANSITION VERS l'EXEC == == ==
 
