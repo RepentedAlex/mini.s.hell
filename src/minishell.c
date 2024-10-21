@@ -25,7 +25,6 @@ int	mini_s_hell(int argc, char *argv[], char *envp[])
 	ft_bzero(&mo_shell, sizeof(t_mo_shell));
 	while (1)
 	{
-		//0. Read input
 		mo_shell.og_input = readline(PROMPT);
 		// TODO Remove readline's printing the line read
 
