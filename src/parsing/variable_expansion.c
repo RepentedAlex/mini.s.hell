@@ -83,10 +83,12 @@ char	*expand_variables(char *src, char *envp[])
 				env_i = -1;
 				continue ;
 			}
-			while (ft_is_alpha(src[i]) || ft_is_ifs(src[i]))
+			else
 			{
-
 				i++;
+				while (ft_is_alpha(src[i]) || ft_is_ifs(src[i]))
+					i++;
+				continue ;
 			}
 		}
 		else
