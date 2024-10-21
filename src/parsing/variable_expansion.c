@@ -60,6 +60,11 @@ char	*expand_variables(char *src, char *envp[])
 		check_in_quotes(src[i], &quotes);
 		if (quotes != 1 && src[i] == '$')
 		{
+			if (src[i + 1] == '$')
+			{
+				i += 2;
+				continue ;
+			}
 			j = 1;
 			while (src[i + j] && ft_is_alpha(src[i + j]))
 			{
