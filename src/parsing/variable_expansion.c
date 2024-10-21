@@ -19,6 +19,8 @@ int	check_if_var_exists(char *var, char *envp[])
 	char	*tmp;
 
 	tmp = var;
+	if (var[0] == '\0')
+		return (-2);
 	i = 0;
 	while (envp[i])
 	{
