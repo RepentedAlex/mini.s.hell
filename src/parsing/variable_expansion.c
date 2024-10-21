@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
 
 int	check_if_var_exists(char *var, char *envp[])
 {

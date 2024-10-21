@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
 
 char	*ft_strnjoin(char *src, char *dst, size_t n)
 {

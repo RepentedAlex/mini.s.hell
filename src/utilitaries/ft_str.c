@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
@@ -54,15 +55,15 @@ int	ft_strncmp(const char *s1, const char *s2, const size_t n)
 	return (0);
 }
 
-int	ft_strlen(const char *str)
-{
-	int	len;
-
-	len = 0;
-	while (str && str[len])
-		len++;
-	return (len);
-}
+// int	ft_strlen(const char *str)
+// {
+// 	int	len;
+//
+// 	len = 0;
+// 	while (str && str[len])
+// 		len++;
+// 	return (len);
+// }
 
 char	*ft_strchr(const char *s, const int c)
 {
@@ -142,7 +143,7 @@ char	*string_tidyer(char *s)
 	(void)ret;
 	unnecessary_spaces = get_num_unnec_spaces(s);
 	if (unnecessary_spaces == 0)
-		return (strdup(s));					// TODO ft_strdup
+		return (ft_strdup(s));
 	ret = (char *)malloc(sizeof(char) * ((ft_strlen(s) - unnecessary_spaces) + 1));
 	if (!ret)
 		return (NULL);

@@ -74,8 +74,3 @@ int	ft_is_symbol(const char *str)
 	}
 	return (0);
 }
-
-// bool	ft_is_var(const char *str)	//TODO
-// {
-//
-// }

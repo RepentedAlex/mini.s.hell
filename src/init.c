@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
 
 int	get_var_count(char *envp[])
 {
@@ -36,7 +37,7 @@ char	**copy_env(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		copy[i] = strdup(envp[i]);												// TODO ft_strdup
+		copy[i] = ft_strdup(envp[i]);
 		i++;
 	}
 	return (copy);

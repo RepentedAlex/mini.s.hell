@@ -5,7 +5,7 @@ CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 DFLAGS	= -MMD -MP
 FFLAGS	= -fsanitize=address
-IFLAGS	= -Iinclude
+IFLAGS	= -Iinclude -ILibft/include
 LFLAGS	= -lreadline
 DEBUG	= -g3
 FLAGS	= $(CFLAGS) $(DFLAGS) $(IFLAGS)
@@ -49,10 +49,14 @@ OBJF	= .cache_exists
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) Libft/libtoolbox.a
 	@echo "Linking $(NAME)..."
-	@$(CC) $(FLAGS) $(LFLAGS) $(OBJ) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJ) Libft/libtoolbox.a $(LFLAGS) -o $(NAME)
 	@echo "$(NAME) is born! :D"
+
+Libft/libtoolbox.a:
+	cd ./Libft/ ; git pull ; cd ../
+	$(MAKE) -C ./Libft
 
 $(BUI_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
 	@echo "$(PENDING)Compiling $<..."
@@ -65,14 +69,17 @@ $(OBJF):
 
 clean:
 	@rm -rf $(BUI_DIR) $(OBJF)
+	$(MAKE) clean -C ./Libft
 	@echo "Removing build files..."
 
 fclean: clean
 	@echo "Removing $(NAME)..."
+	$(MAKE) fclean -C ./Libft
 	@rm -f $(NAME)
 
 re:
 	@$(MAKE) --no-print-directory fclean
+	$(MAKE) re -C ./Libft
 	@echo "Making $(NAME) again"
 	@$(MAKE) --no-print-directory all
 
