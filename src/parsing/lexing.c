@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-//apetitco:
-// TODO On peut se faire baiser parce que je regarde pas ce qu'il y a derrière le token
 void	identify_tokens(t_token **head)
 {
 	t_token	*nav;

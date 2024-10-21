@@ -13,21 +13,21 @@
 #ifndef MINISHELL_BUILTINS_H
 # define MINISHELL_BUILTINS_H
 
-#include <stdbool.h>
+# include <stdbool.h>
 
 # include "minishell_types.h"
 
 // == == == BUILTINS == == ==
-int	ms_cd(char **args);
-int	ms_echo(char **args);
-int	ms_env(char **args);
-int	ms_exit(char **args);
-int	ms_export(char **args);
-int	ms_pwd(char **args);
-int	ms_unset(char **args);
+int			ms_cd(char **args);
+int			ms_echo(char **args);
+int			ms_env(char **args);
+int			ms_exit(char **args);
+int			ms_export(char **args);
+int			ms_pwd(char **args);
+int			ms_unset(char **args);
 
 // == == == FONCTIONS SUBSIDIAIRES == == ==
-t_builtin *get_builtin_array(void);
-int			(*launch_builtins(t_block *block))(char **);
+t_builtin	*get_builtin_array(void);
+int (*launch_builtins(t_block	*block))(char **);
 
 #endif

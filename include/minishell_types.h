@@ -33,7 +33,6 @@ typedef enum e_lexcat
 
 // == == == STRUCTURES == == ==
 
-
 typedef struct s_token
 {
 	char			*str;
@@ -47,7 +46,6 @@ typedef struct s_block
 	char			*str;
 	struct s_block	*next;
 	struct s_block	*prev;
-	// struct s_block	*child[128];
 	t_lexcat		type;
 }				t_block;
 
@@ -62,8 +60,6 @@ typedef struct s_mo_shell
 	char	*clean_input;
 	char	*expanded_input;
 	t_block	*splitted_input;
-
-	// t_token	**tokens;
 	int		last_exit_status;
 }				t_mo_shell;
 

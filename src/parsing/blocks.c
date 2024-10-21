@@ -12,14 +12,14 @@
 
 #include "minishell.h"
 
-t_block *block_setup_first(t_mo_shell *mo_shell)
+t_block	*block_setup_first(t_mo_shell *mo_shell)
 {
-	t_block *block;
+	t_block	*block;
 
 	block = malloc(sizeof(t_block));
 	if (!block)
 		return (NULL);
-	block->str = strdup(mo_shell->expanded_input);	//TODO ft_strdup
+	block->str = strdup(mo_shell->expanded_input);								//TODO ft_strdup
 	if (!block->str)
 		return (NULL);
 	block->next = NULL;
@@ -37,6 +37,7 @@ t_error	split_spaces(t_block **head)
 	char	*strchr_tmp;
 	int		i;
 
+	strchr_tmp = NULL;
 	nav = *head;
 	if (!nav)
 		return (ERROR);

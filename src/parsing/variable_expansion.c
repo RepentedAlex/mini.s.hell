@@ -45,14 +45,12 @@ char	*expand_variables(char *src, char *envp[])
 	int		quotes;
 	char	current_var[1024];
 	char	*ret;
-	int		env_i;
 
 	ret = malloc(sizeof(char));
 	if (!ret)
 		return (NULL);
 	ft_memset(current_var, 0, sizeof(char) * 1024);
 	ft_memset(ret, 0, sizeof(char));
-	env_i = -1;
 	quotes = 0;
 	i = 0;
 	while (src[i])
@@ -72,15 +70,13 @@ char	*expand_variables(char *src, char *envp[])
 				j++;
 			}
 			current_var[j] = '\0';
-			env_i = check_if_var_exists(current_var, envp);
-			if (env_i > -1)
+			if (check_if_var_exists(current_var, envp) > -1)
 			{
-				ret = ft_strnjoin(&envp[env_i][j], ret, \
-					ft_strlen(&envp[env_i][j]));
+				ret = ft_strnjoin(&envp[check_if_var_exists(current_var, envp)][j], ret, \
+					ft_strlen(&envp[check_if_var_exists(current_var, envp)][j]));
 				i++;
 				while (ft_is_alpha(src[i]))
 					i++;
-				env_i = -1;
 				continue ;
 			}
 			else

@@ -26,43 +26,29 @@ int	mini_s_hell(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		mo_shell.og_input = readline(PROMPT);
-
 		if (mo_shell.og_input && *mo_shell.og_input)
 			add_history(mo_shell.og_input);										// TODO When to clear history ?
-
 		if (check_open_quotes(mo_shell.og_input) == ERROR)
 			return (printf("mini.s.hell: quotes are not closed\n"), ERROR);
-
 		mo_shell.clean_input = string_tidyer(mo_shell.og_input);
-
 		mo_shell.expanded_input = expand_variables(mo_shell.clean_input, envp);
-
 		mo_shell.splitted_input = block_setup_first(&mo_shell);
-
 		if (look_for_pipes(&mo_shell.splitted_input) == true)
 		{
 			if (check_pipes_syntax(&mo_shell.splitted_input) == ERROR)
 				return (printf("mini.s.hell: syntax error near unexpected token '|'\n"), ERROR);
-
 			split_pipes(&mo_shell.splitted_input);
 		}
-
 		if (look_for_redir(&mo_shell.splitted_input) == true)
 		{
 			if (check_redir_syntax(&mo_shell.splitted_input) == ERROR)
 				return (printf("mini.s.hell: \n"), ERROR);				// TODO Specify character
-
 			split_redir(&mo_shell.splitted_input);
 		}
-
 		block_string_tidyer(&mo_shell.splitted_input);
-
 		split_spaces(&mo_shell.splitted_input);
-
 		// == == == TRANSITION VERS l'EXEC == == ==
-
 		launch_builtins(mo_shell.splitted_input);
-
 	}
 	garbage_collect(&mo_shell);
 	return (EXIT_SUCCESS);

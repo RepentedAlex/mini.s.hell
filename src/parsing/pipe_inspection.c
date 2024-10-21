@@ -44,7 +44,6 @@ t_error	check_pipes_syntax(t_block **head)
 
 	//pipe + 1 != '|' -> BON
 	//pipe until EOF || '|' -> exist ou != ifs -> BON
-
 	nav = *head;
 	if (!nav)
 		return (ERROR);
