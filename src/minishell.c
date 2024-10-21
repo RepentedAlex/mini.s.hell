@@ -26,18 +26,18 @@ int	mini_s_hell(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		mo_shell.og_input = readline(PROMPT);
-		// TODO Remove readline's printing the line read
+
+		if (mo_shell.og_input && *mo_shell.og_input)
+			add_history(mo_shell.og_input);										// TODO When to clear history ?
 
 		if (check_open_quotes(mo_shell.og_input) == ERROR)
 			return (printf("mini.s.hell: quotes are not closed\n"), ERROR);
 
 		mo_shell.clean_input = string_tidyer(mo_shell.og_input);
 
-		mo_shell.expanded_input = expand_variables(mo_shell.clean_input, envp);	// TODO Verif pour variables inexistantes
-		printf("1%s\n", mo_shell.expanded_input);							// TODO REMOVE printf
+		mo_shell.expanded_input = expand_variables(mo_shell.clean_input, envp);
 
 		mo_shell.splitted_input = block_setup_first(&mo_shell);
-		printf("2%s\n", mo_shell.splitted_input->str);					//TODO REMOVE printf
 
 		if (look_for_pipes(&mo_shell.splitted_input) == true)
 		{
