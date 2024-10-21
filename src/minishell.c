@@ -34,31 +34,28 @@ int	mini_s_hell(int argc, char *argv[], char *envp[])
 
 		mo_shell.clean_input = string_tidyer(mo_shell.og_input);
 
-		//TODO UNDEFINED SPLIT POUR SEQUENCE D'ESPACE ENTRE GUILLEMETS COLLE A UN MOT
-
 		mo_shell.expanded_input = expand_variables(mo_shell.clean_input, envp);	// TODO Verif pour variables inexistantes
-		printf("1%s\n", mo_shell.expanded_input);	// TODO REMOVE
+		printf("1%s\n", mo_shell.expanded_input);							// TODO REMOVE printf
 
 		mo_shell.splitted_input = block_setup_first(&mo_shell);
-		printf("2%s\n", mo_shell.splitted_input->str);					//TODO REMOVE
+		printf("2%s\n", mo_shell.splitted_input->str);					//TODO REMOVE printf
 
 		if (look_for_pipes(&mo_shell.splitted_input) == true)
 		{
 			if (check_pipes_syntax(&mo_shell.splitted_input) == ERROR)
 				return (printf("mini.s.hell: syntax error near unexpected token '|'\n"), ERROR);
 
-			split_pipes(&mo_shell.splitted_input);								// TODO + define in which field to assign
+			split_pipes(&mo_shell.splitted_input);
 		}
 
-		if (look_for_redir(&mo_shell.splitted_input) == true)					// TODO
+		if (look_for_redir(&mo_shell.splitted_input) == true)
 		{
-			if (check_redir_syntax(&mo_shell.splitted_input) == ERROR)			// TODO
+			if (check_redir_syntax(&mo_shell.splitted_input) == ERROR)
 				return (printf("mini.s.hell: \n"), ERROR);				// TODO Specify character
 
 			split_redir(&mo_shell.splitted_input);
 		}
 
-		//TODO SPLIT SPACES TO CLEAN BLOCKS
 		block_string_tidyer(&mo_shell.splitted_input);
 
 
