@@ -22,6 +22,8 @@ LIB_DIR	= libs/
 SRC_DIR	= src/
 TES_DIR	= tests/
 
+LIBFT_A	= Libft/libtoolbox.a
+
 ## SOURCES
 SRC_FIL	= 	minishell \
 			exit \
@@ -56,13 +58,13 @@ all: $(NAME)
 update:
 	cd ./Libft/ ; git pull ; cd ../
 
-$(NAME): $(OBJ) update Libft/libtoolbox.a
+
+$(NAME): $(OBJ) $(LIBFT_A) | update
 	@echo "Linking $(NAME)..."
-	$(CC) $(FLAGS) $(OBJ) Libft/libtoolbox.a $(LFLAGS) -o $(NAME)
-	rm Libft/libtoolbox.a
+	$(CC) $(FLAGS) $(OBJ) $(LIBFT_A) $(LFLAGS) -o $(NAME)
 	@echo "$(NAME) is born! :D"
 
-Libft/libtoolbox.a:
+$(LIBFT_A):
 	$(MAKE) -C ./Libft
 
 $(BUI_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
