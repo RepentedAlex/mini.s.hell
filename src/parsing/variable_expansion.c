@@ -70,8 +70,8 @@ char	*expand_variables(char *src, char *envp[])
 			current_var[j] = '\0';
 			if (check_if_var_exists(current_var, envp) > -1)
 			{
-				ret = ft_strnjoin(&envp[check_if_var_exists(current_var, envp)][j], ret, \
-					ft_strlen(&envp[check_if_var_exists(current_var, envp)][j]));
+				ret = append(ret, &envp[check_if_var_exists(current_var, envp)][j],  \
+					ft_strlen(&envp[check_if_var_exists(current_var, envp)][j]));		//TODO switch to ft_str_append
 				i++;
 				while (ft_is_alpha(src[i]))
 					i++;
@@ -82,7 +82,7 @@ char	*expand_variables(char *src, char *envp[])
 				i++;
 			continue ;
 		}
-		ret = ft_strnjoin(&src[i], ret, sizeof(char));
+		ret = append(ret, &src[i], sizeof(char));					// TODO Szitch to ft_str_append()
 		i++;
 	}
 	return (ret);
