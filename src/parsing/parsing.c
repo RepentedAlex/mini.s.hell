@@ -12,9 +12,42 @@
 
 #include "minishell.h"
 
+bool syntax_check_handler(t_mo_shell *mo_shell, int *error_ret, t_error *value1)
+{
+	*error_ret = check_redir_syntax(&mo_shell->splitted_input);
+	if (*error_ret == 1)
+	{
+		*value1 = (printf("mini.s.hell: syntax error near unexpected \
+token '>'\n"), ERROR);
+		return true;
+	}
+	if (*error_ret == 2)
+	{
+		*value1 = (printf("mini.s.hell: syntax error near unexpected \
+			token '>>'\n"), ERROR);
+		return true;
+	}
+	if (*error_ret == 3)
+	{
+		*value1 = (printf("mini.s.hell: syntax error near unexpected \
+			token '<'\n"), ERROR);
+		return true;
+	}
+	if (*error_ret == 4)
+	{
+		*value1 = (printf("mini.s.hell: syntax error near unexpected \
+			token '<<'\n"), ERROR);
+		return true;
+	}
+	// TODO Specify character
+	split_redir(&mo_shell->splitted_input);
+	return false;
+}
+
 t_error	splitter(t_mo_shell *mo_shell)
 {
 	int	error_ret;
+	t_error sch_ret;
 
 	error_ret = 0;
 	if (look_for_pipes(&mo_shell->splitted_input) == true)
@@ -25,19 +58,8 @@ token '|'\n"), ERROR);
 		split_pipes(&mo_shell->splitted_input);
 	}
 	if (look_for_redir(&mo_shell->splitted_input) == true)
-	{
-		error_ret = check_redir_syntax(&mo_shell->splitted_input);
-		if (error_ret == 1)
-			return (printf("mini.s.hell: syntax error near unexpected token '>'\n"), ERROR);
-		if (error_ret == 2)
-			return (printf("mini.s.hell: syntax error near unexpected token '>>'\n"), ERROR);
-		if (error_ret == 3)
-			return (printf("mini.s.hell: syntax error near unexpected token '<'\n"), ERROR);
-		if (error_ret == 4)
-			return (printf("mini.s.hell: syntax error near unexpected token '<<'\n"), ERROR);
-		// TODO Specify character
-		split_redir(&mo_shell->splitted_input);
-	}
+		if (syntax_check_handler(mo_shell, &error_ret, &sch_ret))
+			return (sch_ret);
 	block_string_tidyer(&mo_shell->splitted_input);
 	split_spaces(&mo_shell->splitted_input);
 	return (NO_ERROR);

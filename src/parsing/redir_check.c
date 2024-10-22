@@ -52,7 +52,7 @@ bool	check_dou_redir(int *i, t_block *nav, t_error *value1)
 	return (false);
 }
 
-int check_redir_syntax(t_block **head)
+int	check_redir_syntax(t_block **head)
 {
 	int		i;
 	t_block	*nav;
