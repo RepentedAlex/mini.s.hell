@@ -17,17 +17,17 @@ bool	check_sing_redir(int *i, t_block *nav, t_error *value1)
 	if (nav->str[*i + 1] == '>')
 	{
 		if (check_before_redir(nav->str, *i - 1) == false)
-			return (*value1 = (ERROR), (true));
+			return (*value1 = 2, (true));
 		if (check_after_redir(nav->str, *i + 2) == false)
-			return (*value1 = (ERROR), (true));
+			return (*value1 = 2, (true));
 		(*i)++;
 	}
 	else
 	{
 		if (check_before_redir(nav->str, *i - 1) == false)
-			return (*value1 = (ERROR), (true));
+			return (*value1 = 1, (true));
 		if (check_after_redir(nav->str, *i + 1) == false)
-			return (*value1 = (ERROR), (true));
+			return (*value1 = 1, (true));
 	}
 	return (false);
 }
@@ -37,22 +37,22 @@ bool	check_dou_redir(int *i, t_block *nav, t_error *value1)
 	if (nav->str[*i + 1] == '<')
 	{
 		if (check_before_redir(nav->str, *i - 1) == false)
-			return (*value1 = (ERROR), true);
+			return (*value1 = 4, true);
 		if (check_after_redir(nav->str, *i + 2) == false)
-			return (*value1 = (ERROR), true);
+			return (*value1 = 4, true);
 		(*i)++;
 	}
 	else
 	{
 		if (check_before_redir(nav->str, *i - 1) == false)
-			return (*value1 = (ERROR), true);
+			return (*value1 = 3, true);
 		if (check_after_redir(nav->str, *i + 1) == false)
-			return (*value1 = (ERROR), true);
+			return (*value1 = 3, true);
 	}
 	return (false);
 }
 
-t_error	check_redir_syntax(t_block **head)
+int check_redir_syntax(t_block **head)
 {
 	int		i;
 	t_block	*nav;

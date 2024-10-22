@@ -14,6 +14,9 @@
 
 t_error	splitter(t_mo_shell *mo_shell)
 {
+	int	error_ret;
+
+	error_ret = 0;
 	if (look_for_pipes(&mo_shell->splitted_input) == true)
 	{
 		if (check_pipes_syntax(&mo_shell->splitted_input) == ERROR)
@@ -23,8 +26,15 @@ token '|'\n"), ERROR);
 	}
 	if (look_for_redir(&mo_shell->splitted_input) == true)
 	{
-		if (check_redir_syntax(&mo_shell->splitted_input) == ERROR)
-			return (printf("mini.s.hell: \n"), ERROR);
+		error_ret = check_redir_syntax(&mo_shell->splitted_input);
+		if (error_ret == 1)
+			return (printf("mini.s.hell: syntax error near unexpected token '>'\n"), ERROR);
+		if (error_ret == 2)
+			return (printf("mini.s.hell: syntax error near unexpected token '>>'\n"), ERROR);
+		if (error_ret == 3)
+			return (printf("mini.s.hell: syntax error near unexpected token '<'\n"), ERROR);
+		if (error_ret == 4)
+			return (printf("mini.s.hell: syntax error near unexpected token '<<'\n"), ERROR);
 		// TODO Specify character
 		split_redir(&mo_shell->splitted_input);
 	}
