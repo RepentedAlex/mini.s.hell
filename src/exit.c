@@ -29,6 +29,7 @@ void	free_list(t_block **head)
 		free(nav);
 		nav = tmp;
 	}
+	*head = NULL;
 }
 
 void	free_2d_tab(char **array)
@@ -46,17 +47,31 @@ void	free_2d_tab(char **array)
 	array = NULL;
 }
 
-void	garbage_collect(t_mo_shell *data)
+void	garbage_collect(t_mo_shell *data, int mode)
 {
-	rl_clear_history();
-	if (data->splitted_input)
-		free_list(&data->splitted_input);
-	if (data->og_input)
-		(free(data->og_input), data->og_input = NULL);
-	if (data->clean_input)
-		free(data->clean_input);
-	if (data->expanded_input)
-		free(data->expanded_input);
-	if (data->shell_env)
-		free_2d_tab(data->shell_env);
+	if (mode == 1)
+	{
+		rl_clear_history();
+		if (data->splitted_input)
+			free_list(&data->splitted_input);
+		if (data->og_input)
+			(free(data->og_input), data->og_input = NULL);
+		if (data->clean_input)
+			free(data->clean_input);
+		if (data->expanded_input)
+			free(data->expanded_input);
+		if (data->shell_env)
+			free_2d_tab(data->shell_env);
+	}
+	else if (mode == 2)
+	{
+		if (data->splitted_input)
+			free_list(&data->splitted_input);
+		if (data->og_input)
+			(free(data->og_input), data->og_input = NULL);
+		if (data->clean_input)
+			(free(data->clean_input), data->clean_input = NULL);
+		if (data->expanded_input)
+			(free(data->expanded_input), data->expanded_input = NULL);
+	}
 }
