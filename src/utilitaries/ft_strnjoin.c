@@ -39,3 +39,14 @@ char	*ft_strnjoin(char *src, char *dst, size_t n)
 	dst = ret;
 	return (ret);
 }
+
+char	*append(char *s1, char *s2, size_t n)
+{
+	char	*ret;
+
+	ret = ft_strnapp(s1, s2, n);
+	if (!ret)
+		return (NULL);
+	free(s1);
+	return (ret);
+}
