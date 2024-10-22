@@ -141,6 +141,13 @@ faire des redirections... il faut s'assurer que la ligne de commande.s envoyée
 est recevable. On effectue donc une analyse de ladite ligne de commande.
 
 #### 1.1.1 Petites vérifications de base
+##### Input vide
+Si l'utilisateur envoie `""` (une string vide), vous pouvez relancer une itération
+de la boucle vu que vous n'aurez, de toute évidence, rien à faire avec cette
+ligne de commande.
+> [!warning]  
+> Si la string envoyée a passé toutes ces validations, on peut la rajouter à 
+> l'historique.
 ##### Bon nombre de guillemets
 Dans la [Sainte-Bible](https://docs.google.com/spreadsheets/d/1uJHQu0VPsjjBkR4hxOeCMEt3AOM1Hp_SmUzPFhAH-nA/edit?gid=0#gid=0), il y a une teraflopée de tests ou on envoie des
 commandes avec des guillemets qui restent ouverts. Et bah bonne nouvelle,
