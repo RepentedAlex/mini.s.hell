@@ -94,6 +94,7 @@ int		ft_is_symbol(const char *str);
 
 // ft_str
 // int		ft_strcmp(const char *s1, const char *s2);
+char	*append(char *s1, char *s2, size_t n);
 t_error	split_spaces(t_block **head);
 char	*ft_strnjoin(char *src, char *dst, size_t n);
 char	*string_tidyer(char *s);
