@@ -53,14 +53,16 @@ OBJF	= .cache_exists
 
 all: $(NAME)
 
-$(NAME): $(OBJ) Libft/libtoolbox.a
+update:
+	cd ./Libft/ ; git pull ; cd ../
+
+$(NAME): $(OBJ) update Libft/libtoolbox.a
 	@echo "Linking $(NAME)..."
 	$(CC) $(FLAGS) $(OBJ) Libft/libtoolbox.a $(LFLAGS) -o $(NAME)
 	rm Libft/libtoolbox.a
 	@echo "$(NAME) is born! :D"
 
 Libft/libtoolbox.a:
-	cd ./Libft/ ; git pull ; cd ../
 	$(MAKE) -C ./Libft
 
 $(BUI_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
