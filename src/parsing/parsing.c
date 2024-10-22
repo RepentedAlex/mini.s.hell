@@ -12,42 +12,42 @@
 
 #include "minishell.h"
 
-bool syntax_check_handler(t_mo_shell *mo_shell, int *error_ret, t_error *value1)
+bool	syntax_check_handler(t_mo_shell *mo_shell, int *error_ret, \
+	t_error *value1)
 {
 	*error_ret = check_redir_syntax(&mo_shell->splitted_input);
 	if (*error_ret == 1)
 	{
 		*value1 = (printf("mini.s.hell: syntax error near unexpected \
 token '>'\n"), ERROR);
-		return true;
+		return (true);
 	}
 	if (*error_ret == 2)
 	{
 		*value1 = (printf("mini.s.hell: syntax error near unexpected \
 			token '>>'\n"), ERROR);
-		return true;
+		return (true);
 	}
 	if (*error_ret == 3)
 	{
 		*value1 = (printf("mini.s.hell: syntax error near unexpected \
 			token '<'\n"), ERROR);
-		return true;
+		return (true);
 	}
 	if (*error_ret == 4)
 	{
 		*value1 = (printf("mini.s.hell: syntax error near unexpected \
 			token '<<'\n"), ERROR);
-		return true;
+		return (true);
 	}
-	// TODO Specify character
 	split_redir(&mo_shell->splitted_input);
-	return false;
+	return (false);
 }
 
 t_error	splitter(t_mo_shell *mo_shell)
 {
-	int	error_ret;
-	t_error sch_ret;
+	int		error_ret;
+	t_error	sch_ret;
 
 	error_ret = 0;
 	if (look_for_pipes(&mo_shell->splitted_input) == true)

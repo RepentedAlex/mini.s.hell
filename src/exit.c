@@ -36,14 +36,12 @@ void	free_2d_tab(char **array)
 	int		i;
 
 	i = 0;
-	while (array[i] )
+	while (array[i])
 	{
 		free(array[i]);
 		array[i] = NULL;
 		i++;
 	}
-	// free(array[i]);
-	// array[i] = NULL;
 	free(array);
 	array = NULL;
 }

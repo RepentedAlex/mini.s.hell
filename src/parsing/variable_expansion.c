@@ -13,7 +13,7 @@
 #include "minishell.h"
 #include "libft.h"
 
-int	check_if_var_exists(char *var, char *envp[])
+int	var_exst(char *var, char *envp[])
 {
 	int		i;
 	int		j;
@@ -44,13 +44,13 @@ char	*expand_variables(char *src, char *envp[])
 	int		i;
 	int		j;
 	int		quotes;
-	char	current_var[1024];
+	char	cur_var[1024];
 	char	*ret;
 
 	ret = malloc(sizeof(char));
 	if (!ret)
 		return (NULL);
-	ft_memset(current_var, 0, sizeof(char) * 1024);
+	ft_memset(cur_var, 0, sizeof(char) * 1024);
 	ft_memset(ret, 0, sizeof(char));
 	quotes = 0;
 	i = 0;
@@ -66,12 +66,12 @@ char	*expand_variables(char *src, char *envp[])
 			}
 			j = 0;
 			while (src[i + ++j] && ft_is_alpha(src[i + j]))
-				current_var[j - 1] = src[i + j];
-			current_var[j] = '\0';
-			if (check_if_var_exists(current_var, envp) > -1)
+				cur_var[j - 1] = src[i + j];
+			cur_var[j] = '\0';
+			if (var_exst(cur_var, envp) > -1)
 			{
-				ret = append(ret, &envp[check_if_var_exists(current_var, envp)][j],  \
-					ft_strlen(&envp[check_if_var_exists(current_var, envp)][j]));		//TODO switch to ft_str_append
+				ret = append(ret, &envp[var_exst(cur_var, envp)][j], \
+					ft_strlen(&envp[var_exst(cur_var, envp)][j]));
 				i++;
 				while (ft_is_alpha(src[i]))
 					i++;
@@ -82,7 +82,7 @@ char	*expand_variables(char *src, char *envp[])
 				i++;
 			continue ;
 		}
-		ret = append(ret, &src[i], sizeof(char));					// TODO Szitch to ft_str_append()
+		ret = append(ret, &src[i], sizeof(char));
 		i++;
 	}
 	return (ret);

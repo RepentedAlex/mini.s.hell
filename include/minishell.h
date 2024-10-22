@@ -64,7 +64,7 @@ t_error	parsing(t_mo_shell *mo_shell);
 // parsing
 t_error	splitter(t_mo_shell *mo_shell);
 
-int		check_if_var_exists(char *var, char *envp[]);
+int		var_exst(char *var, char *envp[]);
 t_error	check_open_quotes(const char *str);
 char	**copy_env(char **envp);
 int		count_leading_whitespace(const char *str);
