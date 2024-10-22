@@ -21,8 +21,8 @@
 int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 {
 	(void)argc, (void)argv, (void)envp;
-	while (1)
-	{
+	// while (1)
+	// {
 		mo_shell->og_input = readline(PROMPT);
 		if (mo_shell->og_input && *mo_shell->og_input)
 			add_history(mo_shell->og_input);										// TODO When to clear history ?
@@ -30,7 +30,7 @@ int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 			return (EXIT_FAILURE);
 		// == == == TRANSITION VERS l'EXEC == == ==
 		launch_builtins(mo_shell->splitted_input);
-	}
+	// }
 	garbage_collect(mo_shell);
 	return (EXIT_SUCCESS);
 }

@@ -44,7 +44,7 @@ void	for_space(t_block *nav)
 		check_in_quotes(nav->str[i], &quotes);
 		if (!quotes && ft_is_ifs(nav->str[i]))
 		{
-			tmp = block_new(&nav->str[i + 1]);
+			tmp = block_new(ft_strdup(&nav->str[i + 1]));
 			tmp->type = RAW;
 			block_add_after(nav, tmp);
 			i = 0;

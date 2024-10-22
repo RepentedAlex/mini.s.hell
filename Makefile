@@ -93,7 +93,7 @@ re:
 	@$(MAKE) --no-print-directory all
 
 gen_sup:
-	@echo -e \
+	@echo \
 	"{\n"\
 	"\tignore_libreadline_leaks\n"\
 	"\tMemcheck:Leak\n"\
