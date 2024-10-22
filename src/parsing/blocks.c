@@ -26,8 +26,6 @@ t_block	*block_setup_first(t_mo_shell *mo_shell)
 	block->next = NULL;
 	block->prev = NULL;
 	block->type = 0;
-	free(mo_shell->expanded_input);
-	mo_shell->expanded_input = NULL;
 	return (block);
 }
 

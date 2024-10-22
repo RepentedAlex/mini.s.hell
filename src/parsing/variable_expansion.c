@@ -35,6 +35,50 @@ int	var_exst(char *var, char *envp[])
 	return (-1);
 }
 
+int	find_var(char *src, char *envp[])
+{
+	int		i;
+	char	var_name[1024];
+	int		var_index;
+
+	i = 0;
+	while (ft_isalpha(src[i]))
+	{
+		var_name[i] = src[i];
+		i++;
+	}
+	var_name[i] = '\0';
+	var_index = var_exst(var_name, envp);
+	return (var_index);
+}
+
+char	*var_expander(char *ret, char *src, int *i, char *envp[])
+{
+	int		var_index;
+	char	*var_content;
+
+	var_index = find_var(&src[*i], envp);
+	if (var_index > -1)
+	{
+		var_content = ft_strchr(envp[var_index], '=') + 1;
+		ret = append(ret, var_content, ft_strlen(var_content));
+	}
+	while (ft_is_alpha(src[++*i + 1]))
+		src += 0;
+	return (ret);
+}
+
+char	*str_init(void)
+{
+	char	*ret;
+
+	ret = malloc(sizeof(char));
+	if (!ret)
+		return (NULL);
+	*ret = '\0';
+	return (ret);
+}
+
 /// @brief Takes a string and check if there are variables that
 /// should be expanded
 /// @param src The source string.
@@ -42,48 +86,26 @@ int	var_exst(char *var, char *envp[])
 char	*expand_variables(char *src, char *envp[])
 {
 	int		i;
-	int		j;
-	int		quotes;
-	char	cur_var[1024];
 	char	*ret;
+	int		quotes;
 
-	ret = malloc(sizeof(char));
-	if (!ret)
-		return (NULL);
-	ft_memset(cur_var, 0, sizeof(char) * 1024);
-	ft_memset(ret, 0, sizeof(char));
+	ret = str_init();
 	quotes = 0;
-	i = 0;
-	while (src[i])
+	i = -1;
+	while (src[++i])
 	{
 		check_in_quotes(src[i], &quotes);
-		if (quotes != 1 && src[i] == '$')
+		if (!quotes && '$' == src[i])
 		{
-			if (src[i + 1] == '$')
-			{
+			if (src[++i] == '$')
 				i += 2;
-				continue ;
-			}
-			j = 0;
-			while (src[i + ++j] && ft_is_alpha(src[i + j]))
-				cur_var[j - 1] = src[i + j];
-			cur_var[j] = '\0';
-			if (var_exst(cur_var, envp) > -1)
+			else
 			{
-				ret = append(ret, &envp[var_exst(cur_var, envp)][j], \
-					ft_strlen(&envp[var_exst(cur_var, envp)][j]));
-				i++;
-				while (ft_is_alpha(src[i]))
-					i++;
+				ret = var_expander(ret, src, &i, envp);
 				continue ;
 			}
-			i++;
-			while (ft_is_alpha(src[i]) || ft_is_ifs(src[i]))
-				i++;
-			continue ;
 		}
 		ret = append(ret, &src[i], sizeof(char));
-		i++;
 	}
 	return (ret);
 }
