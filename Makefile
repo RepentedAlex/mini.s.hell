@@ -71,12 +71,12 @@ $(LIBFT_A):
 	@$(MAKE) -C ./Libft
 
 $(BUI_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
+	@mkdir -p $(dir $@)
 	@echo "$(PENDING)Compiling $<..."
 	@$(CC) $(FLAGS)  -c $< -o $@
 
 $(OBJF):
 	@echo "Creating build directory"
-	@mkdir -p $(BUI_DIR) $(BUI_DIR)/builtins $(BUI_DIR)/parsing $(BUI_DIR)/utilitaries
 	@touch $(OBJF)
 
 clean:

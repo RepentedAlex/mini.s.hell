@@ -22,6 +22,10 @@ void	execute_cl(t_mo_shell *mo_shell)
 	while (nav)
 		nav = nav->next;
 	//TODO Setup pipes and redirections from right to left, redirections steal the pipe
+	while (nav)
+	{
+		nav = nav->prev;
+	}
 
 	nav = mo_shell->splitted_input;
 	//TODO Execute from left to right

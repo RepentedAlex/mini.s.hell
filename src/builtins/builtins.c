@@ -48,6 +48,7 @@ bool	is_builtin(char *str)
 			return (true);
 		i++;
 	}
+	return (false);
 }
 
 /// @brief Check if the command block is a builtin or not
