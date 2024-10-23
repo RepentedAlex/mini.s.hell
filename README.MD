@@ -491,9 +491,9 @@ void	garbage_collect(t_mo_shell *data, int mode)
 		// Alors on le free
 	//SI mode est set à 1
 	{
-        // On clear l'historique
-        // SI on a un field de notre structure mother shell qui doit être free
-            // Alors on le free
+		// On clear l'historique
+		// SI on a un field de notre structure mother shell qui doit être free
+			// Alors on le free
 	}
 }
 ```
