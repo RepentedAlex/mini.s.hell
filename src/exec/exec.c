@@ -12,18 +12,18 @@
 
 #include "minishell.h"
 
-void	execute_cl(t_block **head)
+void	execute_cl(t_mo_shell *mo_shell)
 {
 	t_block	*nav;
 
-	nav = *head;
+	nav = mo_shell->splitted_input;
 	if (!nav)
 		return ;
 	while (nav)
 		nav = nav->next;
 	//TODO Setup pipes and redirections from right to left, redirections steal the pipe
 
-	nav = *head;
+	nav = mo_shell->splitted_input;
 	//TODO Execute from left to right
 	while (nav)
 	{
