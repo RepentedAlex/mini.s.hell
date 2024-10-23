@@ -112,8 +112,7 @@ bool	look_for_pipes(t_block **head);
 t_error	split_pipes(t_block **head);
 
 // redir inspection
-bool	check_after_redir(char *str, int i);
-bool	check_before_redir(char *str, int i);
+int		check_after_redir(char *str, int i);
 int		check_redir_syntax(t_block **head);
 bool	check_dou_redir(int *i, t_block *nav, int *value1);
 bool	check_sing_redir(int *i, t_block *nav, int *value1);

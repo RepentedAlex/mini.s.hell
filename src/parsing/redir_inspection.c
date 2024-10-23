@@ -23,16 +23,6 @@ bool	check_after_redir(char *str, int i)
 	}
 	return (false);
 }
-
-bool	check_before_redir(char *str, int i)
-{
-	while (i >= 0 && str[i] != '<' && str[i] != '>' && str[i] != '|')
-	{
-		if (ft_is_alpha(str[i]))
-			return (true);
-		i--;
-	}
-	return (false);
 }
 
 bool	look_for_redir(t_block **head)
