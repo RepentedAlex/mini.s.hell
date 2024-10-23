@@ -67,6 +67,7 @@ t_error	splitter(t_mo_shell *mo_shell);
 
 int		var_exst(char *var, char *envp[]);
 bool	check_not_dirfile(t_block **head);
+bool	check_if_dirfile_exist(char *path);
 t_error	check_open_quotes(const char *str);
 char	**copy_env(char **envp);
 int		count_leading_whitespace(const char *str);
