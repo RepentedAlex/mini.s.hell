@@ -14,38 +14,48 @@
 
 bool	check_sing_redir(int *i, t_block *nav, int *value1)
 {
+	int	ret;
+
 	if (nav->str[*i + 1] == '>')
 	{
-		if (check_after_redir(nav->str, *i + 2) == false)
+		ret = check_after_redir(nav->str, *i + 2);
+		if (ret == 1)
 			return (*value1 = 2, (true));
+		if (ret == 2)
+			return (*value1 = 5, (true));
 		(*i)++;
 	}
 	else
 	{
-		if (check_before_redir(nav->str, *i - 1) == false)
+		ret = check_after_redir(nav->str, *i + 1);
+		if (ret == 1)
 			return (*value1 = 1, (true));
-		if (check_after_redir(nav->str, *i + 1) == false)
-			return (*value1 = 1, (true));
+		if (ret == 2)
+			return (*value1 = 5, (true));
 	}
 	return (false);
 }
 
 bool	check_dou_redir(int *i, t_block *nav, int *value1)
 {
+	int	ret;
+
 	if (nav->str[*i + 1] == '<')
 	{
-		if (check_before_redir(nav->str, *i - 1) == false)
+		ret = check_after_redir(nav->str, *i + 2);
+		if (ret == 1)
 			return (*value1 = 4, true);
-		if (check_after_redir(nav->str, *i + 2) == false)
-			return (*value1 = 4, true);
+		if (ret == 2)
+			return (*value1 = 5, true);
 		(*i)++;
 	}
 	else
 	{
-		if (check_before_redir(nav->str, *i - 1) == false)
+		ret = check_after_redir(nav->str, *i + 1);
+		if (ret == 1)
 			return (*value1 = 3, true);
-		if (check_after_redir(nav->str, *i + 1) == false)
-			return (*value1 = 3, true);
+		if (ret == 2)
+			return (*value1 = 5, true);
 	}
 	return (false);
 }
