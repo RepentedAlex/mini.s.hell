@@ -25,19 +25,19 @@ token '>'\n"), ERROR);
 	if (*error_ret == 2)
 	{
 		*value1 = (printf("mini.s.hell: syntax error near unexpected \
-			token '>>'\n"), ERROR);
+token '>>'\n"), ERROR);
 		return (true);
 	}
 	if (*error_ret == 3)
 	{
 		*value1 = (printf("mini.s.hell: syntax error near unexpected \
-			token '<'\n"), ERROR);
+token '<'\n"), ERROR);
 		return (true);
 	}
 	if (*error_ret == 4)
 	{
 		*value1 = (printf("mini.s.hell: syntax error near unexpected \
-			token '<<'\n"), ERROR);
+token '<<'\n"), ERROR);
 		return (true);
 	}
 	split_redir(&mo_shell->splitted_input);
@@ -70,6 +70,8 @@ t_error	parsing(t_mo_shell *mo_shell)
 	if (check_open_quotes(mo_shell->og_input) == ERROR)
 		return (printf("mini.s.hell: quotes are not closed\n"), ERROR);
 	mo_shell->clean_input = string_tidyer(mo_shell->og_input);
+	if (mo_shell->clean_input == NULL)
+		return (ERROR);
 	mo_shell->expanded_input = expand_variables(mo_shell->clean_input, \
 		mo_shell->shell_env);
 	mo_shell->splitted_input = block_setup_first(mo_shell);

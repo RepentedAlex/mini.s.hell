@@ -12,12 +12,10 @@
 
 #include "minishell.h"
 
-bool	check_sing_redir(int *i, t_block *nav, t_error *value1)
+bool	check_sing_redir(int *i, t_block *nav, int *value1)
 {
 	if (nav->str[*i + 1] == '>')
 	{
-		if (check_before_redir(nav->str, *i - 1) == false)
-			return (*value1 = 2, (true));
 		if (check_after_redir(nav->str, *i + 2) == false)
 			return (*value1 = 2, (true));
 		(*i)++;
@@ -32,7 +30,7 @@ bool	check_sing_redir(int *i, t_block *nav, t_error *value1)
 	return (false);
 }
 
-bool	check_dou_redir(int *i, t_block *nav, t_error *value1)
+bool	check_dou_redir(int *i, t_block *nav, int *value1)
 {
 	if (nav->str[*i + 1] == '<')
 	{
@@ -56,7 +54,7 @@ int	check_redir_syntax(t_block **head)
 {
 	int		i;
 	t_block	*nav;
-	t_error	ret_check;
+	int	ret_check;
 
 	nav = *head;
 	if (!nav)
