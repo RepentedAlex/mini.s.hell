@@ -87,10 +87,7 @@ t_error	split_redir(t_block **head)
 	t_block	*tmp;
 	int		i;
 
-	tmp = NULL;
 	nav = *head;
-	if (!nav)
-		return (ERROR);
 	while (nav != NULL)
 	{
 		if (ft_strchr(nav->str, '<') == NULL && ft_strchr(nav->str, '>') \
@@ -102,9 +99,11 @@ t_error	split_redir(t_block **head)
 		else if (ft_strchr(nav->str, '>') && ft_strncmp(\
 			ft_strchr(nav->str, '>'), ">>", 2) == 0)
 			for_append(&nav, &tmp, &i);
-		else if (ft_strncmp(ft_strchr(nav->str, '>'), ">", 1) == 0)
+		else if (ft_strchr(nav->str, '>') && ft_strncmp(\
+			ft_strchr(nav->str, '>'), ">", 1) == 0)
 			for_redir_o(&nav, &tmp, &i);
-		else if (ft_strncmp(ft_strchr(nav->str, '<'), "<", 1) == 0)
+		else if (ft_strchr(nav->str, '<') && ft_strncmp(\
+			ft_strchr(nav->str, '<'), "<", 1) == 0)
 			for_redir_i(&nav, &tmp, &i);
 	}
 	return (NO_ERROR);
