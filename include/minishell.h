@@ -93,6 +93,9 @@ t_block	*block_setup_first(t_mo_shell *mo_shell);
 void	block_string_tidyer(t_block **head);
 void	block_split_spaces(t_block *head);
 
+// execution
+void	execute_cl(t_block **head);
+
 // ft_is
 bool	ft_is_alpha(const char c);
 bool	ft_is_ifs(char c);

@@ -33,6 +33,23 @@ t_builtin	*get_builtin_array(void)
 	return (builtins_array);
 }
 
+bool	is_builtin(char *str)
+{
+	t_builtin	*builtins_array;
+	int			i;
+
+	if (!str)
+		return (false);
+	builtins_array = get_builtin_array();
+	i = 0;
+	while (str[i])
+	{
+		if (ft_strcmp(str, builtins_array[i].name) == 0)
+			return (true);
+		i++;
+	}
+}
+
 /// @brief Check if the command block is a builtin or not
 /// @param block The block.
 /// @return true if it's a builtin, false if not in the builtins_array.

@@ -33,7 +33,7 @@ int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 		if (parsing(mo_shell) == ERROR)
 			continue ;
 		// == == == TRANSITION VERS l'EXEC == == ==
-		launch_builtins(mo_shell->splitted_input);
+		execute_cl(&mo_shell->splitted_input);
 	}
 	garbage_collect(mo_shell, 1);
 	return (EXIT_SUCCESS);

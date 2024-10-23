@@ -28,6 +28,7 @@ int			ms_unset(char **args);
 
 // == == == FONCTIONS SUBSIDIAIRES == == ==
 t_builtin	*get_builtin_array(void);
+bool		is_builtin(char *str);
 int (*launch_builtins(t_block	*block))(char **str);
 
 #endif
