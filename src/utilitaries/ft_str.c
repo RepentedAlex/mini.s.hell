@@ -39,6 +39,8 @@ int	get_num_unnec_spaces(char *s)
 		i++;
 		spaces_to_remove++;
 	}
+	if (!s[i])
+		return (i);
 	while (s[i])
 	{
 		check_in_quotes(s[i], &quotes);
