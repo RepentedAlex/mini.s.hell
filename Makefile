@@ -62,11 +62,11 @@ update:
 
 $(NAME): $(OBJ) $(LIBFT_A) | update
 	@echo "Linking $(NAME)..."
-	$(CC) $(FLAGS) $(OBJ) $(LIBFT_A) $(LFLAGS) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) $(LIBFT_A) $(LFLAGS) -o $(NAME)
 	@echo "$(NAME) is born! :D"
 
 $(LIBFT_A):
-	$(MAKE) -C ./Libft
+	@$(MAKE) -C ./Libft
 
 $(BUI_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
 	@echo "$(PENDING)Compiling $<..."
@@ -79,17 +79,17 @@ $(OBJF):
 
 clean:
 	@rm -rf $(BUI_DIR) $(OBJF)
-	$(MAKE) clean -C ./Libft
+	@$(MAKE) clean -C ./Libft
 	@echo "Removing build files..."
 
 fclean: clean
 	@echo "Removing $(NAME)..."
-	$(MAKE) fclean -C ./Libft
+	@$(MAKE) fclean -C ./Libft
 	@rm -f $(NAME)
 
 re:
 	@$(MAKE) --no-print-directory fclean
-	$(MAKE) re -C ./Libft
+	@$(MAKE) re -C ./Libft
 	@echo "Making $(NAME) again"
 	@$(MAKE) --no-print-directory all
 
