@@ -54,7 +54,7 @@ int	check_redir_syntax(t_block **head)
 {
 	int		i;
 	t_block	*nav;
-	int	ret_check;
+	int		ret_check;
 
 	nav = *head;
 	if (!nav)
