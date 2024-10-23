@@ -74,6 +74,7 @@ void	ft_bzero(void *s, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
 void	check_in_quotes(char c, int *quotes);
 void	garbage_collect(t_mo_shell *data, int mode);
+void	splash_screen(void);
 void	split_str(char *str, char **ret, int *nb_token, bool *in_word);
 void	trim_leading_whitespace(char *str, const int leading_whitespaces);
 

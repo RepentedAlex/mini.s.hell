@@ -46,6 +46,7 @@ SRC_FIL	= 	minishell \
 			utilitaries/ft_split \
 			utilitaries/ft_str \
 			utilitaries/ft_strnjoin \
+			utilitaries/splash_screen \
 			utilitaries/utils1
 
 SRC		= $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FIL)))

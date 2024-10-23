@@ -21,6 +21,7 @@
 int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 {
 	(void)argc, (void)argv, (void)envp;
+	splash_screen();
 	while (1)
 	{
 		garbage_collect(mo_shell, 2);
