@@ -24,7 +24,7 @@ int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 	splash_screen();
 	while (1)
 	{
-		garbage_collect(mo_shell, 2);
+		garbage_collect(mo_shell, 0);
 		mo_shell->og_input = readline(PROMPT);
 		if (mo_shell->og_input[0] == '\0')
 			break ;
