@@ -109,6 +109,8 @@ char	*string_tidyer(char *s)
 	unnecessary_spaces = get_num_unnec_spaces(s);
 	if (unnecessary_spaces == 0)
 		return (ft_strdup(s));
+	if (ft_strlen(s) - unnecessary_spaces == 0)
+		return (NULL);
 	ret = (char *)malloc(sizeof(char) * ((ft_strlen(s) - \
 		unnecessary_spaces) + 1));
 	if (!ret)
