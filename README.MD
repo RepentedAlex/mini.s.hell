@@ -497,12 +497,12 @@ void	garbage_collect(t_mo_shell *data, int mode)
 	}
 }
 ```
-En procédant ainsi on a une fonction qui peut servir soit à préparer le terrain
+En procédant ainsi, on a une fonction qui peut servir soit à préparer le terrain
 pour la prochaine ligne de commande une fois que l'exécution de la ligne actuelle
-est finie, soit servir à tout remballer avant la sortie du programme, plutôt habile
-, non ? <sub><sup>dites oui svp j'en suis fier</sup></sub>
+est finie, soit servir à tout remballer avant la sortie du programme, plutôt habile,
+non ? <sub><sup>dites oui svp, j'en suis fier</sup></sub>
 # Annexe
-## Liste des includes (parce que y'en a une floppée)
+## Liste des includes (parce que y en a une floppée)
 ```c  
 # include <curses.h>  
 # include <fcntl.h>  
