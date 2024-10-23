@@ -52,6 +52,8 @@ bool	check_dou_redir(int *i, t_block *nav, int *value1)
 	else
 	{
 		ret = check_after_redir(nav->str, *i + 1);
+		if (nav->str[*i + 1] == '>')
+			return (*value1 = 5, (true));
 		if (ret == 1)
 			return (*value1 = 3, true);
 		if (ret == 2)
