@@ -13,16 +13,17 @@
 #include "minishell.h"
 #include "libft.h"
 
-bool	check_after_redir(char *str, int i)
+int	check_after_redir(char *str, int i)
 {
-	while (str[i] && str[i] != '<' && str[i] != '>' && str[i] != '|')
+	while (str[i] != '<' && str[i] != '>' && str[i] != '|')
 	{
+		if (str[i] == '\0')
+			return (2);
 		if (ft_is_alpha(str[i]))
-			return (true);
+			return (0);
 		i++;
 	}
-	return (false);
-}
+	return (1);
 }
 
 bool	look_for_redir(t_block **head)
