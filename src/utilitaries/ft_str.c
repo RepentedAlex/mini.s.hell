@@ -33,12 +33,9 @@ int	get_num_unnec_spaces(char *s)
 
 	spaces_to_remove = 0;
 	quotes = 0;
-	i = 0;
-	while (ft_is_ifs(s[i]))
-	{
-		i++;
+	i = -1;
+	while (ft_is_ifs(s[++i]))
 		spaces_to_remove++;
-	}
 	if (!s[i])
 		return (i);
 	while (s[i])
