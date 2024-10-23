@@ -485,8 +485,8 @@ void	garbage_collect(t_mo_shell *data, int mode)
 {
 	// SI on a un field de notre structure mother shell qui doit être free
 		// Alors on le free
-    // ...  Ici on ne libèrera que les fields qui ne sont pas nécessaires
-    // d'être "transmis" pour la prochaine ligne de commande
+	// ...  On ne libèrera que les fields qui ne sont pas nécessaires
+	// d'être "transmis" pour la prochaine ligne de commande
 	// SI on a un field de notre structure mother shell qui doit être free
 		// Alors on le free
 	//SI mode est set à 1
