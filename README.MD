@@ -478,7 +478,29 @@ int main(int argc, char *argv[])
     return (EXIT_SUCCESS);  
 }  
 ```  
-
+# Garbage Collector
+Notre garbage collector suit cette logique :
+```C
+void	garbage_collect(t_mo_shell *data, int mode)
+{
+	// SI on a un field de notre structure mother shell qui doit être free
+		// Alors on le free
+    // ...  Ici on ne libèrera que les fields qui ne sont pas nécessaires
+    // d'être "transmis" pour la prochaine ligne de commande
+	// SI on a un field de notre structure mother shell qui doit être free
+		// Alors on le free
+	//SI mode est set à 1
+	{
+        // On clear l'historique
+        // SI on a un field de notre structure mother shell qui doit être free
+            // Alors on le free
+	}
+}
+En procédant ainsi on a une fonction qui peut servir soit à préparer le terrain
+pour la prochaine ligne de commande une fois que l'exécution de la ligne actuelle
+est finie, soit servir à tout remballer avant la sortie du programme, plutôt habile
+, non ? <sub><sup>dites oui svp j'en suis fier</sup></sub>  
+```
 # Annexe
 ## Liste des includes (parce que y'en a une floppée)
 ```c  
