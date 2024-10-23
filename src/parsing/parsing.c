@@ -30,7 +30,7 @@ unexpected token '<'\n"), true);
 unexpected token '<<'\n"), true);
 	if (*error_ret == 5)
 		return (*value1 = printf("mini.s.hell: syntax error near \
-unexpected token '<newline>'\n"), true);
+unexpected token 'newline'\n"), true);
 	split_redir(&mo_shell->splitted_input);
 	return (false);
 }
