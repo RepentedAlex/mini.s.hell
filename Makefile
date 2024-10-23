@@ -32,6 +32,7 @@ SRC_FIL	= 	minishell \
 			builtins/builtins_part1 \
 			builtins/builtins_part2 \
 			parsing/check_quotes \
+			parsing/check_not_dirfile \
 			parsing/lexing \
 			parsing/blocks \
 			parsing/parsing \

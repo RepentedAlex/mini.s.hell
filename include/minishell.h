@@ -17,6 +17,7 @@
 
 // Librairies standard
 # include <curses.h>
+# include <dirent.h>
 # include <fcntl.h>
 # include <sys/ioctl.h>
 # include <signal.h>
@@ -65,13 +66,16 @@ t_error	parsing(t_mo_shell *mo_shell);
 t_error	splitter(t_mo_shell *mo_shell);
 
 int		var_exst(char *var, char *envp[]);
+bool	check_not_dirfile(t_block **head);
 t_error	check_open_quotes(const char *str);
 char	**copy_env(char **envp);
 int		count_leading_whitespace(const char *str);
 int		count_tokens(const char *str);
+int		find_var(char *src, char *envp[]);
 void	free_tab(char **array);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
+char	*get_pwd(char	**envp);
 void	check_in_quotes(char c, int *quotes);
 void	garbage_collect(t_mo_shell *data, int mode);
 void	splash_screen(void);

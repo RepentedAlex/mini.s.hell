@@ -62,6 +62,8 @@ token '|'\n"), ERROR);
 			return (sch_ret);
 	block_string_tidyer(&mo_shell->splitted_input);
 	split_spaces(&mo_shell->splitted_input);
+	if (check_not_dirfile(&mo_shell->splitted_input) == ERROR)
+		return (ERROR);
 	return (NO_ERROR);
 }
 
