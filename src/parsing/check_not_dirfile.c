@@ -31,7 +31,10 @@ bool	check_if_dirfile_exist(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd > -1)
 	{
-		printf("%s: Permission denied\n", path);
+		if (access(path, R_OK | X_OK) == -1)
+		{
+			printf("%s: Permission denied\n", path);
+		}
 		close(fd);
 		return (true);
 	}
