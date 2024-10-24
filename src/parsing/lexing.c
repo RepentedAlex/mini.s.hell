@@ -13,9 +13,9 @@
 #include "minishell.h"
 #include "libft.h"
 
-void	identify_tokens(t_token **head)
+void	identify_tokens(t_block **head)
 {
-	t_token	*nav;
+	t_block	*nav;
 
 	nav = *head;
 	if (!nav)
