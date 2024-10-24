@@ -47,6 +47,31 @@ void	free_2d_tab(char **array)
 	array = NULL;
 }
 
+void	free_cmd_table(t_cmd **head)
+{
+	t_cmd	*nav;
+	t_cmd	*tmp;
+
+	nav = *head;
+	while (nav)
+	{
+		if (nav->cmd != NULL)
+		{
+			free(nav->cmd);
+			nav->cmd = NULL;
+		}
+		if (nav->args)
+		{
+			free_2d_tab(nav->args);
+			nav->args = NULL;
+		}
+		tmp = nav->next;
+		free(nav);
+		nav = tmp;
+	}
+	*head = NULL;
+}
+
 void	garbage_collect(t_mo_shell *data, int mode)
 {
 	if (data->splitted_input)
@@ -57,10 +82,12 @@ void	garbage_collect(t_mo_shell *data, int mode)
 		(free(data->clean_input), data->clean_input = NULL);
 	if (data->expanded_input)
 		(free(data->expanded_input), data->expanded_input = NULL);
+	if (data->cmds_table)
+		(free_cmd_table(&data->cmds_table), data->cmds_table = NULL);
 	if (mode == 1)
 	{
 		rl_clear_history();
 		if (data->shell_env)
-			free_2d_tab(data->shell_env);
+			(free_2d_tab(data->shell_env), data->shell_env = NULL);
 	}
 }

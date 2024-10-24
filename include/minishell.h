@@ -73,6 +73,7 @@ char	**copy_env(char **envp);
 int		count_leading_whitespace(const char *str);
 int		count_tokens(const char *str);
 int		find_var(char *src, char *envp[]);
+void	free_2d_tab(char **array);
 void	free_tab(char **array);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
@@ -92,6 +93,12 @@ t_block	*block_new(char *str);
 t_block	*block_setup_first(t_mo_shell *mo_shell);
 void	block_string_tidyer(t_block **head);
 void	block_split_spaces(t_block *head);
+
+// cmd
+t_cmd	*cmd_new(char *str);
+t_cmd	*cmd_goto_last(t_cmd *head);
+t_error	cmd_add_after(t_cmd *ref, t_cmd *to_insert);
+t_error	cmd_add_back(t_cmd **head, t_cmd *node);
 
 // execution
 void	execute_cl(t_mo_shell *mo_shell);

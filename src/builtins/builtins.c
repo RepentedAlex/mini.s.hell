@@ -52,19 +52,19 @@ bool	is_builtin(char *str)
 }
 
 /// @brief Check if the command block is a builtin or not
-/// @param block The block.
+/// @param command The block.
 /// @return true if it's a builtin, false if not in the builtins_array.
-int	(*launch_builtins(t_block *block))(char **str)
+int	(*launch_builtins(t_cmd *command))(char **str)
 {
 	t_builtin	*builtins_array;
 	int			i;
 
-	if (!block)
+	if (!command)
 		return (NULL);
 	builtins_array = get_builtin_array();
 	i = -1;
 	while (builtins_array[++i].name != NULL)
-		if (ft_strcmp(block->str, builtins_array[i].name) == 0)
+		if (ft_strcmp(command->cmd, builtins_array[i].name) == 0)
 			return (builtins_array[i].builtin_func);
 	return (NULL);
 }
