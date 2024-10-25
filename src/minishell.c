@@ -12,6 +12,36 @@
 
 #include "minishell.h"
 
+void	create_outfiles(t_block **head)
+{
+	t_block	*nav;
+	t_block	*tmp;
+	int		fd;
+
+	nav = *head;
+	while (nav)
+	{
+		printf("block \"%s\",type: %d\n", nav->str, nav->type);
+		if (nav->type == REDIR_O || nav->type == APPEND)
+		{
+			printf("Program decided it was a redir SHOULD BE 3 or 4\n");
+			tmp = nav;
+			nav = nav->next;
+			printf("Now on block \"%s\",type: %d\n", nav->str, nav->type);
+			block_pop(&tmp);
+			fd = open(nav->str, O_RDWR | O_CREAT);
+			close(fd);
+			tmp = nav;
+			nav = nav->next;
+			printf("Now on block \"%s\",type: %d\n", nav->str, nav->type);
+			printf("== Prev block is %s, type %d ==", tmp->str, tmp->type);
+			block_pop(&tmp);
+		}
+		else
+			nav = nav->next;
+	}
+}
+
 /// @brief The main mini.s.hell function ! :D
 /// @param argc The number of arguments passed via the CLI.
 /// @param argv The arguments passed via the CLI.
@@ -32,6 +62,7 @@ int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 			add_history(mo_shell->og_input);
 		if (parsing(mo_shell) == ERROR)
 			continue ;
+		create_outfiles(&mo_shell->splitted_input);
 		// == == == TRANSITION VERS l'EXEC == == ==
 		execute_cl(mo_shell);
 	}

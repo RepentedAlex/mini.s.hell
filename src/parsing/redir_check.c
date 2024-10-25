@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-bool	check_sing_redir(int *i, t_block *nav, int *value1)
+t_error check_redir_o(int *i, t_block *nav, int *value1)
 {
 	int	ret;
 
@@ -20,23 +20,23 @@ bool	check_sing_redir(int *i, t_block *nav, int *value1)
 	{
 		ret = check_after_redir(nav->str, *i + 2);
 		if (ret == 1)
-			return (*value1 = 2, (true));
+			return (*value1 = 2, ERROR);
 		if (ret == 2)
-			return (*value1 = 5, (true));
+			return (*value1 = 5, ERROR);
 		(*i)++;
 	}
 	else
 	{
 		ret = check_after_redir(nav->str, *i + 1);
 		if (ret == 1)
-			return (*value1 = 1, (true));
+			return (*value1 = 1, ERROR);
 		if (ret == 2)
-			return (*value1 = 5, (true));
+			return (*value1 = 5, ERROR);
 	}
-	return (false);
+	return (NO_ERROR);
 }
 
-bool	check_dou_redir(int *i, t_block *nav, int *value1)
+t_error check_redir_i(int *i, t_block *nav, int *value1)
 {
 	int	ret;
 
@@ -44,22 +44,22 @@ bool	check_dou_redir(int *i, t_block *nav, int *value1)
 	{
 		ret = check_after_redir(nav->str, *i + 2);
 		if (ret == 1)
-			return (*value1 = 4, true);
+			return (*value1 = 4, ERROR);
 		if (ret == 2)
-			return (*value1 = 5, true);
+			return (*value1 = 5, ERROR);
 		(*i)++;
 	}
 	else
 	{
 		ret = check_after_redir(nav->str, *i + 1);
 		if (nav->str[*i + 1] == '>')
-			return (*value1 = 5, (true));
+			return (*value1 = 5, ERROR);
 		if (ret == 1)
-			return (*value1 = 3, true);
+			return (*value1 = 3, ERROR);
 		if (ret == 2)
-			return (*value1 = 5, true);
+			return (*value1 = 5, ERROR);
 	}
-	return (false);
+	return (NO_ERROR);
 }
 
 int	check_redir_syntax(t_block **head)
@@ -77,10 +77,10 @@ int	check_redir_syntax(t_block **head)
 		while (nav->str[i])
 		{
 			if (nav->str[i] == '>')
-				if (check_sing_redir(&i, nav, &ret_check))
+				if (check_redir_o(&i, nav, &ret_check) == ERROR)
 					return (ret_check);
 			if (nav->str[i] == '<')
-				if (check_dou_redir(&i, nav, &ret_check))
+				if (check_redir_i(&i, nav, &ret_check))
 					return (ret_check);
 			i++;
 		}

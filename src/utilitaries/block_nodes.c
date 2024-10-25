@@ -12,6 +12,26 @@
 
 #include "minishell.h"
 
+void	block_pop(t_block **block)
+{
+	t_block	*tmp;
+	t_block	*save_prev;
+	t_block	*save_next;
+
+	tmp = *block;
+	save_prev = tmp->prev;
+	save_next = tmp->next;
+	if (tmp->str)
+	{
+		free(tmp->str);
+		tmp->str = NULL;
+	}
+	tmp->prev->next = save_next;
+	if (tmp->next)
+		tmp->next->prev = save_prev;
+	free(tmp);
+}
+
 t_error	block_add_after(t_block *ref, t_block *to_insert)
 {
 	t_block	*tmp;

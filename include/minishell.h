@@ -90,6 +90,7 @@ t_error	block_add_back(t_block **head, t_block *node);
 t_error	block_add_front(t_block **head, t_block *node);
 t_block	*block_goto_last(t_block *head);
 t_block	*block_new(char *str);
+void	block_pop(t_block **block);
 t_block	*block_setup_first(t_mo_shell *mo_shell);
 void	block_string_tidyer(t_block **head);
 void	block_split_spaces(t_block *head);
