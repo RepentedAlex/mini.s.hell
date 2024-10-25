@@ -268,6 +268,33 @@ va créer un [arbre de syntaxe abstrait](https://fr.wikipedia.org/wiki/Arbre_de_
 Le parser va, quant à lui, prendre les tokens que le lexer a créés pour créer  
 une table de commande selon une grammaire.
 ### 1.2 L'exécution
+#### 1.2.1 La mise en place des pipes et des redirections
+Avant de pouvoir enfin exécuter nos commandes, il faut mettre en place tous les
+pipes et redirections. Pour ce faire, nous allons procéder de droite à gauche en
+donnant la priorité aux redirections. Dans le cas de multiples redirections
+similaires.
+##### Plusieurs redirections d'output
+S'il y a plusieurs redirections de sortie alors, on doit créer tous les fichiers,
+mais seulement écrire dans le fichier de la dernière redirection (celui le plus
+à droite).
+###### Plusieurs redirections d'append
+Les redirections d'append sont gérées au même titre que les redirections
+d'output.
+##### Plusieurs redirections d'input
+Pour les redirections d'input, c'est la même logique, sauf que l'on n'a pas à
+ouvrir tous les fichiers. Il y a juste à ouvrir le fichier de la dernière
+redirection (c'est-à-dire la redirection la plus à droite).
+##### Plusieurs HereDoc
+Pour les HereDoc c'est un peu plus complexe.
+`cat << a << b` ouvrira deux heredoc. D'abord l'utilisateur écrira sur le heredoc a.
+Ensuite une fois que le premier HereDoc trouvera une ligne avec juste 'a', il se
+fermera et l'on commencera à écrire sur le HereDoc b. Une fois que l'on aura à
+son tour fermé le HereDoc b, cat affichera uniquement le contenu du dernier HereDoc,
+dans notre cas, le HereDoc b !
+Il semblerait que l'on puisse se dispenser d'ouvrir les HereDoc qui ne sont pas
+en dernière position puisque ceux-ci ne sont pas utilisés. Ainsi, il suffit
+d'ouvrir le dernier HereDoc dans le cas où l'on en aurait plusieurs !
+
 Une fois que la string a été parsée, on exécute les commandes avec les options  
 et/ou arguments qui ont été fournis.
 ```c  
