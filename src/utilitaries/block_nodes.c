@@ -60,6 +60,8 @@ t_error	block_add_after(t_block *ref, t_block *to_insert)
 		tmp = ref->next;
 		to_insert->next = tmp;
 		to_insert->prev = ref;
+		if (ref->next)
+			ref->next->prev = to_insert;
 		ref->next = to_insert;
 	}
 	return (NO_ERROR);
