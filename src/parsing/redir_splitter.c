@@ -52,8 +52,31 @@ void	for_redir_o(t_block **nav, t_block **tmp, int *i)
 	*nav = (*nav)->next;
 }
 
+t_error	lexcat_redir_i(t_block **head)
+{
+	t_block	*nav;
 
-t_error	lexcat_redir(t_block **head)
+	nav = *head;
+	while (nav)
+	{
+		if (!ft_strcmp(nav->str, "<<"))
+		{
+			nav->type = HEREDOC;
+			nav->next->type = EOFHD;
+			nav = nav->next;
+		}
+		if (!ft_strcmp(nav->str, "<"))
+		{
+			nav->type = REDIR_I;
+			nav->next->type = INFILE;
+			nav = nav->next;
+		}
+		nav = nav->next;
+	}
+	return (NO_ERROR);
+}
+
+t_error	lexcat_redir_o(t_block **head)
 {
 	t_block	*nav;
 
@@ -66,22 +89,10 @@ t_error	lexcat_redir(t_block **head)
 			nav->next->type = OUTFILE;
 			nav = nav->next;
 		}
-		if (!ft_strcmp(nav->str, "<<"))
-		{
-			nav->type = HEREDOC;
-			nav->next->type = EOFHD;
-			nav = nav->next;
-		}
 		if (!ft_strcmp(nav->str, ">"))
 		{
 			nav->type = REDIR_O;
 			nav->next->type = OUTFILE;
-			nav = nav->next;
-		}
-		if (!ft_strcmp(nav->str, "<"))
-		{
-			nav->type = REDIR_I;
-			nav->next->type = INFILE;
 			nav = nav->next;
 		}
 		nav = nav->next;

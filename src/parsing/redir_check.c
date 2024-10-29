@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_error check_redir_o(int *i, t_block *nav, int *value1)
+t_error	check_redir_o(int *i, t_block *nav, int *value1)
 {
 	int	ret;
 
@@ -36,7 +36,7 @@ t_error check_redir_o(int *i, t_block *nav, int *value1)
 	return (NO_ERROR);
 }
 
-t_error check_redir_i(int *i, t_block *nav, int *value1)
+t_error	check_redir_i(int *i, t_block *nav, int *value1)
 {
 	int	ret;
 

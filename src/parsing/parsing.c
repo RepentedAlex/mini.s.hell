@@ -31,7 +31,6 @@ unexpected token '<<'\n"), true);
 	if (*error_ret == 5)
 		return (*value1 = printf("mini.s.hell: syntax error near \
 unexpected token 'newline'\n"), true);
-	// split_redir(&mo_shell->splitted_input);
 	return (false);
 }
 
@@ -48,6 +47,13 @@ void	clean_empty_nodes(t_block **head)
 			block_pop(&nav);
 		nav = tmp;
 	}
+}
+
+t_error	lexcat_redir_handler(t_block **head)
+{
+	lexcat_redir_i(head);
+	lexcat_redir_o(head);
+	return (NO_ERROR);
 }
 
 t_error	splitter(t_mo_shell *mo_shell)
@@ -69,7 +75,7 @@ token '|'\n"), ERROR);
 	block_string_tidyer(&mo_shell->splitted_input);
 	split_spaces(&mo_shell->splitted_input);
 	clean_empty_nodes(&mo_shell->splitted_input);
-	lexcat_redir(&mo_shell->splitted_input);
+	lexcat_redir_handler(&mo_shell->splitted_input);	//Surely redundant
 	//TODO Remove quotes
 	if (check_not_dirfile(&mo_shell->splitted_input) == ERROR)
 		return (ERROR);

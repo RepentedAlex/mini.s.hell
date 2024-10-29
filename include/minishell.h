@@ -111,7 +111,7 @@ t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head);
 t_error	open_redir_i(t_cmd **cmd_head, t_block **block_head);
 t_error	open_redir_o(t_cmd **cmd_head, t_block **block_head);
 t_error	pipeline_setup(t_mo_shell *mo_shell);
-void	setup_pipes(t_block **block_head, t_cmd **cmd_head);
+void	setup_pipes(t_cmd **cmd_head);
 t_cmd	*spltd_in_to_cmd_blocks(t_block **head);
 
 // exit
@@ -139,7 +139,9 @@ int		check_redir_syntax(t_block **head);
 bool	check_dou_redir(int *i, t_block *nav, int *value1);
 bool	check_sing_redir(int *i, t_block *nav, int *value1);
 bool	look_for_redir(t_block **head);
-t_error	lexcat_redir(t_block **head);
+t_error	lexcat_redir_handler(t_block **head);
+t_error	lexcat_redir_i(t_block **head);
+t_error	lexcat_redir_o(t_block **head);
 
 // utilitaries
 char	**add_str_to_array(char **array, char *str);
