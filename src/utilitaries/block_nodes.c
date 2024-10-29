@@ -32,23 +32,6 @@ void	block_pop(t_block **block)
 	free(tmp);
 }
 
-t_error	block_add_before(t_block *ref, t_block *to_insert)
-{
-	t_block	*tmp;
-
-	if (ref == NULL)
-		ref = to_insert;
-	else
-	{
-		tmp = ref->prev;
-		tmp->next = to_insert;
-		to_insert->prev = tmp;
-		ref->prev = to_insert;
-		to_insert->next = ref;
-	}
-	return (NO_ERROR);
-}
-
 t_error	block_add_after(t_block *ref, t_block *to_insert)
 {
 	t_block	*tmp;
@@ -78,22 +61,6 @@ t_error	block_add_back(t_block **head, t_block *node)
 	{
 		tail->next = node;
 		node->prev = tail;
-	}
-	return (NO_ERROR);
-}
-
-t_error	block_add_front(t_block **head, t_block *node)
-{
-	t_block	*nav;
-
-	if (*head == NULL)
-		*head = node;
-	else
-	{
-		nav = *head;
-		nav->prev = node;
-		node->next = nav;
-		node->prev = NULL;
 	}
 	return (NO_ERROR);
 }
