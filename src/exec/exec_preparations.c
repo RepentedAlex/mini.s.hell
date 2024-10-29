@@ -24,27 +24,23 @@ void	fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head)
 
 	nav_cmd = *cmd_head;
 	nav_block = *block_head;
-	while (nav_cmd)
+	block_has_cmd = false;
+	while (nav_cmd && nav_block)
 	{
-		block_has_cmd = false;
-		while (nav_block)
+		if (!block_has_cmd && nav_block->type == RAW)
 		{
-			if (nav_block->type == PIPE)
-			{
-				nav_block = nav_block->next;
-				break ;
-			}
-			if (!block_has_cmd && nav_block->type == RAW)
-			{
-				block_has_cmd = true;
-				nav_cmd->cmd = ft_strdup(nav_block->str);
-				nav_block->type = CMD;
-			}
-			else if (block_has_cmd && nav_block->type == RAW)
-				nav_cmd->args = add_str_to_array(nav_cmd->args, nav_block->str);
-			nav_block = nav_block->next;
+			block_has_cmd = true;
+			nav_cmd->cmd = ft_strdup(nav_block->str);
+			nav_block->type = CMD;
 		}
-		nav_cmd = nav_cmd->next;
+		else if (block_has_cmd && nav_block->type == RAW)
+			nav_cmd->args = add_str_to_array(nav_cmd->args, nav_block->str);
+		if (nav_block->type == PIPE)
+		{
+			nav_cmd = nav_cmd->next;
+			block_has_cmd = false;
+		}
+		nav_block = nav_block->next;
 	}
 }
 
@@ -98,9 +94,9 @@ t_cmd	*spltd_in_to_cmd_blocks(t_block **head)
 /// @return ERROR if file couldn't be opened, NO_ERROR otherwise.
 t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head)
 {
-			if (open_redir_i(cmd_head, block_head) == ERROR)
-				return (ERROR);
-			if (open_redir_o(cmd_head, block_head) == ERROR)
-				return (ERROR);
+	if (open_redir_i(cmd_head, block_head) == ERROR)
+		return (ERROR);
+	if (open_redir_o(cmd_head, block_head) == ERROR)
+		return (ERROR);
 	return (NO_ERROR);
 }
