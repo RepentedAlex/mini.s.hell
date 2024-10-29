@@ -100,7 +100,7 @@ void	block_split_spaces(t_block *head);
 t_cmd	*cmd_new(char *str);
 t_cmd	*cmd_goto_last(t_cmd *head);
 t_error	cmd_add_after(t_cmd *ref, t_cmd *to_insert);
-t_error	cmd_add_back(t_cmd **head, t_cmd *node);
+t_error	cmd_add_back(t_cmd *head, t_cmd *node);
 
 // execution
 void	execute_cl(t_mo_shell *mo_shell);
