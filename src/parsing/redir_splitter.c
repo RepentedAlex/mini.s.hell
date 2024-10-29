@@ -22,9 +22,6 @@ void	for_heredoc(t_block **nav, t_block **tmp, int *i)
 	(*tmp)->type = EOFHD;
 	block_add_after((*nav)->next, *tmp);
 	*i = 0;
-	while ((*nav)->str[(*i)] && (*nav)->str[(*i)] != '<')
-		(*i)++;
-	(*nav)->str[(*i)] = '\0';
 	*nav = (*nav)->next;
 	*nav = (*nav)->next;
 }
@@ -38,9 +35,6 @@ void	for_append(t_block **nav, t_block **tmp, int *i)
 	(*tmp)->type = OUTFILE;
 	block_add_after((*nav)->next, *tmp);
 	*i = 0;
-	while ((*nav)->str[(*i)] && (*nav)->str[(*i)] != '>')
-		(*i)++;
-	(*nav)->str[(*i)] = '\0';
 	*nav = (*nav)->next;
 	*nav = (*nav)->next;
 }
@@ -54,57 +48,43 @@ void	for_redir_o(t_block **nav, t_block **tmp, int *i)
 	(*tmp)->type = OUTFILE;
 	block_add_after((*nav)->next, *tmp);
 	*i = 0;
-	while ((*nav)->str[(*i)] && (*nav)->str[(*i)] != '>')
-		(*i)++;
-	(*nav)->str[(*i)] = '\0';
 	*nav = (*nav)->next;
 	*nav = (*nav)->next;
 }
 
-void	for_redir_i(t_block **nav, t_block **tmp, int *i)
-{
-	*tmp = block_new(ft_strdup("<"));
-	(*tmp)->type = REDIR_I;
-	block_add_after(*nav, *tmp);
-	*tmp = block_new(ft_strdup(ft_strchr((*nav)->str, '<') + 1));
-	(*tmp)->type = INFILE;
-	block_add_after((*nav)->next, *tmp);
-	*i = 0;
-	while ((*nav)->str[(*i)] && (*nav)->str[(*i)] != '<')
-		(*i)++;
-	(*nav)->str[(*i)] = '\0';
-	*nav = (*nav)->next;
-	*nav = (*nav)->next;
-}
 
-/// @brief Takes a list of t_block and create new nodes when it finds a '<',
-/// '<<', '>', '>>'.
-/// @param head
-/// @return
-t_error	split_redir(t_block **head)
+t_error	lexcat_redir(t_block **head)
 {
 	t_block	*nav;
-	t_block	*tmp;
-	int		i;
 
 	nav = *head;
-	while (nav != NULL)
+	while (nav)
 	{
-		if (ft_strchr(nav->str, '<') == NULL && ft_strchr(nav->str, '>') \
-			== NULL)
+		if (!ft_strcmp(nav->str, ">>"))
+		{
+			nav->type = APPEND;
+			nav->next->type = OUTFILE;
 			nav = nav->next;
-		else if (ft_strchr(nav->str, '<') && ft_strncmp(\
-			ft_strchr(nav->str, '<'), "<<", 2) == 0)
-			for_heredoc(&nav, &tmp, &i);
-		else if (ft_strchr(nav->str, '>') && ft_strncmp(\
-			ft_strchr(nav->str, '>'), ">>", 2) == 0)
-			for_append(&nav, &tmp, &i);
-		else if (ft_strchr(nav->str, '>') && ft_strncmp(\
-			ft_strchr(nav->str, '>'), ">", 1) == 0)
-			for_redir_o(&nav, &tmp, &i);
-		else if (ft_strchr(nav->str, '<') && ft_strncmp(\
-			ft_strchr(nav->str, '<'), "<", 1) == 0)
-			for_redir_i(&nav, &tmp, &i);
+		}
+		if (!ft_strcmp(nav->str, "<<"))
+		{
+			nav->type = HEREDOC;
+			nav->next->type = EOFHD;
+			nav = nav->next;
+		}
+		if (!ft_strcmp(nav->str, ">"))
+		{
+			nav->type = REDIR_O;
+			nav->next->type = OUTFILE;
+			nav = nav->next;
+		}
+		if (!ft_strcmp(nav->str, "<"))
+		{
+			nav->type = REDIR_I;
+			nav->next->type = INFILE;
+			nav = nav->next;
+		}
+		nav = nav->next;
 	}
 	return (NO_ERROR);
 }
