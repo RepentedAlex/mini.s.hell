@@ -68,6 +68,8 @@ token '|'\n"), ERROR);
 			return (sch_ret);
 	block_string_tidyer(&mo_shell->splitted_input);
 	split_spaces(&mo_shell->splitted_input);
+	clean_empty_nodes(&mo_shell->splitted_input);
+	lexcat_redir(&mo_shell->splitted_input);
 	//TODO Remove quotes
 	if (check_not_dirfile(&mo_shell->splitted_input) == ERROR)
 		return (ERROR);
