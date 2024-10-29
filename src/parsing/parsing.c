@@ -35,6 +35,21 @@ unexpected token 'newline'\n"), true);
 	return (false);
 }
 
+void	clean_empty_nodes(t_block **head)
+{
+	t_block	*nav;
+	t_block	*tmp;
+
+	nav = *head;
+	while (nav)
+	{
+		tmp = nav->next;
+		if (nav->str[0] == '\0' || ft_string_is_ifs(nav->str))
+			block_pop(&nav);
+		nav = tmp;
+	}
+}
+
 t_error	splitter(t_mo_shell *mo_shell)
 {
 	int		error_ret;
