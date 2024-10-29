@@ -103,15 +103,25 @@ t_error	cmd_add_after(t_cmd *ref, t_cmd *to_insert);
 t_error	cmd_add_back(t_cmd *head, t_cmd *node);
 
 // execution
+t_error	execution(t_mo_shell *mo_shell);
 void	execute_cl(t_mo_shell *mo_shell);
+
+void	fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head);
+t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head);
+t_error	open_redir_i(t_cmd **cmd_head, t_block **block_head);
+t_error	open_redir_o(t_cmd **cmd_head, t_block **block_head);
+t_error	pipeline_setup(t_mo_shell *mo_shell);
+void	setup_redirections(t_block **block_head, t_cmd **cmd_head);
+t_cmd	*spltd_in_to_cmd_blocks(t_block **head);
+
+// exit
+void	close_fds(t_cmd **head);
 
 // ft_is
 bool	ft_is_alpha(const char c);
 bool	ft_is_ifs(char c);
 int		ft_is_symbol(const char *str);
 
-// ft_str
-// int		ft_strcmp(const char *s1, const char *s2);
 char	*append(char *s1, char *s2, size_t n);
 t_error	split_spaces(t_block **head);
 char	*ft_strnjoin(char *src, char *dst, size_t n);
@@ -130,6 +140,9 @@ bool	check_dou_redir(int *i, t_block *nav, int *value1);
 bool	check_sing_redir(int *i, t_block *nav, int *value1);
 bool	look_for_redir(t_block **head);
 t_error	lexcat_redir(t_block **head);
+
+// utilitaries
+char	**add_str_to_array(char **array, char *str);
 
 // variables expansion
 char	*expand_variables(char *src, char *envp[]);
