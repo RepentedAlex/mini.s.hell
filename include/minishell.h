@@ -129,7 +129,7 @@ int		check_redir_syntax(t_block **head);
 bool	check_dou_redir(int *i, t_block *nav, int *value1);
 bool	check_sing_redir(int *i, t_block *nav, int *value1);
 bool	look_for_redir(t_block **head);
-t_error	split_redir(t_block **head);
+t_error	lexcat_redir(t_block **head);
 
 // variables expansion
 char	*expand_variables(char *src, char *envp[]);
