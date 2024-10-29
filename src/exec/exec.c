@@ -78,7 +78,73 @@ char	**add_str_to_array(char **array, char *str)
 	return (ret);
 }
 
-void	splitted_input_to_cmd_blocks(t_block **head, t_cmd **cmd_head)
+void	renseign_fields(t_cmd **cmd_head, t_block **block_head)
+{
+	t_block	*nav_block;
+	t_cmd	*nav_cmd;
+	bool	block_has_cmd;
+
+	nav_cmd = *cmd_head;
+	nav_block = *block_head;
+	while (nav_cmd)
+	{
+		block_has_cmd = false;
+		while (nav_block && nav_block->type != PIPE)
+		{
+			if (!block_has_cmd && nav_block->type == RAW)
+			{
+				block_has_cmd = true;
+				nav_cmd->cmd = ft_strdup(nav_block->str);
+				nav_block->type = CMD;
+				nav_block = nav_block->next;
+			}
+			else if (block_has_cmd && nav_block->type == RAW)
+			{
+				nav_cmd->args = add_str_to_array(nav_cmd->args, nav_block->str);
+				nav_block = nav_block->next;
+			}
+			else if (nav_block->type >= 2 && nav_block->type <= 5)
+			{
+				if (nav_block->type == REDIR_O)
+				{
+					nav_block = nav_block->next;
+					if (nav_cmd->fd_o >= 0)
+						(close(nav_cmd->fd_o), nav_cmd->fd_o = 0);
+					nav_cmd->fd_o = open(nav_block->str, O_RDWR | O_CREAT | O_TRUNC, 0666);
+				}
+				else if (nav_block->type == APPEND)
+				{
+					nav_block = nav_block->next;
+					if (nav_cmd->fd_o >= 0)
+						(close(nav_cmd->fd_o), nav_cmd->fd_o = 0);
+					nav_cmd->fd_o = open(nav_block->str, O_RDWR | O_APPEND | O_CREAT, 0666);
+				}
+				else if (nav_block->type == REDIR_I)
+				{
+					nav_block = nav_block->next;
+					if (nav_cmd->fd_i >= 0)
+						(close(nav_cmd->fd_i), nav_cmd->fd_i = 0);
+					nav_cmd->fd_i = open(nav_block->str, O_RDWR);
+				}
+				else if (nav_block->type == HEREDOC)
+				{
+					nav_block = nav_block->next;
+					if (nav_cmd->fd_i >= 0)
+						(close(nav_cmd->fd_i), nav_cmd->fd_i = 0);
+					nav_cmd->fd_i = open("heredoc", O_RDWR | O_CREAT, 0666);
+					//TODO Fill heredoc
+					// fill_heredoc();
+				}
+				nav_block = nav_block->next;
+			}
+		}
+		if (nav_block)
+			nav_block = nav_block->next;
+		nav_cmd = nav_cmd->next;
+	}
+}
+
+t_cmd *splitted_input_to_cmd_blocks(t_block **head)
 {
 	t_block	*nav;
 	t_cmd	*tmp;
