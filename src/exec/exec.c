@@ -149,7 +149,9 @@ t_cmd *splitted_input_to_cmd_blocks(t_block **head)
 	t_block	*nav;
 	t_cmd	*tmp;
 	int		number_of_cmds;
+	t_cmd	*ret;
 
+	ret = NULL;
 	tmp = NULL;
 	number_of_cmds = 1;
 	nav = *head;
@@ -197,8 +199,9 @@ void	execute_cl(t_mo_shell *mo_shell)
 	nav = mo_shell->splitted_input;
 	if (!nav)
 		return ;
-	splitted_input_to_cmd_blocks(&mo_shell->splitted_input, &mo_shell->cmds_table);
-
+	mo_shell->cmds_table = splitted_input_to_cmd_blocks(&mo_shell->splitted_input);
+	renseign_fields(&mo_shell->cmds_table, &mo_shell->splitted_input);
+	// create_outfiles(&mo_shell->cmds_table);
 	//TODO Setup pipes and redirections from right to left, redirections steal the pipe
 	//TODO Pop les nodes qui correspondent à la redirection pour pouvoir renseigner les arguments ensuite
 	setup_redirections(&mo_shell->splitted_input, &mo_shell->cmds_table);
