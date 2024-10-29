@@ -29,15 +29,15 @@ t_cmd	*cmd_new(char *str)
 	return (node);
 }
 
-t_error	cmd_add_back(t_cmd **head, t_cmd *node)
+t_error	cmd_add_back(t_cmd *head, t_cmd *node)
 {
 	t_cmd	*tail;
 
-	tail = cmd_goto_last(*head);
-	if (tail == NULL)
-		*head = node;
+	if (!head)
+		head = node;
 	else
 	{
+		tail = cmd_goto_last(head);
 		tail->next = node;
 		node->prev = tail;
 	}
