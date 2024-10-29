@@ -224,4 +224,13 @@ void	execute_cl(t_mo_shell *mo_shell)
 		}
 		to_launch = to_launch->next;
 	}
+	to_launch = mo_shell->cmds_table;
+	while (to_launch)
+	{
+		if (to_launch->fd_i >= 0)
+			(close(to_launch->fd_i), to_launch->fd_i = -2);
+		if (to_launch->fd_o >= 0)
+			(close(to_launch->fd_o), to_launch->fd_o = -2);
+		to_launch = to_launch->next;
+	}
 }
