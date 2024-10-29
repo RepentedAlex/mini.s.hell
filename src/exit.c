@@ -72,6 +72,21 @@ void	free_cmd_table(t_cmd **head)
 	*head = NULL;
 }
 
+void	close_fds(t_cmd **head)
+{
+	t_cmd	*nav;
+
+	nav = *head;
+	while (nav)
+	{
+		if (nav->fd_i >= 0)
+			(close(nav->fd_i), nav->fd_i = -2);
+		if (nav->fd_o >= 0)
+			(close(nav->fd_o), nav->fd_o = -2);
+		nav = nav->next;
+	}
+}
+
 void	garbage_collect(t_mo_shell *data, int mode)
 {
 	if (data->splitted_input)

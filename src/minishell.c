@@ -33,7 +33,8 @@ int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 		if (parsing(mo_shell) == ERROR)
 			continue ;
 		// == == == TRANSITION VERS l'EXEC == == ==
-		execute_cl(mo_shell);
+		// execute_cl(mo_shell);
+		execution(mo_shell);
 	}
 	garbage_collect(mo_shell, 1);
 	return (EXIT_SUCCESS);

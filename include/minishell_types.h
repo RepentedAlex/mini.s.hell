@@ -49,8 +49,8 @@ typedef struct s_cmd
 	char			**args;
 	int				fd_i;
 	int				fd_o;
-	struct s_cmd		*next;
-	struct s_cmd		*prev;
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
 }		t_cmd;
 
 // Structure mère
