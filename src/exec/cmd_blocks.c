@@ -24,8 +24,8 @@ t_cmd	*cmd_new(char *str)
 	node->args = NULL;
 	node->next = NULL;
 	node->prev = NULL;
-	node->fd_i = 0;
-	node->fd_o = 0;
+	node->fd_i = -2;
+	node->fd_o = -2;
 	return (node);
 }
 
