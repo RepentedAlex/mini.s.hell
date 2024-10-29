@@ -111,7 +111,7 @@ t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head);
 t_error	open_redir_i(t_cmd **cmd_head, t_block **block_head);
 t_error	open_redir_o(t_cmd **cmd_head, t_block **block_head);
 t_error	pipeline_setup(t_mo_shell *mo_shell);
-void	setup_redirections(t_block **block_head, t_cmd **cmd_head);
+void	setup_pipes(t_block **block_head, t_cmd **cmd_head);
 t_cmd	*spltd_in_to_cmd_blocks(t_block **head);
 
 // exit

@@ -13,31 +13,6 @@
 #include <libft.h>
 #include "minishell.h"
 
-void	setup_redirections(t_block **block_head, t_cmd **cmd_head)
-{
-	t_block	*nav_block;
-	t_cmd	*nav_cmd;
-
-	nav_block = block_goto_last(*block_head);
-	nav_cmd = cmd_goto_last(*cmd_head);
-	while (nav_cmd)
-	{
-		while (nav_block && ft_strcmp(nav_block->str, nav_cmd->cmd))
-		{
-			if (nav_block->type >= 2 && nav_block->type <= 5) //Si on tombe sur une redirection ('<', '>', '<<', '>>'), alors on redirige l'entrée ou la sortie sur le fichier pointé
-			{ // REMINDER : Les redirections VOLENT les pipes (oui, sans vergogne aucune)
-				//TODO GÉRER LA REDIR
-				//TODO GÉRER LE HEREDOC
-			}
-			nav_block = nav_block->prev;
-		}
-		//À chaque pipe, rediriger la sortie de la commande précédente en entrée de la commande actuelle
-		//TODO GÉRER LE PIPE
-		nav_cmd = nav_cmd->prev;
-	}
-
-}
-
 char	**for_first_arg(char *str)
 {
 	char	**ret;
@@ -76,8 +51,6 @@ char	**add_str_to_array(char **array, char *str)
 	(free_2d_tab(array), array = NULL);
 	return (ret);
 }
-
-
 
 /// @brief Runs the commands, iterating through the commands table.
 /// @param mo_shell The pointer to the mother shell structure.

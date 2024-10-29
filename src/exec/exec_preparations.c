@@ -13,6 +13,24 @@
 #include "libft.h"
 #include "minishell.h"
 
+/// @brief Sets up pipes to link command.
+/// Remember: pipes gets stolen by redirections so if fd_i || fd_o != 0
+/// Then you don't set the according pipe (or you make it read/write to
+/// something empty).
+/// @param block_head The block list's head.
+/// @param cmd_head The command table list's head.
+void	setup_pipes(t_block **block_head, t_cmd **cmd_head)
+{
+	t_cmd	*nav_cmd;
+
+	nav_cmd = cmd_goto_last(*cmd_head);
+	while (nav_cmd)
+	{
+		//TODO GÉRER LE PIPE
+		nav_cmd = nav_cmd->prev;
+	}
+}
+
 /// @brief Fills the cmd and args fields of each t_cmd node.
 /// @param cmd_head The command table list's head.
 /// @param block_head The block list's head.
@@ -55,7 +73,7 @@ t_error	pipeline_setup(t_mo_shell *mo_shell)
 	open_redir_files(&mo_shell->cmds_table, &mo_shell->splitted_input);
 	//TODO Setup pipes and redirections from right to left, redirections steal the pipe
 	//TODO Pop les nodes qui correspondent à la redirection pour pouvoir renseigner les arguments ensuite
-	setup_redirections(&mo_shell->splitted_input, &mo_shell->cmds_table);
+	setup_pipes(&mo_shell->splitted_input, &mo_shell->cmds_table);
 	return (NO_ERROR);
 }
 
