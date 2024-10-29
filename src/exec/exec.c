@@ -161,34 +161,16 @@ t_cmd *splitted_input_to_cmd_blocks(t_block **head)
 			number_of_cmds++;
 		nav = nav->next;
 	}
-	nav = *head;
-	while (nav)
-	{
-		if (nav->prev != NULL && nav->prev->type == PIPE && nav->type == RAW)
-			nav->type = CMD;
-		// TODO Le code en dessous servira a remplir le field args de chaque t_cmd
-		// if (first || nav->prev->type == PIPE)
-		// {
-		// 	first = false;
-		// 	nav->type = CMD;
-		// 	tmp = cmd_new(nav->str);
-		// 	(cmd_add_back(cmd_head, tmp), nav = nav->next);
-		// 	while (nav && nav->type == RAW)
-		// 	{
-		// 		tmp->args = add_str_to_array(tmp->args, nav->str);
-		// 		nav = nav->next;
-		// 	}
-		// }
-		// if (!nav)
-		// 	break ;
-		nav = nav->next;
-	}
+	tmp = cmd_new(NULL);
+	ret = tmp;
+	number_of_cmds--;
 	while (number_of_cmds > 0)
 	{
 		tmp = cmd_new(NULL);
-		cmd_add_back(cmd_head, tmp);
+		cmd_add_back(ret, tmp);
 		number_of_cmds--;
 	}
+	return (ret);
 }
 
 void	execute_cl(t_mo_shell *mo_shell)
