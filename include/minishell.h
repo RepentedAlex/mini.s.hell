@@ -143,6 +143,15 @@ t_error	lexcat_redir_handler(t_block **head);
 t_error	lexcat_redir_i(t_block **head);
 t_error	lexcat_redir_o(t_block **head);
 
+// splitters
+int		handle_ap(t_block *nav, int *i);
+int		handle_else(t_block *nav, int *i);
+int		handle_hd(t_block *nav, int *i);
+int		handle_ifs(t_block *nav, int *i);
+int		handle_ri(t_block *nav, int *i);
+int		handle_ro(t_block *nav, int *i);
+int		handle_no_symbols_no_ifs(t_block *nav, int *i);
+
 // utilitaries
 char	**add_str_to_array(char **array, char *str);
 

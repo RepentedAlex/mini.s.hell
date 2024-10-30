@@ -45,6 +45,8 @@ SRC_FIL	= 	minishell \
 			parsing/redir_check \
 			parsing/redir_inspection \
 			parsing/redir_splitter \
+			parsing/splitters_1 \
+			parsing/splitters_2 \
 			parsing/variable_expansion \
 			utilitaries/block_nodes \
 			utilitaries/ft_is \

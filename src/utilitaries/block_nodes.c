@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <libft.h>
 #include "minishell.h"
 
 void	block_pop(t_block **block)
@@ -84,7 +85,9 @@ t_block	*block_new(char *str)
 	node = (t_block *)malloc(sizeof(t_block));
 	if (!node)
 		return (NULL);
-	node->str = str;
+	node->str = ft_strdup(str);
+	if (!node->str)
+		return (NULL);
 	node->next = NULL;
 	node->prev = NULL;
 	node->type = 0;
