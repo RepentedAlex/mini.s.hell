@@ -76,7 +76,6 @@ token '|'\n"), ERROR);
 	split_spaces(&mo_shell->splitted_input);
 	clean_empty_nodes(&mo_shell->splitted_input);
 	lexcat_redir_handler(&mo_shell->splitted_input);	//Surely redundant
-	//TODO Remove quotes
 	if (check_not_dirfile(&mo_shell->splitted_input) == ERROR)
 		return (ERROR);
 	return (NO_ERROR);
