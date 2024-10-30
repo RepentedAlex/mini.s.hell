@@ -33,7 +33,10 @@ t_builtin	*get_builtin_array(void)
 	return (builtins_array);
 }
 
-bool	is_builtin(char *str)
+/// @brief Checks if the str provided is a builtin.
+/// @param str The command to check
+/// @return
+bool is_builtin(char *str)
 {
 	t_builtin	*builtins_array;
 	int			i;

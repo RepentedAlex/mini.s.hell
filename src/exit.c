@@ -79,9 +79,9 @@ void	close_fds(t_cmd **head)
 	nav = *head;
 	while (nav)
 	{
-		if (nav->fd_i >= 0)
-			(close(nav->fd_i), nav->fd_i = -2);
-		if (nav->fd_o >= 0)
+		if (nav->fd_i > 0)
+			(close(nav->fd_i), nav->fd_i = 0);
+		if (nav->fd_o > 2)
 			(close(nav->fd_o), nav->fd_o = -2);
 		nav = nav->next;
 	}

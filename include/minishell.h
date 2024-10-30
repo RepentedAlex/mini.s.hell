@@ -105,6 +105,7 @@ t_error	cmd_add_back(t_cmd *head, t_cmd *node);
 // execution
 t_error	execution(t_mo_shell *mo_shell);
 void	execute_cl(t_mo_shell *mo_shell);
+char	*get_path(char *cmd, char *envp[]);
 
 void	fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head);
 t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head);

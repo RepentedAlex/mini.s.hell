@@ -25,6 +25,7 @@ void	setup_pipes(t_cmd **cmd_head)
 	nav_cmd = cmd_goto_last(*cmd_head);
 	while (nav_cmd)
 	{
+		//
 		//TODO GÉRER LE PIPE
 		nav_cmd = nav_cmd->prev;
 	}
@@ -61,6 +62,28 @@ void	fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head)
 	}
 }
 
+void	expand_cmd_path(t_cmd **head, char *envp[])
+{
+	t_cmd	*nav;
+	char	*cmd_path;
+
+	cmd_path = NULL;
+	nav = *head;
+	while (nav)
+	{
+		if (ft_strcmp(nav->cmd, "./") == 0 || ft_strcmp(nav->cmd, "/") == 0 || \
+			is_builtin(nav->cmd))
+			nav = nav->next;
+		else
+		{
+			cmd_path = get_path(nav->cmd, envp);
+			free(nav->cmd);
+			nav->cmd = cmd_path;
+			nav = nav->next;
+		}
+	}
+}
+
 /// @brief Handles the setup of the pipes and redirections. Handles heredoc
 /// as well.
 /// @param mo_shell Pointer to the Mother Shell structure.
@@ -70,9 +93,9 @@ t_error	pipeline_setup(t_mo_shell *mo_shell)
 	mo_shell->cmds_table = spltd_in_to_cmd_blocks(&mo_shell->splitted_input);
 	fill_cmd_and_args(&mo_shell->cmds_table, &mo_shell->splitted_input);
 	open_redir_files(&mo_shell->cmds_table, &mo_shell->splitted_input);
+	expand_cmd_path(&mo_shell->cmds_table, mo_shell->shell_env);
 	//TODO Setup pipes and redirections from right to left, redirections steal the pipe
-	//TODO Pop les nodes qui correspondent à la redirection pour pouvoir renseigner les arguments ensuite
-	setup_pipes(&mo_shell->cmds_table);
+	// setup_pipes(&mo_shell->cmds_table);
 	return (NO_ERROR);
 }
 

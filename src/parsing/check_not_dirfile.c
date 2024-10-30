@@ -52,7 +52,7 @@ bool	check_not_dirfile(t_block **head)
 	if (ft_strchr(nav->str, '/'))
 	{
 		check_if_dirfile_exist(nav->str);
-		return (true);
+		return (false);
 	}
 	nav = nav->next;
 	while (nav)
