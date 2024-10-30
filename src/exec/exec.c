@@ -84,10 +84,12 @@ void	execution_sequence(t_mo_shell *mo_shell)
 	int		pid_i;
 
 	to_launch = mo_shell->cmds_table;
-	pipe_i = 0;
-	pid_i = 0;
+	pipe_i = -1;
+	pid_i = -1;
 	while (to_launch)
 	{
+		pid_i++;
+		pipe_i++;
 		if (is_builtin(to_launch->cmd))
 		{
 			launch_builtins(to_launch);
@@ -133,8 +135,6 @@ void	execution_sequence(t_mo_shell *mo_shell)
 				printf("execve error\n");
 				exit(EXIT_FAILURE); ;
 			}
-			pid_i++;
-			pipe_i++;
 		}
 		to_launch = to_launch->next;
 	}
@@ -143,7 +143,7 @@ void	execution_sequence(t_mo_shell *mo_shell)
 	// pid_i--;
 	// while (pid_i > 0)
 	// {
-		waitpid(pid[pid_i], NULL, 0);
+		waitpid(pid[0], NULL, 0);
 	// 	pid_i--;
 	// }
 }
