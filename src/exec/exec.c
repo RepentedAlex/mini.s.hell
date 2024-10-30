@@ -138,14 +138,7 @@ void	execution_sequence(t_mo_shell *mo_shell)
 		}
 		to_launch = to_launch->next;
 	}
-	// close(pipe_fd[pipe_i - 1][0]);
-	// close(pipe_fd[pipe_i - 1][1]);
-	// pid_i--;
-	// while (pid_i > 0)
-	// {
 		waitpid(pid[0], NULL, 0);
-	// 	pid_i--;
-	// }
 }
 
 /// @brief This function handles all things related to the execution.
