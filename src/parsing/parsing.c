@@ -89,7 +89,7 @@ t_error	parsing(t_mo_shell *mo_shell)
 	if (mo_shell->clean_input == NULL)
 		return (ERROR);
 	mo_shell->expanded_input = expand_variables(mo_shell->clean_input, \
-		mo_shell->shell_env);
+		mo_shell->shell_env, mo_shell);
 	mo_shell->splitted_input = block_setup_first(mo_shell);
 	if (splitter(mo_shell))
 		return (ERROR);

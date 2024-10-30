@@ -158,6 +158,6 @@ char	**add_str_to_array(char **array, char *str);
 bool	ft_string_is_only_ifs(char *str);
 
 // variables expansion
-char	*expand_variables(char *src, char *envp[]);
+char	*expand_variables(char *src, char *envp[], t_mo_shell *mo_shell);
 
 #endif

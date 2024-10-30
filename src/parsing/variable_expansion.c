@@ -83,12 +83,17 @@ char	*str_init(void)
 /// should be expanded
 /// @param src The source string.
 /// @param envp The environment variables.
-char	*expand_variables(char *src, char *envp[])
+/// @param mo_shell
+char	*expand_variables(char *src, char *envp[], t_mo_shell *mo_shell)
 {
 	int		i;
 	char	*ret;
 	int		quotes;
+	size_t	les_len;
+	char	*les;
 
+	les = ft_itoa(mo_shell->last_exit_status);
+	les_len = ft_strlen(les);
 	ret = str_init();
 	quotes = 0;
 	i = -1;
@@ -99,13 +104,15 @@ char	*expand_variables(char *src, char *envp[])
 		{
 			if (src[++i] == '$')
 				i += 2;
+			else if (src[i] == '?')
+				ret = append(ret, les, les_len);
 			else
 			{
 				ret = var_expander(ret, src, &i, envp);
-				continue ;
 			}
 		}
-		ret = append(ret, &src[i], sizeof(char));
+		else
+			ret = append(ret, &src[i], 1);
 	}
 	return (ret);
 }
