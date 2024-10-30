@@ -114,5 +114,6 @@ char	*expand_variables(char *src, char *envp[], t_mo_shell *mo_shell)
 		else
 			ret = append(ret, &src[i], 1);
 	}
+	free(les);
 	return (ret);
 }
