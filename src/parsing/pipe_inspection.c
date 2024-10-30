@@ -38,10 +38,10 @@ void	for_pipe(t_block **head, t_block **nav)
 	t_block	*tmp;
 
 	i = 0;
-	tmp = block_new(ft_strdup("|"));
+	tmp = block_new("|");
 	tmp->type = PIPE;
 	block_add_back(head, tmp);
-	tmp = block_new(ft_strdup(ft_strchr((*nav)->str, '|') + 1));
+	tmp = block_new(ft_strchr((*nav)->str, '|') + 1);
 	block_add_back(head, tmp);
 	i = 0;
 	while ((*nav)->str[i] && (*nav)->str[i] != '|')
