@@ -10,7 +10,37 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <libft.h>
+
 #include "minishell.h"
+
+int	handle_quotes(t_block *nav, int *i)
+{
+	int		quotes;
+	t_block	*tmp;
+	char	*str_tmp;
+	int		j;
+
+	quotes = 0;
+	if (nav->str[*i] == '\'')
+		quotes = 1;
+	else if (nav->str[*i] == '\"')
+		quotes = 2;
+	str_tmp = ft_strdup(&nav->str[*i + 1]);
+	free(nav->str);
+	nav->str = str_tmp;
+	while ((quotes == 1 && nav->str[*i] != '\'') || \
+		(quotes == 2 && nav->str[*i] != '\"'))
+		(*i)++;
+	j = 1;
+	while (ft_is_ifs(nav->str[*i + j]) && !ft_is_symbol(&nav->str[*i + j]) && \
+		nav->str[*i + j] != '\'' && nav->str[*i + j] != '\"')
+		j++;
+	tmp = block_new(&nav->str[*i + j]);
+	nav->str[*i] = '\0';
+	block_add_after(nav, tmp);
+	return (1);
+}
 
 int	handle_ro(t_block *nav, int *i)
 {

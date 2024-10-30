@@ -95,7 +95,7 @@ char	*expand_variables(char *src, char *envp[])
 	while (src[++i])
 	{
 		check_in_quotes(src[i], &quotes);
-		if (!quotes && '$' == src[i])
+		if (quotes != 1 && '$' == src[i])
 		{
 			if (src[++i] == '$')
 				i += 2;

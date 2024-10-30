@@ -148,12 +148,14 @@ int		handle_ap(t_block *nav, int *i);
 int		handle_else(t_block *nav, int *i);
 int		handle_hd(t_block *nav, int *i);
 int		handle_ifs(t_block *nav, int *i);
+int		handle_quotes(t_block *nav, int *i);
 int		handle_ri(t_block *nav, int *i);
 int		handle_ro(t_block *nav, int *i);
 int		handle_no_symbols_no_ifs(t_block *nav, int *i);
 
 // utilitaries
 char	**add_str_to_array(char **array, char *str);
+bool	ft_string_is_only_ifs(char *str);
 
 // variables expansion
 char	*expand_variables(char *src, char *envp[]);

@@ -47,6 +47,18 @@ bool	ft_string_is_ifs(char *str)
 	return (false);
 }
 
+bool	ft_string_is_only_ifs(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (ft_is_ifs(str[i]))
+		i++;
+	if (!str[i])
+		return (true);
+	return (false);
+}
+
 //apetitco :
 // On peut sûrement tirer parti de l'enum t_lexcat pour identifier le symbole
 //plus précisément lorsque l'on retourne.

@@ -32,25 +32,23 @@ t_block	*block_setup_first(t_mo_shell *mo_shell)
 void	for_space(t_block *nav)
 {
 	int		i;
-	int		quotes;
 
 	i = 0;
-	quotes = 0;
 	while (nav->str[i])
 	{
-		check_in_quotes(nav->str[i], &quotes);
-		if (!quotes && !ft_is_symbol(&nav->str[i]) && !ft_is_ifs(nav->str[i]) \
-			&& handle_no_symbols_no_ifs(nav, &i))
+		if ((nav->str[i] == '\'' || nav->str[i] == '"') && handle_quotes(nav, &i))
 			break ;
-		if (!quotes && !ft_strncmp(&nav->str[i], "<<", 2) && handle_hd(nav, &i))
+		if (!ft_is_symbol(&nav->str[i]) && handle_no_symbols_no_ifs(nav, &i))
 			break ;
-		if (!quotes && !ft_strncmp(&nav->str[i], ">>", 2) && handle_ap(nav, &i))
+		if (!ft_strncmp(&nav->str[i], "<<", 2) && handle_hd(nav, &i))
 			break ;
-		if (!quotes && !ft_strncmp(&nav->str[i], "<", 1) && handle_ri(nav, &i))
+		if (!ft_strncmp(&nav->str[i], ">>", 2) && handle_ap(nav, &i))
 			break ;
-		if (!quotes && !ft_strncmp(&nav->str[i], ">", 1) && handle_ro(nav, &i))
+		if (!ft_strncmp(&nav->str[i], "<", 1) && handle_ri(nav, &i))
 			break ;
-		if (!quotes && !ft_is_ifs(nav->str[i]) && handle_ifs(nav, &i))
+		if (!ft_strncmp(&nav->str[i], ">", 1) && handle_ro(nav, &i))
+			break ;
+		if (!ft_is_ifs(nav->str[i]) && handle_ifs(nav, &i))
 			break ;
 		if (handle_else(nav, &i))
 			continue ;

@@ -43,7 +43,7 @@ void	clean_empty_nodes(t_block **head)
 	while (nav)
 	{
 		tmp = nav->next;
-		if (nav->str[0] == '\0' || ft_string_is_ifs(nav->str))
+		if (nav->str[0] == '\0' || ft_string_is_only_ifs(nav->str))
 			block_pop(&nav);
 		nav = tmp;
 	}
