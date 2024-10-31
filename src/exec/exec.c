@@ -75,70 +75,109 @@ void	execute_cl(t_mo_shell *mo_shell)
 	close_fds(&mo_shell->cmds_table);
 }
 
+/// @brief
+/// @param to_launch The current command we want to execute.
+/// @param pipes The current pipe.
+/// @param envp The environment variables
+void	child_process(t_cmd *to_launch, t_pipes *pipes, char *envp[])
+{
+	//IF fd_in not standard
+	if (to_launch->fd_i != STDIN_FILENO)
+	{
+		//dup2 from STDIN to fd from fd_in
+		// printf("%s: redirecting stdin to infile\n", to_launch->cmd);
+		dup2(to_launch->fd_i, STDIN_FILENO);
+	}
+	//ELSE IF not first command
+	else if (to_launch->prev)
+	{
+		//Read from previous pipe's reading end
+		// printf("%s: redirecting stdin to previous pipe reading end\n", to_launch->cmd);
+		dup2(pipes->pipe[pipes->pipe_i - 1][0], STDIN_FILENO);
+	}
+	//IF fd_out not standard
+	if (to_launch->fd_o !=  STDOUT_FILENO)
+	{
+		//dup2 from STDOUT to fd from fd_out
+		// printf("%s: redirecting stdout to outfile\n", to_launch->cmd);
+		dup2(to_launch->fd_o, STDOUT_FILENO);
+	}
+	//ELSE IF not last command
+	else if (to_launch->next)
+	{
+		//Write to next pipe's writing end
+		// printf("%s: redirecting stdout to next pipe writing end\n", to_launch->cmd);
+		dup2(pipes->pipe[pipes->pipe_i][1], STDOUT_FILENO);
+	}
+
+	//Might need to redirect output to next pipe
+
+	//IF not first command
+	if (to_launch->prev)
+	{
+		//CLOSE previous pipe
+		// close(pipes->pipe[pipes->pipe_i - 1][0]);
+		// close(pipes->pipe[pipes->pipe_i - 1][1]);
+	}
+	//CLOSE current pipe
+	if (to_launch->next && to_launch->fd_o != STDOUT_FILENO)
+		close(pipes->pipe[pipes->pipe_i][0]);
+	if (to_launch->next && to_launch->fd_i != STDIN_FILENO)
+		close(pipes->pipe[pipes->pipe_i][1]);
+
+	//Execute command
+	execve(to_launch->cmd, to_launch->args, envp);
+	printf("execve error\n");
+	exit(EXIT_FAILURE);
+}
+
+/// @brief
+/// @param mo_shell
 void	execution_sequence(t_mo_shell *mo_shell)
 {
 	t_cmd	*to_launch;
-	int		pipe_fd[1024][2];
-	int		pipe_i;
-	int		pid[1024];
-	int		pid_i;
+	t_pipes	pipes_array;
+	t_pids	pids_array;
 
 	to_launch = mo_shell->cmds_table;
-	pipe_i = -1;
-	pid_i = -1;
+	pipes_array.pipe_i = -1;
+	pids_array.pid_i = -1;
 	while (to_launch)
 	{
-		pid_i++;
-		pipe_i++;
-		if (is_builtin(to_launch->cmd))
+		pipes_array.pipe_i++;
+		pids_array.pid_i++;
+
+		//IF there's a command next, create pipe
+		if (to_launch->next && pipe(pipes_array.pipe[pipes_array.pipe_i]) == -1)
 		{
-			launch_builtins(to_launch);
+			printf("pipe error\n");
+			exit(EXIT_FAILURE);
 		}
+
+		//IF is a builtin
+		if (is_builtin(to_launch->cmd) == true)
+		{
+			//Execute the command without fork
+		}
+
+		//IF is not a builtin, fork
 		else
 		{
-			if (to_launch->next) //Si on a une commande ensuite alors on cree un pipe
-			{
-				if (pipe(pipe_fd[pipe_i]) == -1)
-				{
-					printf("pipe error\n");
-					exit(EXIT_FAILURE); ;
-				}
-			}
-
-			if ((pid[pid_i] = fork()) == -1)
+			if ((pids_array.pid[pids_array.pid_i] = fork()) == -1)
 			{
 				printf("fork error\n");
 				exit(EXIT_FAILURE); ;
 			}
-			if (pid[pid_i] == 0) //PIPES
-			{
-				if (pipe_i > 0) //SI PIPE AVANT
-				{
-					dup2(pipe_fd[pipe_i - 1][0], STDIN_FILENO);
-				}
-				if (to_launch->next)
-				{
-					dup2(pipe_fd[pipe_i][1], STDOUT_FILENO);
-				}
-				if (pipe_i > 0)
-				{
-					close(pipe_fd[pipe_i - 1][0]);
-					close(pipe_fd[pipe_i - 1][1]);
-				}
-				if (to_launch->next)
-				{
-					close(pipe_fd[pipe_i][0]);
-					close(pipe_fd[pipe_i][1]);
-				}
-
-				execve(to_launch->cmd, to_launch->args, mo_shell->shell_env);
-				printf("execve error\n");
-				exit(EXIT_FAILURE); ;
-			}
+			if (pids_array.pid[pids_array.pid_i] == 0)
+				child_process(to_launch, &pipes_array, mo_shell->shell_env);
+			else
+				parent_process();
 		}
+		//Go to next command
 		to_launch = to_launch->next;
 	}
-		waitpid(pid[0], NULL, 0);
+	//Wait for all pids to finish (might only be needed if execution is in foreground
+	waitpid(0, NULL, WUNTRACED);
 }
 
 /// @brief This function handles all things related to the execution.
