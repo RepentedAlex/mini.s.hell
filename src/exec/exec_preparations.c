@@ -76,9 +76,12 @@ void	expand_cmd_path(t_cmd **head, char *envp[])
 			nav = nav->next;
 		else
 		{
-			cmd_path = get_path(nav->cmd, envp);
-			free(nav->cmd);
-			nav->cmd = cmd_path;
+			if (get_path(nav->cmd, envp) != NULL)
+			{
+				cmd_path = get_path(nav->cmd, envp);
+				free(nav->cmd);
+				nav->cmd = cmd_path;
+			}
 			nav = nav->next;
 		}
 	}

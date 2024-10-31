@@ -120,19 +120,33 @@ void	child_process(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 		// close(pipes->pipe[pipes->pipe_i - 1][1]);
 	}
 	//CLOSE current pipe
-	if (to_launch->next && to_launch->fd_o != STDOUT_FILENO)
-		close(pipes->pipe[pipes->pipe_i][0]);
-	if (to_launch->next && to_launch->fd_i != STDIN_FILENO)
-		close(pipes->pipe[pipes->pipe_i][1]);
+	// if (to_launch->next)
+	// 	close(pipes->pipe[pipes->pipe_i][0]);
+	// if (to_launch->next)
+	// 	close(pipes->pipe[pipes->pipe_i][1]);
 
 	//Execute command
 	execve(to_launch->cmd, to_launch->args, envp);
-	printf("execve error\n");
+	printf("%s: command not found\n", to_launch->cmd);
 	exit(EXIT_FAILURE);
 }
 
-/// @brief
-/// @param mo_shell
+/// @brief Runs a command that is not builtin into the shell.
+/// @param mo_shell The Mother Shell structure.
+/// @param to_launch The command that is next in line to be run.
+/// @param pipes_array The srtucture that holds all the pipes file descriptors.
+/// @param pids_array The structure that holds all the PIDs.
+void external_command(t_mo_shell *mo_shell, t_cmd *to_launch, \
+	t_pipes *pipes_array, t_pids pids_array)
+{
+	if ((pids_array.pid[pids_array.pid_i] = fork()) == -1)
+		(printf("fork error\n"), exit(EXIT_FAILURE));
+	if (pids_array.pid[pids_array.pid_i] == 0)
+		child_process(to_launch, pipes_array, mo_shell->shell_env);
+}
+
+/// @brief Handles the execution of the commands, from left to right.
+/// @param mo_shell The Mother_Shell structure.
 void	execution_sequence(t_mo_shell *mo_shell)
 {
 	t_cmd	*to_launch;
@@ -146,38 +160,27 @@ void	execution_sequence(t_mo_shell *mo_shell)
 	{
 		pipes_array.pipe_i++;
 		pids_array.pid_i++;
-
-		//IF there's a command next, create pipe
 		if (to_launch->next && pipe(pipes_array.pipe[pipes_array.pipe_i]) == -1)
 		{
 			printf("pipe error\n");
 			exit(EXIT_FAILURE);
 		}
-
-		//IF is a builtin
 		if (is_builtin(to_launch->cmd) == true)
-		{
-			//Execute the command without fork
-		}
-
-		//IF is not a builtin, fork
-		else
-		{
-			if ((pids_array.pid[pids_array.pid_i] = fork()) == -1)
 			{
-				printf("fork error\n");
-				exit(EXIT_FAILURE); ;
+				//Launch builtin
 			}
-			if (pids_array.pid[pids_array.pid_i] == 0)
-				child_process(to_launch, &pipes_array, mo_shell->shell_env);
-			else
-				parent_process();
-		}
-		//Go to next command
+		else
+			external_command(mo_shell, to_launch, &pipes_array, pids_array);
 		to_launch = to_launch->next;
 	}
-	//Wait for all pids to finish (might only be needed if execution is in foreground
-	waitpid(0, NULL, WUNTRACED);
+	while (pipes_array.pipe_i > 0)
+	{
+		(close(pipes_array.pipe[pipes_array.pipe_i - 1][0]), pipes_array.pipe[pipes_array.pipe_i - 1][0] = 0);
+		(close(pipes_array.pipe[pipes_array.pipe_i - 1][1]), pipes_array.pipe[pipes_array.pipe_i - 1][1] = 0);
+		pipes_array.pipe_i--;
+	}
+
+		waitpid(0, NULL, WUNTRACED | WNOHANG);
 }
 
 /// @brief This function handles all things related to the execution.

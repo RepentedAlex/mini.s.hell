@@ -75,4 +75,16 @@ typedef struct s_builtin
 	int		(*builtin_func)(char **args);
 }			t_builtin;
 
+typedef struct s_pipes
+{
+	int	pipe[1024][2];
+	int	pipe_i;
+}		t_pipes;
+
+typedef struct s_pids
+{
+	int	pid[1024];
+	int	pid_i;
+}		t_pids;
+
 #endif
