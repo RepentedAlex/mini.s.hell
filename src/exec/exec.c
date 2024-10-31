@@ -40,7 +40,7 @@ char	**add_str_to_array(char **array, char *str)
 	i = 0;
 	while (nav[i] != NULL)
 		i++;
-	ret = (char **)malloc(sizeof(char *) * (i + 2));
+	ret = (char **) malloc(sizeof(char *) * (i + 2));
 	if (!ret)
 		return (NULL);
 	i = -1;
@@ -92,26 +92,20 @@ void	child_process(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 	else if (to_launch->prev)
 	{
 		//Read from previous pipe's reading end
-		// printf("%s: redirecting stdin to previous pipe reading end\n", to_launch->cmd);
 		dup2(pipes->pipe[pipes->pipe_i - 1][0], STDIN_FILENO);
 	}
 	//IF fd_out not standard
-	if (to_launch->fd_o !=  STDOUT_FILENO)
+	if (to_launch->fd_o != STDOUT_FILENO)
 	{
 		//dup2 from STDOUT to fd from fd_out
-		// printf("%s: redirecting stdout to outfile\n", to_launch->cmd);
 		dup2(to_launch->fd_o, STDOUT_FILENO);
 	}
 	//ELSE IF not last command
 	else if (to_launch->next)
 	{
 		//Write to next pipe's writing end
-		// printf("%s: redirecting stdout to next pipe writing end\n", to_launch->cmd);
 		dup2(pipes->pipe[pipes->pipe_i][1], STDOUT_FILENO);
 	}
-
-	//Might need to redirect output to next pipe
-
 	//IF not first command
 	if (to_launch->prev)
 	{
@@ -119,12 +113,9 @@ void	child_process(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 		close(pipes->pipe[pipes->pipe_i - 1][0]);
 		close(pipes->pipe[pipes->pipe_i - 1][1]);
 	}
-	// CLOSE current pipe
-	 // if (to_launch->next)
-	 // 	close(pipes->pipe[pipes->pipe_i][0]);
-	 // if (to_launch->next)
-	 // 	close(pipes->pipe[pipes->pipe_i][1]);
-
+	// CLOSE pipe
+	close(pipes->pipe[pipes->pipe_i][0]);
+	close(pipes->pipe[pipes->pipe_i][1]);
 	//Execute command
 	execve(to_launch->cmd, to_launch->args, envp);
 	perror("mini.s.hell");
@@ -139,9 +130,10 @@ void	child_process(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 void external_command(t_mo_shell *mo_shell, t_cmd *to_launch, \
 	t_pipes *pipes_array, t_pids pids_array)
 {
-	if ((pids_array.pid[pids_array.pid_i] = fork()) == -1)
+	pids_array->pid[pids_array->pid_i] = fork();
+	if (pids_array->pid[pids_array->pid_i] == -1)
 		(perror("fork error\n"), exit(EXIT_FAILURE));
-	if (pids_array.pid[pids_array.pid_i] == 0)
+	if (pids_array->pid[pids_array->pid_i] == 0)
 		child_process(to_launch, pipes_array, mo_shell->shell_env);
 }
 
@@ -155,6 +147,8 @@ void	execution_sequence(t_mo_shell *mo_shell)
 	int		i;
 
 	to_launch = mo_shell->cmds_table;
+	ft_memset(pids_array.pid, 0, sizeof(pids_array.pid));
+	ft_memset(pipes_array.pipe, -1, sizeof(pipes_array.pipe));
 	pipes_array.pipe_i = -1;
 	pids_array.pid_i = -1;
 	while (to_launch)
@@ -167,22 +161,25 @@ void	execution_sequence(t_mo_shell *mo_shell)
 			exit(EXIT_FAILURE);
 		}
 		if (is_builtin(to_launch->cmd) == true)
-			{
-				//Launch builtin
-			}
+		{
+			//Launch builtin
+		}
 		else
 			external_command(mo_shell, to_launch, &pipes_array, pids_array);
 		to_launch = to_launch->next;
 	}
+	i = -1;
 	while (pipes_array.pipe_i > 0)
 	{
-		(close(pipes_array.pipe[pipes_array.pipe_i - 1][0]), pipes_array.pipe[pipes_array.pipe_i - 1][0] = 0);
-		(close(pipes_array.pipe[pipes_array.pipe_i - 1][1]), pipes_array.pipe[pipes_array.pipe_i - 1][1] = 0);
+		close(pipes_array.pipe[pipes_array.pipe_i - 1][0]);
+		close(pipes_array.pipe[pipes_array.pipe_i - 1][1]);
 		pipes_array.pipe_i--;
 	}
+	//Wait for all children to finish their task
 	i = -1;
 	while (++i <= pids_array.pid_i)
-		waitpid(pids_array.pid[i], NULL, 0);
+		if (pids_array.pid[i] != 0)
+			waitpid(pids_array.pid[i], NULL, 0);
 }
 
 /// @brief This function handles all things related to the execution.
