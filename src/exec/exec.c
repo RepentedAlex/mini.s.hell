@@ -127,8 +127,8 @@ void	child_process(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 /// @param to_launch The command that is next in line to be run.
 /// @param pipes_array The srtucture that holds all the pipes file descriptors.
 /// @param pids_array The structure that holds all the PIDs.
-void external_command(t_mo_shell *mo_shell, t_cmd *to_launch, \
-	t_pipes *pipes_array, t_pids pids_array)
+void	external_command(t_mo_shell *mo_shell, t_cmd *to_launch, \
+	t_pipes *pipes_array, t_pids *pids_array)
 {
 	pids_array->pid[pids_array->pid_i] = fork();
 	if (pids_array->pid[pids_array->pid_i] == -1)
@@ -165,7 +165,7 @@ void	execution_sequence(t_mo_shell *mo_shell)
 			//Launch builtin
 		}
 		else
-			external_command(mo_shell, to_launch, &pipes_array, pids_array);
+			external_command(mo_shell, to_launch, &pipes_array, &pids_array);
 		to_launch = to_launch->next;
 	}
 	i = -1;
