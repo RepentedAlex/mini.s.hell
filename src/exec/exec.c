@@ -115,19 +115,19 @@ void	child_process(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 	//IF not first command
 	if (to_launch->prev)
 	{
-		//CLOSE previous pipe
-		// close(pipes->pipe[pipes->pipe_i - 1][0]);
-		// close(pipes->pipe[pipes->pipe_i - 1][1]);
+		// CLOSE previous pipe
+		close(pipes->pipe[pipes->pipe_i - 1][0]);
+		close(pipes->pipe[pipes->pipe_i - 1][1]);
 	}
-	//CLOSE current pipe
-	// if (to_launch->next)
-	// 	close(pipes->pipe[pipes->pipe_i][0]);
-	// if (to_launch->next)
-	// 	close(pipes->pipe[pipes->pipe_i][1]);
+	// CLOSE current pipe
+	 // if (to_launch->next)
+	 // 	close(pipes->pipe[pipes->pipe_i][0]);
+	 // if (to_launch->next)
+	 // 	close(pipes->pipe[pipes->pipe_i][1]);
 
 	//Execute command
 	execve(to_launch->cmd, to_launch->args, envp);
-	printf("%s: command not found\n", to_launch->cmd);
+	perror("mini.s.hell");
 	exit(EXIT_FAILURE);
 }
 
@@ -140,7 +140,7 @@ void external_command(t_mo_shell *mo_shell, t_cmd *to_launch, \
 	t_pipes *pipes_array, t_pids pids_array)
 {
 	if ((pids_array.pid[pids_array.pid_i] = fork()) == -1)
-		(printf("fork error\n"), exit(EXIT_FAILURE));
+		(perror("fork error\n"), exit(EXIT_FAILURE));
 	if (pids_array.pid[pids_array.pid_i] == 0)
 		child_process(to_launch, pipes_array, mo_shell->shell_env);
 }
@@ -152,6 +152,7 @@ void	execution_sequence(t_mo_shell *mo_shell)
 	t_cmd	*to_launch;
 	t_pipes	pipes_array;
 	t_pids	pids_array;
+	int		i;
 
 	to_launch = mo_shell->cmds_table;
 	pipes_array.pipe_i = -1;
@@ -162,7 +163,7 @@ void	execution_sequence(t_mo_shell *mo_shell)
 		pids_array.pid_i++;
 		if (to_launch->next && pipe(pipes_array.pipe[pipes_array.pipe_i]) == -1)
 		{
-			printf("pipe error\n");
+			perror("pipe error");
 			exit(EXIT_FAILURE);
 		}
 		if (is_builtin(to_launch->cmd) == true)
@@ -179,8 +180,9 @@ void	execution_sequence(t_mo_shell *mo_shell)
 		(close(pipes_array.pipe[pipes_array.pipe_i - 1][1]), pipes_array.pipe[pipes_array.pipe_i - 1][1] = 0);
 		pipes_array.pipe_i--;
 	}
-
-		waitpid(0, NULL, WUNTRACED | WNOHANG);
+	i = -1;
+	while (++i <= pids_array.pid_i)
+		waitpid(pids_array.pid[i], NULL, 0);
 }
 
 /// @brief This function handles all things related to the execution.
