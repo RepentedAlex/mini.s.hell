@@ -85,7 +85,6 @@ void	child_process(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 	if (to_launch->fd_i != STDIN_FILENO)
 	{
 		//dup2 from STDIN to fd from fd_in
-		// printf("%s: redirecting stdin to infile\n", to_launch->cmd);
 		dup2(to_launch->fd_i, STDIN_FILENO);
 	}
 	//ELSE IF not first command
