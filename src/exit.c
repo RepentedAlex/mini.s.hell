@@ -101,7 +101,7 @@ void	garbage_collect(t_mo_shell *data, int mode)
 		(free_cmd_table(&data->cmds_table), data->cmds_table = NULL);
 	if (mode == 1)
 	{
-		rl_clear_history();
+		clear_history();
 		if (data->shell_env)
 			(free_2d_tab(data->shell_env), data->shell_env = NULL);
 	}

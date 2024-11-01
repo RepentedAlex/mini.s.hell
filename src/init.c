@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
+#include <libft.h>
 
 int	get_var_count(char *envp[])
 {

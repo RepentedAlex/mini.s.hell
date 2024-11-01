@@ -22,7 +22,7 @@ LIB_DIR	= libs/
 SRC_DIR	= src/
 TES_DIR	= tests/
 
-LIBFT_A	= Libft/libtoolbox.a
+LIBFT_A	= Libft/libft.a
 
 ## SOURCES
 SRC_FIL	= 	minishell \
