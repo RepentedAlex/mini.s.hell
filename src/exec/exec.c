@@ -138,12 +138,13 @@ void	external_command(t_mo_shell *mo_shell, t_cmd *to_launch, \
 
 /// @brief Handles the execution of the commands, from left to right.
 /// @param mo_shell The Mother_Shell structure.
-void	execution_sequence(t_mo_shell *mo_shell)
+int	execution_sequence(t_mo_shell *mo_shell)
 {
 	t_cmd	*to_launch;
 	t_pipes	pipes_array;
 	t_pids	pids_array;
 	int		i;
+	int 	exit_status;
 
 	to_launch = mo_shell->cmds_table;
 	ft_memset(pids_array.pid, 0, sizeof(pids_array.pid));
@@ -178,10 +179,14 @@ void	execution_sequence(t_mo_shell *mo_shell)
 	i = -1;
 	while (++i <= pids_array.pid_i)
 		if (pids_array.pid[i] != 0)
-			waitpid(pids_array.pid[i], NULL, 0);
+			waitpid(pids_array.pid[i], &exit_status, 0);
+	if (WIFEXITED(exit_status))
+		printf("Exit status: %d\n", WEXITSTATUS(exit_status));
+
+	return (exit_status);
 }
 
-/// @brief This function handles all things related to the execution.
+ /// @brief This function handles all things related to the execution.
 /// @param mo_shell The pointer to the mother shell structure.
 /// @return ERROR on error, NO_ERROR otherwise.
 t_error	execution(t_mo_shell *mo_shell)
