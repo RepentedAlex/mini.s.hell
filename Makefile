@@ -23,6 +23,7 @@ SRC_DIR	= src/
 TES_DIR	= tests/
 
 LIBFT_A	= Libft/libft.a
+SUP_FILE = supress_readline.valgrind
 
 ## SOURCES
 SRC_FIL	= 	minishell \
@@ -101,17 +102,17 @@ re:
 	@echo "Making $(NAME) again"
 	@$(MAKE) --no-print-directory all
 
-gen_sup:
+$(SUP_FILE):
 	@echo \
 	"{\n"\
 	"\tignore_libreadline_leaks\n"\
 	"\tMemcheck:Leak\n"\
 	"\t...\n"\
 	"\tobj:*/libreadline.so.*\n"\
-	"}\n" > supress_readline.valgrind
+	"}\n" > $(SUP_FILE)
 
-v:
-	@$(VAL) --suppressions=supress_readline.valgrind ./$(NAME)
+v: all $(SUP_FILE)
+	@$(VAL) --suppressions=$(SUP_FILE) ./$(NAME)
 
 -include $(OBJ:.o=.d)
 
