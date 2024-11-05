@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 18:37:25 by apetitco          #+#    #+#             */
-/*   Updated: 2024/10/08 18:37:28 by apetitco         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:28:07 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	close_fds(t_cmd **head)
 void	garbage_collect(t_mo_shell *data, int mode)
 {
 	if (data->splitted_input)
-		free_list(&data->splitted_input);
+		(free_list(&data->splitted_input), data->splitted_input = NULL);
 	if (data->og_input)
 		(free(data->og_input), data->og_input = NULL);
 	if (data->clean_input)
