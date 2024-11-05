@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:30:37 by apetitco          #+#    #+#             */
-/*   Updated: 2024/10/09 19:30:37 by apetitco         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:15:58 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ bool is_builtin(char *str)
 /// @brief Check if the command block is a builtin or not
 /// @param command The block.
 /// @return true if it's a builtin, false if not in the builtins_array.
-int	(*launch_builtins(t_cmd *command))(char **str)
+int	(*launch_builtins(t_cmd *command))(char **str, t_mo_shell *mo_shell)
 {
 	t_builtin	*builtins_array;
 	int			i;

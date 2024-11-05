@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_part1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:21:11 by apetitco          #+#    #+#             */
-/*   Updated: 2024/10/21 17:21:18 by apetitco         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:17:54 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,35 @@
 /// @brief
 /// @param args
 /// @return
-int	ms_cd(char **args)
+int	ms_cd(char **args, t_mo_shell *mo_shell)
 {
+	int	i;
+	(void)mo_shell;
+
+	(void)args;
+	i = 0;
+	return (i);
+}
+
+// /// @brief
+// /// @param args
+// /// @return
+// int	ms_echo(char **args, t_mo_shell *mo_shell)
+// {
+// 	int	i;
+// 	(void)mo_shell;
+//
+// 	(void)args;
+// 	i = 0;
+// 	return (i);
+// }
+
+/// @brief
+/// @param args
+/// @return
+int	ms_env(char **args, t_mo_shell *mo_shell)
+{
+	(void)mo_shell;
 	int	i;
 
 	(void)args;
@@ -25,47 +52,25 @@ int	ms_cd(char **args)
 	return (i);
 }
 
-/// @brief
-/// @param args
-/// @return
-int	ms_echo(char **args)
-{
-	int	i;
+// /// @brief
+// /// @param args
+// /// @return
+// int	ms_exit(char **args, t_mo_shell *mo_shell)
+// {
+// 	(void)mo_shell;
+// 	int	i;
 
-	(void)args;
-	i = 0;
-	return (i);
-}
-
-/// @brief
-/// @param args
-/// @return
-int	ms_env(char **args)
-{
-	int	i;
-
-	(void)args;
-	i = 0;
-	return (i);
-}
+// 	(void)args;
+// 	i = 0;
+// 	return (i);
+// }
 
 /// @brief
 /// @param args
 /// @return
-int	ms_exit(char **args)
+int	ms_export(char **args, t_mo_shell *mo_shell)
 {
-	int	i;
-
-	(void)args;
-	i = 0;
-	return (i);
-}
-
-/// @brief
-/// @param args
-/// @return
-int	ms_export(char **args)
-{
+	(void)mo_shell;
 	int	i;
 
 	(void)args;
