@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_types.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:12:13 by apetitco          #+#    #+#             */
-/*   Updated: 2024/10/09 19:12:18 by apetitco         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:47:22 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,28 @@
 // == == == LIBRAIRIES == == ==
 
 // Librairies perso
+
+
+// ERROR TYPES
+typedef enum e_err_msg
+{
+	ERRMSG_CMD_NOT_FOUND,
+	ERRMSG_NO_SUCH_FILE,
+	ERRMSG_PERM_DENIED,
+	ERRMSG_AMBIGUOUS,
+	ERRMSG_TOO_MANY_ARGS,
+	ERRMSG_NUMERIC_REQUI
+}	t_err_msg;
+
+typedef enum e_err_no
+{
+	ENO_SUCCESS,
+	ENO_GENERAL,
+	ENO_CANT_EXEC = 126,
+	ENO_NOT_FOUND,
+	ENO_EXEC_255 = 255
+}	t_err_no;
+
 
 // LEXING
 typedef enum e_lexcat
@@ -33,6 +55,13 @@ typedef enum e_lexcat
 }			t_lexcat;
 
 // == == == STRUCTURES == == ==
+
+typedef struct s_err
+{
+	t_err_no	no;
+	t_err_msg	msg;
+	char		*cause;
+}	t_err;
 
 typedef struct s_block
 {
