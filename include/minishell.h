@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:49:16 by apetitco          #+#    #+#             */
-/*   Updated: 2024/10/08 11:50:04 by apetitco         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:36:49 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,9 @@ void	block_pop(t_block **block);
 t_block	*block_setup_first(t_mo_shell *mo_shell);
 void	block_string_tidyer(t_block **head);
 void	block_split_spaces(t_block *head);
+
+//builtins
+int	ft_err_msg(t_err err);
 
 // cmd
 t_cmd	*cmd_new(char *str);
