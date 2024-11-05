@@ -13,24 +13,6 @@
 #include "libft.h"
 #include "minishell.h"
 
-/// @brief Sets up pipes to link command.
-/// Remember: pipes gets stolen by redirections so if fd_i || fd_o != 0
-/// Then you don't set the according pipe (or you make it read/write to
-/// something empty).
-/// @param cmd_head The command table list's head.
-void	setup_pipes(t_cmd **cmd_head)
-{
-	t_cmd	*nav_cmd;
-
-	nav_cmd = cmd_goto_last(*cmd_head);
-	while (nav_cmd)
-	{
-		//
-		//TODO GÉRER LE PIPE
-		nav_cmd = nav_cmd->prev;
-	}
-}
-
 /// @brief Fills the cmd and args fields of each t_cmd node.
 /// @param cmd_head The command table list's head.
 /// @param block_head The block list's head.
@@ -85,10 +67,8 @@ void	expand_cmd_path(t_cmd **head, char *envp[])
 			tmp = get_path(nav->cmd, envp);
 			if (tmp)
 			{
-				free(tmp);
-				cmd_path = get_path(nav->cmd, envp);
-				free(nav->cmd);
-				nav->cmd = cmd_path;
+				(free(tmp), cmd_path = get_path(nav->cmd, envp));
+				(free(nav->cmd), nav->cmd = cmd_path);
 			}
 			else
 				free(tmp);

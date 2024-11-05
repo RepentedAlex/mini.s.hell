@@ -18,9 +18,9 @@
 /// @return
 int	ms_pwd(char **args, t_mo_shell *mo_shell)
 {
-	(void)mo_shell;
 	int	i;
 
+	(void)mo_shell;
 	(void)args;
 	i = 0;
 	return (i);
@@ -31,9 +31,9 @@ int	ms_pwd(char **args, t_mo_shell *mo_shell)
 /// @return
 int	ms_unset(char **args, t_mo_shell *mo_shell)
 {
-	(void)mo_shell;
 	int	i;
 
+	(void)mo_shell;
 	(void)args;
 	i = 0;
 	return (i);

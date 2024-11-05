@@ -97,7 +97,7 @@ void	block_string_tidyer(t_block **head);
 void	block_split_spaces(t_block *head);
 
 //builtins
-int	ft_err_msg(t_err err);
+int		ft_err_msg(t_err err);
 
 // cmd
 t_cmd	*cmd_new(char *str);

@@ -19,8 +19,8 @@
 int	ms_cd(char **args, t_mo_shell *mo_shell)
 {
 	int	i;
-	(void)mo_shell;
 
+	(void)mo_shell;
 	(void)args;
 	i = 0;
 	return (i);
@@ -44,9 +44,9 @@ int	ms_cd(char **args, t_mo_shell *mo_shell)
 /// @return
 int	ms_env(char **args, t_mo_shell *mo_shell)
 {
-	(void)mo_shell;
 	int	i;
 
+	(void)mo_shell;
 	(void)args;
 	i = 0;
 	return (i);
@@ -70,9 +70,9 @@ int	ms_env(char **args, t_mo_shell *mo_shell)
 /// @return
 int	ms_export(char **args, t_mo_shell *mo_shell)
 {
-	(void)mo_shell;
 	int	i;
 
+	(void)mo_shell;
 	(void)args;
 	i = 0;
 	return (i);

@@ -29,6 +29,6 @@ int			ms_unset(char **args, t_mo_shell *mo_shell);
 // == == == FONCTIONS SUBSIDIAIRES == == ==
 t_builtin	*get_builtin_array(void);
 bool		is_builtin(char *str);
-int (*launch_builtins(t_cmd	*command))(char **str, t_mo_shell *mo_shell);
+int (*g_launch_builtins(t_cmd	*command))(char **str, t_mo_shell *mo_shell);
 
 #endif

@@ -64,7 +64,7 @@ void	execute_cl(t_mo_shell *mo_shell)
 		if (is_builtin(to_launch->cmd) == true)
 		{
 			//exec builtin
-			launch_builtins(to_launch);
+			g_launch_builtins(to_launch);
 		}
 		else
 		{
@@ -81,41 +81,21 @@ void	execute_cl(t_mo_shell *mo_shell)
 /// @param envp The environment variables
 void	child_process(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 {
-	//IF fd_in not standard
 	if (to_launch->fd_i != STDIN_FILENO)
-	{
-		//dup2 from STDIN to fd from fd_in
 		dup2(to_launch->fd_i, STDIN_FILENO);
-	}
-	//ELSE IF not first command
 	else if (to_launch->prev)
-	{
-		//Read from previous pipe's reading end
 		dup2(pipes->pipe[pipes->pipe_i - 1][0], STDIN_FILENO);
-	}
-	//IF fd_out not standard
 	if (to_launch->fd_o != STDOUT_FILENO)
-	{
-		//dup2 from STDOUT to fd from fd_out
 		dup2(to_launch->fd_o, STDOUT_FILENO);
-	}
-	//ELSE IF not last command
 	else if (to_launch->next)
-	{
-		//Write to next pipe's writing end
 		dup2(pipes->pipe[pipes->pipe_i][1], STDOUT_FILENO);
-	}
-	//IF not first command
 	if (to_launch->prev)
 	{
-		// CLOSE previous pipe
 		close(pipes->pipe[pipes->pipe_i - 1][0]);
 		close(pipes->pipe[pipes->pipe_i - 1][1]);
 	}
-	// CLOSE pipe
 	close(pipes->pipe[pipes->pipe_i][0]);
 	close(pipes->pipe[pipes->pipe_i][1]);
-	//Execute command
 	execve(to_launch->cmd, to_launch->args, envp);
 	perror("mini.s.hell");
 	exit(EXIT_FAILURE);
@@ -144,8 +124,8 @@ int	execution_sequence(t_mo_shell *mo_shell)
 	t_pipes	pipes_array;
 	t_pids	pids_array;
 	int		i;
-	int (*f_builtin)(char **, t_mo_shell *mo_shell);
-	int 	exit_status;
+	int		(*f_builtin)(char **, t_mo_shell *mo_shell);
+	int		exit_status;
 
 	to_launch = mo_shell->cmds_table;
 	ft_memset(pids_array.pid, 0, sizeof(pids_array.pid));
@@ -163,7 +143,7 @@ int	execution_sequence(t_mo_shell *mo_shell)
 		}
 		if (is_builtin(to_launch->cmd) == true)
 		{
-			f_builtin = (launch_builtins(to_launch));
+			f_builtin = (g_launch_builtins(to_launch));
 			exit_status = f_builtin(to_launch->args, mo_shell);
 		}
 		else
@@ -184,11 +164,10 @@ int	execution_sequence(t_mo_shell *mo_shell)
 			waitpid(pids_array.pid[i], &exit_status, 0);
 	// if (WIFEXITED(exit_status))
 		// printf("Exit status: %d\n", WEXITSTATUS(exit_status));
-
 	return (exit_status);
 }
 
- /// @brief This function handles all things related to the execution.
+/// @brief This function handles all things related to the execution.
 /// @param mo_shell The pointer to the mother shell structure.
 /// @return ERROR on error, NO_ERROR otherwise.
 t_error	execution(t_mo_shell *mo_shell)
@@ -196,7 +175,6 @@ t_error	execution(t_mo_shell *mo_shell)
 	if (!mo_shell->splitted_input)
 		return (ERROR);
 	pipeline_setup(mo_shell);
-	//TODO Exec
 	execution_sequence(mo_shell);
 	close_fds(&mo_shell->cmds_table);
 	return (NO_ERROR);

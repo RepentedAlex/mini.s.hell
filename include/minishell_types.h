@@ -17,8 +17,7 @@
 
 // Librairies perso
 
-
-// ERROR TYPES
+// == == == ENUM == == ==
 typedef enum e_err_msg
 {
 	ERRMSG_CMD_NOT_FOUND,
@@ -37,7 +36,6 @@ typedef enum e_err_no
 	ENO_NOT_FOUND,
 	ENO_EXEC_255 = 255
 }	t_err_no;
-
 
 // LEXING
 typedef enum e_lexcat
@@ -71,7 +69,7 @@ typedef struct s_block
 	t_lexcat		type;
 }				t_block;
 
-/// Structure pour les commandes
+///
 typedef struct s_cmd
 {
 	char			*cmd;

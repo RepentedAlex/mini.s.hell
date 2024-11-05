@@ -66,7 +66,7 @@ static int	exit_gen(char *s, t_mo_shell *mo_shell)
 		}
 		i++;
 	}
-	return ((unsigned long long)(result * sign) % 256);
+	return ((result * sign) % 256);
 }
 
 /// @brief Exit builtin
@@ -76,13 +76,14 @@ static int	exit_gen(char *s, t_mo_shell *mo_shell)
 int	ms_exit(char **args, t_mo_shell *mo_shell)
 {
 	int	exit_s;
-	
+
 	exit_s = mo_shell->last_exit_status;
 	if (args && args[0])
 	{
 		if (args[1] && ft_isnumber(args[0]))
 		{
-			exit_s = ft_err_msg((t_err){ENO_GENERAL, ERRMSG_TOO_MANY_ARGS, NULL});
+			exit_s = ft_err_msg((t_err){ENO_GENERAL, \
+				ERRMSG_TOO_MANY_ARGS, NULL});
 			(garbage_collect(mo_shell, 1), exit(exit_s));
 		}
 		else

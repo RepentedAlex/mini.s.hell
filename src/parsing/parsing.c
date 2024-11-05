@@ -75,7 +75,7 @@ token '|'\n"), ERROR);
 	block_string_tidyer(&mo_shell->splitted_input);
 	split_spaces(&mo_shell->splitted_input);
 	clean_empty_nodes(&mo_shell->splitted_input);
-	lexcat_redir_handler(&mo_shell->splitted_input);	//Surely redundant
+	lexcat_redir_handler(&mo_shell->splitted_input); //Surely redundant
 	if (check_not_dirfile(&mo_shell->splitted_input) == ERROR)
 		return (ERROR);
 	return (NO_ERROR);
