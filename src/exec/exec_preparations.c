@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_preparations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:50:10 by apetitco          #+#    #+#             */
-/*   Updated: 2024/10/29 15:50:12 by apetitco         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:58:38 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ void	expand_cmd_path(t_cmd **head, char *envp[])
 	nav = *head;
 	while (nav)
 	{
+		if (is_builtin(nav->cmd) == true)
+		{
+			nav = nav->next;
+			continue ;
+		}
 		if (ft_strcmp(nav->cmd, "./") == 0 || ft_strcmp(nav->cmd, "/") == 0 || \
 			is_builtin(nav->cmd))
 			nav = nav->next;
