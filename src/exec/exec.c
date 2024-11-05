@@ -144,6 +144,7 @@ int	execution_sequence(t_mo_shell *mo_shell)
 	t_pipes	pipes_array;
 	t_pids	pids_array;
 	int		i;
+	int (*f_builtin)(char **, t_mo_shell *mo_shell);
 	int 	exit_status;
 
 	to_launch = mo_shell->cmds_table;
@@ -162,7 +163,8 @@ int	execution_sequence(t_mo_shell *mo_shell)
 		}
 		if (is_builtin(to_launch->cmd) == true)
 		{
-			//Launch builtin
+			f_builtin = (launch_builtins(to_launch));
+			exit_status = f_builtin(to_launch->args, mo_shell);
 		}
 		else
 			external_command(mo_shell, to_launch, &pipes_array, &pids_array);
