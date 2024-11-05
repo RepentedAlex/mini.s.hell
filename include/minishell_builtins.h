@@ -18,17 +18,19 @@
 # include "minishell_types.h"
 
 // == == == BUILTINS == == ==
-int			ms_cd(char **args, t_mo_shell *mo_shell);
-int			ms_echo(char **args, t_mo_shell *mo_shell);
-int			ms_env(char **args, t_mo_shell *mo_shell);
-int			ms_exit(char **args, t_mo_shell *mo_shell);
-int			ms_export(char **args, t_mo_shell *mo_shell);
-int			ms_pwd(char **args, t_mo_shell *mo_shell);
-int			ms_unset(char **args, t_mo_shell *mo_shell);
+int			ms_cd(char **args, t_mo_shell *mo_shell, t_cmd *cmd);
+int			ms_echo(char **args, t_mo_shell *mo_shell, t_cmd *cmd);
+int			ms_env(char **args, t_mo_shell *mo_shell, t_cmd *cmd);
+int			ms_exit(char **args, t_mo_shell *mo_shell, t_cmd *cmd);
+int			ms_export(char **args, t_mo_shell *mo_shell, t_cmd *cmd);
+int			ms_pwd(char **args, t_mo_shell *mo_shell, t_cmd *cmd);
+int			ms_unset(char **args, t_mo_shell *mo_shell, t_cmd *cmd);
 
 // == == == FONCTIONS SUBSIDIAIRES == == ==
 t_builtin	*get_builtin_array(void);
 bool		is_builtin(char *str);
-int (*g_launch_builtins(t_cmd	*command))(char **str, t_mo_shell *mo_shell);
+
+int (*g_launch_builtins(t_cmd *command))(char **str, t_mo_shell *mo_shell, \
+	t_cmd *cmd);
 
 #endif

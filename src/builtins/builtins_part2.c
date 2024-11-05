@@ -15,12 +15,14 @@
 
 /// @brief
 /// @param args
+/// @param cmd
 /// @return
-int	ms_pwd(char **args, t_mo_shell *mo_shell)
+int	ms_pwd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	int	i;
 
 	(void)mo_shell;
+	(void)cmd;
 	(void)args;
 	i = 0;
 	return (i);
@@ -28,12 +30,14 @@ int	ms_pwd(char **args, t_mo_shell *mo_shell)
 
 /// @brief
 /// @param args
+/// @param cmd
 /// @return
-int	ms_unset(char **args, t_mo_shell *mo_shell)
+int	ms_unset(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	int	i;
 
 	(void)mo_shell;
+	(void)cmd;
 	(void)args;
 	i = 0;
 	return (i);

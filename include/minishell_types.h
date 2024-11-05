@@ -99,7 +99,7 @@ typedef struct s_mo_shell
 typedef struct s_builtin
 {
 	char	*name;
-	int		(*builtin_func)(char **args, t_mo_shell *mo_shell);
+	int		(*builtin_func)(char **args, t_mo_shell *mo_shell, t_cmd *cmd);
 }			t_builtin;
 
 typedef struct s_pipes

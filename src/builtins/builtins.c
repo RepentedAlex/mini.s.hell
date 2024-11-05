@@ -57,7 +57,8 @@ bool	is_builtin(char *str)
 /// @brief Check if the command block is a builtin or not
 /// @param command The block.
 /// @return true if it's a builtin, false if not in the builtins_array.
-int	(*g_launch_builtins(t_cmd *command))(char **str, t_mo_shell *mo_shell)
+int (*g_launch_builtins(t_cmd *command))(char **str, t_mo_shell *mo_shell, \
+	t_cmd *cmd)
 {
 	t_builtin	*builtins_array;
 	int			i;

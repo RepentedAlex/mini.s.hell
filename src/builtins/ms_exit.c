@@ -72,11 +72,13 @@ static int	exit_gen(char *s, t_mo_shell *mo_shell)
 /// @brief Exit builtin
 /// @param args Arguments for the command
 /// @param mo_shell Pointer to the Mother Shell structure
+/// @param cmd
 /// @return 
-int	ms_exit(char **args, t_mo_shell *mo_shell)
+int	ms_exit(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	int	exit_s;
 
+	(void)cmd;
 	exit_s = mo_shell->last_exit_status;
 	if (args && args[0])
 	{

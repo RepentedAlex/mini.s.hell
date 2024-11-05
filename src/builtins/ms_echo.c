@@ -30,8 +30,9 @@ bool	echo_check_option(char *str)
 /// @brief
 /// @param
 /// @param mo_shell
+/// @param cmd
 /// @return
-int	ms_echo(char **args, t_mo_shell *mo_shell)
+int	ms_echo(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	int		i;
 	bool	option;
@@ -58,12 +59,12 @@ int	ms_echo(char **args, t_mo_shell *mo_shell)
 				i++;
 			}
 		}
-		ft_putstr_fd(args[i], 1);
+		ft_putstr_fd(args[i], cmd->fd_o);
 		if (args[i + 1])
-			ft_putstr_fd(" ", 1);
+			ft_putstr_fd(" ", cmd->fd_o);
 		i++;
 	}
 	if (!option)
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd("\n", cmd->fd_o);
 	return (0);
 }
