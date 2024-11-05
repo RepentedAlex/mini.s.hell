@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:39:02 by apetitco          #+#    #+#             */
-/*   Updated: 2024/10/23 18:39:05 by apetitco         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:51:32 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,8 +182,8 @@ int	execution_sequence(t_mo_shell *mo_shell)
 	while (++i <= pids_array.pid_i)
 		if (pids_array.pid[i] != 0)
 			waitpid(pids_array.pid[i], &exit_status, 0);
-	if (WIFEXITED(exit_status))
-		printf("Exit status: %d\n", WEXITSTATUS(exit_status));
+	// if (WIFEXITED(exit_status))
+		// printf("Exit status: %d\n", WEXITSTATUS(exit_status));
 
 	return (exit_status);
 }
