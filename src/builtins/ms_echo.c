@@ -38,6 +38,7 @@ int	ms_echo(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	bool	option;
 
 	(void)mo_shell;
+	(void)cmd;
 	i = 0;
 	option = false;
 	while (args && args[i] && args[i][0] == '-')
@@ -59,12 +60,12 @@ int	ms_echo(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 				i++;
 			}
 		}
-		ft_putstr_fd(args[i], cmd->fd_o);
+		ft_putstr_fd(args[i], 1);
 		if (args[i + 1])
-			ft_putstr_fd(" ", cmd->fd_o);
+			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (!option)
-		ft_putstr_fd("\n", cmd->fd_o);
+		ft_putstr_fd("\n", 1);
 	return (0);
 }
