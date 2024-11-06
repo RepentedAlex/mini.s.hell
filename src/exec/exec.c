@@ -165,7 +165,6 @@ int	execution_sequence(t_mo_shell *mo_shell)
 		fork_for_cmd(mo_shell, to_launch, &pipes_array, &pids_array);
 		to_launch = to_launch->next;
 	}
-	i = -1;
 	while (pipes_array.pipe_i > 0)
 	{
 		close(pipes_array.pipe[pipes_array.pipe_i - 1][0]);
