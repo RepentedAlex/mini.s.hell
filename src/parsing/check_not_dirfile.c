@@ -38,7 +38,7 @@ bool	check_if_dirfile_exist(char *path)
 		close(fd);
 		return (true);
 	}
-	printf("%s: No such file or directory\n", path);
+	// printf("%s: No such file or directory\n", path);
 	return (false);
 }
 
