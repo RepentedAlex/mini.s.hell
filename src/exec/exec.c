@@ -52,29 +52,6 @@ char	**add_str_to_array(char **array, char *str)
 	return (ret);
 }
 
-/// @brief Runs the commands, iterating through the commands table.
-/// @param mo_shell The pointer to the mother shell structure.
-void	execute_cl(t_mo_shell *mo_shell)
-{
-	t_cmd	*to_launch;
-
-	to_launch = mo_shell->cmds_table;
-	while (to_launch)
-	{
-		if (is_builtin(to_launch->cmd) == true)
-		{
-			//exec builtin
-			g_launch_builtins(to_launch);
-		}
-		else
-		{
-			//execve
-		}
-		to_launch = to_launch->next;
-	}
-	close_fds(&mo_shell->cmds_table);
-}
-
 /// @brief
 /// @param to_launch The current command we want to execute.
 /// @param pipes The current pipe.
