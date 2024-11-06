@@ -71,7 +71,7 @@ void	expand_cmd_path(t_cmd **head, char *envp[])
 				(free(nav->cmd), nav->cmd = cmd_path);
 			}
 			else
-				free(tmp);
+				(perror(nav->cmd), free(tmp));
 			nav = nav->next;
 		}
 	}
