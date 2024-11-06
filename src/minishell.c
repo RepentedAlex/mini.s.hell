@@ -12,6 +12,20 @@
 
 #include "minishell.h"
 
+bool	words_in_str(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ':' || str[i] != '!')
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 /// @brief The main mini.s.hell function ! :D
 /// @param argc The number of arguments passed via the CLI.
 /// @param argv The arguments passed via the CLI.
@@ -26,7 +40,7 @@ int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 	{
 		garbage_collect(mo_shell, 0);
 		mo_shell->og_input = readline(PROMPT);
-		if (mo_shell->og_input[0] == '\0')
+		if (mo_shell->og_input[0] == '\0' || words_in_str(mo_shell->og_input) == false)
 			continue ;
 		if (mo_shell->og_input && *mo_shell->og_input)
 			add_history(mo_shell->og_input);
