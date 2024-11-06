@@ -79,7 +79,7 @@ void	execute_cl(t_mo_shell *mo_shell)
 /// @param to_launch The current command we want to execute.
 /// @param pipes The current pipe.
 /// @param envp The environment variables
-void	child_process(t_cmd *to_launch, t_pipes *pipes, char *envp[])
+int child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 {
 	if (to_launch->fd_i != STDIN_FILENO)
 		dup2(to_launch->fd_i, STDIN_FILENO);
@@ -94,11 +94,44 @@ void	child_process(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 		close(pipes->pipe[pipes->pipe_i - 1][0]);
 		close(pipes->pipe[pipes->pipe_i - 1][1]);
 	}
-	close(pipes->pipe[pipes->pipe_i][0]);
-	close(pipes->pipe[pipes->pipe_i][1]);
+	if (to_launch->next)
+	{
+		close(pipes->pipe[pipes->pipe_i][0]);
+		close(pipes->pipe[pipes->pipe_i][1]);
+	}
 	execve(to_launch->cmd, to_launch->args, envp);
+	perror("mini.s.hell01");
+	// exit(EXIT_FAILURE);
+	return (0);
+}
+
+int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell)
+{
+	int	(*f_builtin)(char **, t_mo_shell *mo_shell, t_cmd *cmd);
+	if (to_launch->fd_i != STDIN_FILENO)
+		dup2(to_launch->fd_i, STDIN_FILENO);
+	else if (to_launch->prev)
+		dup2(pipes->pipe[pipes->pipe_i - 1][0], STDIN_FILENO);
+	if (to_launch->fd_o != STDOUT_FILENO)
+		dup2(to_launch->fd_o, STDOUT_FILENO);
+	else if (to_launch->next)
+		dup2(pipes->pipe[pipes->pipe_i][1], STDOUT_FILENO);
+	if (to_launch->prev)
+	{
+		close(pipes->pipe[pipes->pipe_i - 1][0]);
+		close(pipes->pipe[pipes->pipe_i - 1][1]);
+	}
+	if (to_launch->next)
+	{
+		close(pipes->pipe[pipes->pipe_i][0]);
+		close(pipes->pipe[pipes->pipe_i][1]);
+	}
+	f_builtin = (g_launch_builtins(to_launch));
+	mo_shell->last_exit_status = f_builtin(to_launch->args, mo_shell, to_launch);
+	return(mo_shell->last_exit_status);
 	perror("mini.s.hell");
-	exit(EXIT_FAILURE);
+	// exit(EXIT_FAILURE);
+	return (mo_shell->last_exit_status);
 }
 
 /// @brief Runs a command that is not builtin into the shell.
@@ -106,14 +139,26 @@ void	child_process(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 /// @param to_launch The command that is next in line to be run.
 /// @param pipes_array The srtucture that holds all the pipes file descriptors.
 /// @param pids_array The structure that holds all the PIDs.
-void	external_command(t_mo_shell *mo_shell, t_cmd *to_launch, \
+int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 	t_pipes *pipes_array, t_pids *pids_array)
 {
-	pids_array->pid[pids_array->pid_i] = fork();
-	if (pids_array->pid[pids_array->pid_i] == -1)
-		(perror("fork error\n"), exit(EXIT_FAILURE));
+	int		ret;
+
+	ret = mo_shell->last_exit_status;
+	if (is_builtin(to_launch->cmd) == false || to_launch->prev || to_launch->next)
+	{
+		pids_array->pid[pids_array->pid_i] = fork();
+		if (pids_array->pid[pids_array->pid_i] == -1)
+			(perror("fork error\n"), exit(EXIT_FAILURE));
+	}
 	if (pids_array->pid[pids_array->pid_i] == 0)
-		child_process(to_launch, pipes_array, mo_shell->shell_env);
+	{
+		if (is_builtin(to_launch->cmd) == false)
+			child_process_ext(to_launch, pipes_array, mo_shell->shell_env);
+		if (is_builtin(to_launch->cmd) == true)
+			child_process_bi(to_launch, pipes_array, mo_shell);
+	}
+	return (ret);
 }
 
 /// @brief Handles the execution of the commands, from left to right.
@@ -124,7 +169,6 @@ int	execution_sequence(t_mo_shell *mo_shell)
 	t_pipes	pipes_array;
 	t_pids	pids_array;
 	int		i;
-	int		(*f_builtin)(char **, t_mo_shell *mo_shell, t_cmd *cmd);
 	int		exit_status;
 
 	to_launch = mo_shell->cmds_table;
@@ -141,13 +185,7 @@ int	execution_sequence(t_mo_shell *mo_shell)
 			perror("pipe error");
 			exit(EXIT_FAILURE);
 		}
-		if (is_builtin(to_launch->cmd) == true)
-		{
-			f_builtin = (g_launch_builtins(to_launch));
-			exit_status = f_builtin(to_launch->args, mo_shell, to_launch);
-		}
-		else
-			external_command(mo_shell, to_launch, &pipes_array, &pids_array);
+		fork_for_cmd(mo_shell, to_launch, &pipes_array, &pids_array);
 		to_launch = to_launch->next;
 	}
 	i = -1;
