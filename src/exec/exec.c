@@ -52,11 +52,7 @@ char	**add_str_to_array(char **array, char *str)
 	return (ret);
 }
 
-/// @brief
-/// @param to_launch The current command we want to execute.
-/// @param pipes The current pipe.
-/// @param envp The environment variables
-int child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
+void	handler_dup2(t_cmd *to_launch, t_pipes *pipes)
 {
 	if (to_launch->fd_i != STDIN_FILENO)
 		dup2(to_launch->fd_i, STDIN_FILENO);
@@ -68,14 +64,23 @@ int child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 		dup2(pipes->pipe[pipes->pipe_i][1], STDOUT_FILENO);
 	if (to_launch->prev)
 	{
-		close(pipes->pipe[pipes->pipe_i - 1][0]);
-		close(pipes->pipe[pipes->pipe_i - 1][1]);
+		close(pipes->pipe[pipes->pipe_i - 1][0]);	//Close read end of previous pipe
+		close(pipes->pipe[pipes->pipe_i - 1][1]);	//Close write end of previous pipe
 	}
 	if (to_launch->next)
 	{
-		close(pipes->pipe[pipes->pipe_i][0]);
-		close(pipes->pipe[pipes->pipe_i][1]);
+		close(pipes->pipe[pipes->pipe_i][0]);	//Close read end of previous pipe
+		close(pipes->pipe[pipes->pipe_i][1]);	//Close write end of previous pipe
 	}
+}
+
+/// @brief
+/// @param to_launch The current command we want to execute.
+/// @param pipes The current pipe.
+/// @param envp The environment variables
+int child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
+{
+	handler_dup2(to_launch, pipes);
 	execve(to_launch->cmd, to_launch->args, envp);
 	perror("mini.s.hell01");
 	// exit(EXIT_FAILURE);
@@ -85,30 +90,14 @@ int child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell)
 {
 	int	(*f_builtin)(char **, t_mo_shell *mo_shell, t_cmd *cmd);
-	if (to_launch->fd_i != STDIN_FILENO)
-		dup2(to_launch->fd_i, STDIN_FILENO);
-	else if (to_launch->prev)
-		dup2(pipes->pipe[pipes->pipe_i - 1][0], STDIN_FILENO);
-	if (to_launch->fd_o != STDOUT_FILENO)
-		dup2(to_launch->fd_o, STDOUT_FILENO);
-	else if (to_launch->next)
-		dup2(pipes->pipe[pipes->pipe_i][1], STDOUT_FILENO);
-	if (to_launch->prev)
-	{
-		close(pipes->pipe[pipes->pipe_i - 1][0]);
-		close(pipes->pipe[pipes->pipe_i - 1][1]);
-	}
-	if (to_launch->next)
-	{
-		close(pipes->pipe[pipes->pipe_i][0]);
-		close(pipes->pipe[pipes->pipe_i][1]);
-	}
+
+	handler_dup2(to_launch, pipes);
 	f_builtin = (g_launch_builtins(to_launch));
-	mo_shell->last_exit_status = f_builtin(to_launch->args, mo_shell, to_launch);
-	return(mo_shell->last_exit_status);
+	if (f_builtin(to_launch->args, mo_shell, to_launch) == 0)
+		exit(EXIT_SUCCESS);
 	perror("mini.s.hell");
-	// exit(EXIT_FAILURE);
-	return (mo_shell->last_exit_status);
+	exit(EXIT_FAILURE);
+	// return (mo_shell->last_exit_status);
 }
 
 /// @brief Runs a command that is not builtin into the shell.
