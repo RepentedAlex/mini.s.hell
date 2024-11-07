@@ -115,6 +115,7 @@ $(SUP_FILE):
 	"}\n" > $(SUP_FILE)
 
 v: all $(SUP_FILE)
+	@clear
 	@$(VAL) --suppressions=$(SUP_FILE) ./$(NAME)
 
 -include $(OBJ:.o=.d)
