@@ -54,15 +54,12 @@ int	find_var(char *src, char *envp[])
 
 char	*var_expander(char *ret, char *src, int *i, char *envp[])
 {
-	int		var_index;
 	char	*var_content;
 
-	var_index = find_var(&src[*i], envp);
-	if (var_index > -1)
-	{
-		var_content = ft_strchr(envp[var_index], '=') + 1;
-		ret = append(ret, var_content, ft_strlen(var_content));
-	}
+	var_content = getenv(&src[1]);
+	if (!var_content)
+		return (NULL);
+	ret = append(ret, var_content, ft_strlen(var_content));
 	while (ft_is_alpha(src[++*i + 1]))
 		src += 0;
 	return (ret);
