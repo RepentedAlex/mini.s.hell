@@ -49,9 +49,12 @@ size_t	count_quotes(const char *str)
 	return (quote_count);
 }
 
-///
-/// @param str
-void	remove_quotes(char *str)
+/**
+ * @brief Remove quotes
+ *
+ * @param str 
+ */
+char	*remove_quotes(char *str)
 {
 	char	*ret;
 	int		i;
@@ -60,23 +63,31 @@ void	remove_quotes(char *str)
 
 	ret = (char *)malloc(sizeof(char) * (ft_strlen(str) - count_quotes(str) + 1));
 	if (!ret)
-		return ;
+		return (NULL);
 	i = 0;
 	j = 0;
 	quotes = 0;
-	while (str[i])
+	while (str[i + j])
 	{
-		check_in_quotes(str[i], &quotes); //Doesn't give the proper information to skip quoting quotes
-		if (quotes == 1 && str[i + j] == '\'' || quotes == 2 && str[i + j] == '\"')
+		if (!quotes || (quotes == 1 && str[i + j] == '\'') || (quotes == 2 && str[i + j] == '\"'))
+		{
+			check_in_quotes(str[i + j], &quotes); //Doesn't give the proper information to skip quoting quotes
+			j++;
+			continue ;
+		}
+		if ((quotes == 1 && str[i + j] == '\'') || (quotes == 2 && str[i + j] == '\"'))
 		{
 			j++;
+			continue ;
 		}
-		if (!quotes)
+		if ((quotes == 2 && str[i + j] != '\"') || (quotes == 1 && str[i + j] != '\'') || !quotes)
 		{
 			ret[i] = str[i + j];
 			i++;
 		}
 	}
+	free(str);
+	return (ret);
 }
 
 bool	check_if_word_is_quoted(const char *word)
@@ -114,7 +125,7 @@ char	*heredoc(t_block *block, t_cmd *cmd)
 	if (quoted_word)
 	{
 		wrong_quote_count = !check_good_number_quotes(block->str);
-		remove_quotes(block->str);
+		block->str = remove_quotes(block->str);
 	}
 	while (1) //Not sure if while true is a wonderful idea
 	{
@@ -131,6 +142,6 @@ int	main(void)
 {
 	t_block block;
 
-	block.str = "EOF";
+	block.str = ft_strdup("\"\'\"");
 	heredoc(&block, NULL);
 }
