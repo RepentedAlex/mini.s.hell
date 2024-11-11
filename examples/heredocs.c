@@ -13,6 +13,12 @@
 #include "../include/minishell.h"
 #include "../Libft/include/libft.h"
 
+/**
+ * @brief 
+ *
+ * @param str 
+ * @return 
+ */
 bool	check_good_number_quotes(const char *str)
 {
 	int	i;
@@ -34,50 +40,62 @@ bool	check_good_number_quotes(const char *str)
 	return (true);
 }
 
+void	do_work(char *str, char *ret, int *quotes)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i + j])
+	{
+		if (!quotes || (*quotes == 1 && str[i + j] == '\'') || \
+				(*quotes == 2 && str[i + j] == '\"'))
+		{
+			check_in_quotes(str[i + j++], quotes);
+			continue ;
+		}
+		if ((*quotes == 1 && str[i + j] == '\'') || \
+				(*quotes == 2 && str[i + j] == '\"'))
+		{
+			j++;
+			continue ;
+		}
+		if ((*quotes == 2 && str[i + j] != '\"') || \
+				(*quotes == 1 && str[i + j] != '\'') || !quotes)
+			ret[i] = str[i++ + j];
+	}
+}
+
 /**
  * @brief Remove "quotting" quotes.
  *
  * @param str The string we want to get rid of quotes.
- * @return The remaining of the string without quotes or NULL on error (quotes left open count as an error).
+ * @return The remaining of the string without quotes or NULL on error 
+ * (quotes left open count as an error).
  */
 char	*remove_quotes(char *str)
 {
 	char	*ret;
-	int		i;
-	int		j;
 	int		quotes;
 
 	ret = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!ret)
 		return (NULL);
-	i = 0;
-	j = 0;
 	quotes = 0;
-	while (str[i + j])
-	{
-		if (!quotes || (quotes == 1 && str[i + j] == '\'') || (quotes == 2 && str[i + j] == '\"'))
-		{
-			check_in_quotes(str[i + j], &quotes); //Doesn't give the proper information to skip quoting quotes
-			j++;
-			continue ;
-		}
-		if ((quotes == 1 && str[i + j] == '\'') || (quotes == 2 && str[i + j] == '\"'))
-		{
-			j++;
-			continue ;
-		}
-		if ((quotes == 2 && str[i + j] != '\"') || (quotes == 1 && str[i + j] != '\'') || !quotes)
-		{
-			ret[i] = str[i + j];
-			i++;
-		}
-	}
+	do_work(str, ret, &quotes);
 	free(str);
 	if (quotes)
 		return (free(ret), NULL);
 	return (ret);
 }
 
+/**
+ * @brief 
+ *
+ * @param word 
+ * @return 
+ */
 bool	check_if_word_is_quoted(const char *word)
 {
 	int	i;
@@ -91,52 +109,57 @@ bool	check_if_word_is_quoted(const char *word)
 	return (false);
 }
 
-char	*heredoc(t_block *block, t_cmd *cmd, char **envp)
+/**
+ * @brief 
+ *
+ * @param str 
+ * @param envp 
+ * @param mo_shell 
+ */
+void	heredoc_expand_word(char *str, char *envp[], t_mo_shell *mo_shell)
+{
+	char	*tmp;
+
+	tmp = expand_variables(str, envp, mo_shell);
+	free(str);
+	str = tmp;
+	tmp = NULL;
+}
+
+/**
+ * @brief 
+ *
+ * @param block 
+ * @param cmd 
+ * @param envp 
+ */
+void	heredoc(t_block *block, t_cmd *cmd, char **envp)
 {
 	int		heredoc_fd;
 	char	*line;
-	char	*ret;
-	char	*tmp;
 	bool	quoted_word;
 
-	//UNHAPPY CODE
 	if (!block->str)
 		ft_putstr_fd("Invalid word\n", 2);
-
-	//HAPPY CODE
-	line = NULL;
-	ret = NULL;
-	tmp = NULL;
-	//Check if word is quoted (if quoted, no expansion)
 	quoted_word = check_if_word_is_quoted(block->str);
 	if (quoted_word)
-	{
 		block->str = remove_quotes(block->str);
-	}
 	else
-	{
-		tmp = expand_variables(block->str, envp, NULL);
-		free(block->str);
-		block->str = tmp;
-		tmp = NULL;
-	}
+		heredoc_expand_word(block->str, envp, NULL);
 	heredoc_fd = open("/tmp/heredoc", O_CREAT | O_RDWR | O_TRUNC, 0666);
-	while (1) //Not sure if while true is a wonderful idea
+	while (1)
 	{
 		line = readline("> ");
-
-		//BREAK CONDITION
 		if (ft_strcmp(line, block->str) == 0)
 			break ;
 		write(heredoc_fd, line, ft_strlen(line));
 		write(heredoc_fd, "\n", 1);
 	}
-	return (ret);
 }
 
 int	main(int argc, char **envp)
 {
-	t_block block;
+	t_block	block;
 
 	block.str = ft_strdup("\"$USER\"");
 	heredoc(&block, NULL, envp);
