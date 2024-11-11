@@ -96,6 +96,7 @@ char	*heredoc(t_block *block, t_cmd *cmd, char **envp)
 	char	*buffer;
 	char	*line;
 	char	*ret;
+	char	*tmp;
 	bool	quoted_word;
 
 	//UNHAPPY CODE
@@ -106,6 +107,7 @@ char	*heredoc(t_block *block, t_cmd *cmd, char **envp)
 	line = NULL;
 	buffer = NULL;
 	ret = NULL;
+	tmp = NULL;
 	//Check if word is quoted (if quoted, no expansion)
 	quoted_word = check_if_word_is_quoted(block->str);
 	if (quoted_word)
@@ -114,7 +116,10 @@ char	*heredoc(t_block *block, t_cmd *cmd, char **envp)
 	}
 	else
 	{
-		expand_variables(block->str, envp, NULL);
+		tmp = expand_variables(block->str, envp, NULL);
+		free(block->str);
+		block->str = tmp;
+		tmp = NULL;
 	}
 	while (1) //Not sure if while true is a wonderful idea
 	{
@@ -131,6 +136,6 @@ int	main(int argc, char **envp)
 {
 	t_block block;
 
-	block.str = ft_strdup("\"\"");
+	block.str = ft_strdup("\"$USER\"");
 	heredoc(&block, NULL, envp);
 }
