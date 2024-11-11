@@ -120,7 +120,7 @@ char	*heredoc(t_block *block, t_cmd *cmd, char **envp)
 		block->str = tmp;
 		tmp = NULL;
 	}
-	heredoc_fd = open("/tmp/heredoc", O_CREAT | O_RDWR, 0666);
+	heredoc_fd = open("/tmp/heredoc", O_CREAT | O_RDWR, O_TRUNC, 0666);
 	while (1) //Not sure if while true is a wonderful idea
 	{
 		line = readline("> ");
