@@ -49,24 +49,33 @@ size_t	count_quotes(const char *str)
 	return (quote_count);
 }
 
+///
+/// @param str
 void	remove_quotes(char *str)
 {
 	char	*ret;
 	int		i;
 	int		j;
-	int		is_in_quotes;
+	int		quotes;
 
 	ret = (char *)malloc(sizeof(char) * (ft_strlen(str) - count_quotes(str) + 1));
 	if (!ret)
 		return ;
 	i = 0;
 	j = 0;
-	is_in_quotes = 0;
+	quotes = 0;
 	while (str[i])
 	{
-		check_in_quotes(str[i], &is_in_quotes) //Doesn't give the proper information to skip quoting quotes
-		ret[i] = str[i + j];
-		i++;
+		check_in_quotes(str[i], &quotes); //Doesn't give the proper information to skip quoting quotes
+		if (quotes == 1 && str[i + j] == '\'' || quotes == 2 && str[i + j] == '\"')
+		{
+			j++;
+		}
+		if (!quotes)
+		{
+			ret[i] = str[i + j];
+			i++;
+		}
 	}
 }
 
