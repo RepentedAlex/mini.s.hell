@@ -59,7 +59,7 @@ void	expand_cmd_path(t_cmd **head, char *envp[])
 			nav = nav->next;
 			continue ;
 		}
-		if (ft_strcmp(nav->cmd, "./") == 0 || ft_strcmp(nav->cmd, "/") == 0 || \
+		if (ft_strncmp(nav->cmd, "./", 2) == 0 || ft_strncmp(nav->cmd, "/", 1) == 0 || \
 			is_builtin(nav->cmd))
 			nav = nav->next;
 		else
