@@ -91,7 +91,7 @@ bool	check_if_word_is_quoted(const char *word)
 	return (false);
 }
 
-char	*heredoc(t_block *block, t_cmd *cmd)
+char	*heredoc(t_block *block, t_cmd *cmd, char **envp)
 {
 	char	*buffer;
 	char	*line;
@@ -112,6 +112,10 @@ char	*heredoc(t_block *block, t_cmd *cmd)
 	{
 		block->str = remove_quotes(block->str);
 	}
+	else
+	{
+		expand_variables(block->str, envp, NULL);
+	}
 	while (1) //Not sure if while true is a wonderful idea
 	{
 		line = readline("> ");
@@ -123,10 +127,10 @@ char	*heredoc(t_block *block, t_cmd *cmd)
 	return (ret);
 }
 
-int	main(void)
+int	main(int argc, char **envp)
 {
 	t_block block;
 
 	block.str = ft_strdup("\"\"");
-	heredoc(&block, NULL);
+	heredoc(&block, NULL, envp);
 }
