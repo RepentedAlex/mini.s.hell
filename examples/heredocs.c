@@ -128,7 +128,8 @@ char	*heredoc(t_block *block, t_cmd *cmd, char **envp)
 		//BREAK CONDITION
 		if (ft_strcmp(line, block->str) == 0)
 			break ;
-		write(heredoc_fd, line, sizeof(line));
+		write(heredoc_fd, line, ft_strlen(line));
+		write(heredoc_fd, "\n", 1);
 	}
 	return (ret);
 }
