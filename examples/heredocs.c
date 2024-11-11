@@ -93,7 +93,7 @@ bool	check_if_word_is_quoted(const char *word)
 
 char	*heredoc(t_block *block, t_cmd *cmd, char **envp)
 {
-	char	*buffer;
+	int		heredoc_fd;
 	char	*line;
 	char	*ret;
 	char	*tmp;
@@ -105,7 +105,6 @@ char	*heredoc(t_block *block, t_cmd *cmd, char **envp)
 
 	//HAPPY CODE
 	line = NULL;
-	buffer = NULL;
 	ret = NULL;
 	tmp = NULL;
 	//Check if word is quoted (if quoted, no expansion)
@@ -121,6 +120,7 @@ char	*heredoc(t_block *block, t_cmd *cmd, char **envp)
 		block->str = tmp;
 		tmp = NULL;
 	}
+	heredoc_fd = open("/tmp/heredoc", O_CREAT | O_RDWR, 0666);
 	while (1) //Not sure if while true is a wonderful idea
 	{
 		line = readline("> ");
@@ -128,6 +128,7 @@ char	*heredoc(t_block *block, t_cmd *cmd, char **envp)
 		//BREAK CONDITION
 		if (ft_strcmp(line, block->str) == 0)
 			break ;
+		write(heredoc_fd, line, sizeof(line));
 	}
 	return (ret);
 }
