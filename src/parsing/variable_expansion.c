@@ -54,6 +54,7 @@ int	find_var(char *src, char *envp[])
 
 char	*var_expander(char *ret, char *src, int *i, char *envp[])
 {
+	(void)envp;
 	char	*var_content;
 
 	var_content = getenv(&src[1]);
