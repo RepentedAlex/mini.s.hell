@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-#include "../Libft/include/libft.h"
+#include "../../../include/minishell.h"
+#include "../../../Libft/include/libft.h"
 
 /**
  * @brief Checks if single and double quotes are in pairs
@@ -41,7 +41,7 @@ bool	check_good_number_quotes(const char *str)
 	return (true);
 }
 
-void	do_work(char *str, char *ret, int *quotes)
+void	unquote_word(char *str, char *ret, int *quotes)
 {
 	int	i;
 	int	j;
@@ -84,7 +84,7 @@ char	*remove_quotes(char *str)
 	if (!ret)
 		return (NULL);
 	quotes = 0;
-	do_work(str, ret, &quotes);
+	unquote_word(str, ret, &quotes);
 	free(str);
 	if (quotes)
 		return (free(ret), NULL);
