@@ -60,7 +60,7 @@ void	do_work(char *str, char *ret, int *quotes)
 				(*quotes == 2 && str[i + j] == '\"')) && j++)
 			continue ;
 		if ((*quotes == 2 && str[i + j] != '\"') || \
-				(*quotes == 1 && str[i + j] != '\'') || !quotes)
+				(*quotes == 1 && str[i + j] != '\'') || !*quotes)
 		{
 			ret[i] = str[i + j];
 			i++;
