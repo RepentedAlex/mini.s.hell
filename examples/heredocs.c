@@ -65,7 +65,10 @@ void	do_work(char *str, char *ret, int *quotes)
 		}
 		if ((*quotes == 2 && str[i + j] != '\"') || \
 				(*quotes == 1 && str[i + j] != '\'') || !quotes)
-			ret[i] = str[i++ + j];
+		{
+			ret[i] = str[i + j];
+			i++;
+		}
 	}
 }
 
@@ -164,6 +167,6 @@ int	main(int argc, char **envp)
 {
 	t_block	block;
 
-	block.str = ft_strdup("\"\'\'\'\"");
+	block.str = ft_strdup("\"$USER\"");
 	heredoc(&block, NULL, envp);
 }
