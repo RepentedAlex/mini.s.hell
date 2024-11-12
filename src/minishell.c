@@ -52,13 +52,25 @@ int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 	return (EXIT_SUCCESS);
 }
 
+t_error	init_shell()
+{
+	int	shell_terminal;
+	int	shell_is_interactive;
+
+	shell_terminal = STDIN_FILENO;
+	shell_is_interactive = isatty(shell_terminal);
+	if (!shell_is_interactive)
+		return (ERROR);
+	return (NO_ERROR);
+}
+
 int	main(const int argc, char *argv[], char *envp[])
 {
 	t_mo_shell	mo_shell;
 
 	ft_bzero(&mo_shell, sizeof(t_mo_shell));
 	mo_shell.shell_env = copy_env(envp);
-	if (isatty(STDIN_FILENO) == 1)
-		return (mini_s_hell(argc, argv, envp, &mo_shell));
-	return (0);
+	if (init_shell() == ERROR)
+		return (ERROR);
+	return (mini_s_hell(argc, argv, envp, &mo_shell));
 }
