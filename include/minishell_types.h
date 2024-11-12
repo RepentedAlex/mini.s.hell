@@ -69,11 +69,11 @@ typedef struct s_block
 	t_lexcat		type;
 }				t_block;
 
-///
 typedef struct s_cmd
 {
 	char			*cmd;
 	char			**args;
+	bool			heredoc;
 	int				fd_i;
 	int				fd_o;
 	struct s_cmd	*next;
