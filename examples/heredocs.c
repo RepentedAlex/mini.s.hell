@@ -41,7 +41,6 @@ bool	check_good_number_quotes(const char *str)
 	return (true);
 }
 
-
 void	do_work(char *str, char *ret, int *quotes)
 {
 	int	i;
@@ -57,12 +56,9 @@ void	do_work(char *str, char *ret, int *quotes)
 			check_in_quotes(str[i + j++], quotes);
 			continue ;
 		}
-		if ((*quotes == 1 && str[i + j] == '\'') || \
-				(*quotes == 2 && str[i + j] == '\"'))
-		{
-			j++;
+		if (((*quotes == 1 && str[i + j] == '\'') || \
+				(*quotes == 2 && str[i + j] == '\"')) && j++)
 			continue ;
-		}
 		if ((*quotes == 2 && str[i + j] != '\"') || \
 				(*quotes == 1 && str[i + j] != '\'') || !quotes)
 		{
