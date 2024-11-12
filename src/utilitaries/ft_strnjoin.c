@@ -40,6 +40,11 @@ char	*ft_strnjoin(char *src, char *dst, size_t n)
 	return (ret);
 }
 
+///
+/// \param s1
+/// \param s2
+/// \param n The number of characters we want to append from s2 to the end of s1
+/// \return
 char	*append(char *s1, char *s2, size_t n)
 {
 	char	*ret;
