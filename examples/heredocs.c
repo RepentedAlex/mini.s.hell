@@ -51,7 +51,7 @@ void	do_work(char *str, char *ret, int *quotes)
 	j = 0;
 	while (str[i + j])
 	{
-		if (!quotes || (*quotes == 1 && str[i + j] == '\'') || \
+		if (!*quotes || (*quotes == 1 && str[i + j] == '\'') || \
 				(*quotes == 2 && str[i + j] == '\"'))
 		{
 			check_in_quotes(str[i + j++], quotes);
