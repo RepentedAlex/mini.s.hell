@@ -167,6 +167,6 @@ int	main(int argc, char **envp)
 {
 	t_block	block;
 
-	block.str = ft_strdup("\"$USER\"");
+	block.str = ft_strdup("\"\'\'\'\"");
 	heredoc(&block, NULL, envp);
 }
