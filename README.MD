@@ -268,6 +268,39 @@ va créer un [arbre de syntaxe abstrait](https://fr.wikipedia.org/wiki/Arbre_de_
 Le parser va, quant à lui, prendre les tokens que le lexer a créés pour créer  
 une table de commande selon une grammaire.
 ### 1.2 L'exécution
+#### 1.2.0 The GNU way
+Si l'on se réfère à la [documentation GNU](https://www.gnu.org/software/libc/manual/html_mono/libc.html#Implementing-a-Shell),
+voici comment un shell lance ses commandes:
+```C
+void    launch_process (process *p, pid_t pgid,
+				int infile, int outfile, int errfile,
+				int foreground, char *envp[])
+{
+	pid_t pid;
+	
+	/* Set the standard input/output channels of the new process.  */
+	if (infile != STDIN_FILENO)
+	{
+		dup2 (infile, STDIN_FILENO);
+		close (infile);
+	}
+	if (outfile != STDOUT_FILENO)
+	{
+		dup2 (outfile, STDOUT_FILENO);
+		close (outfile);
+	}
+	if (errfile != STDERR_FILENO)
+	{
+		dup2 (errfile, STDERR_FILENO);
+		close (errfile);
+	}
+
+	/* Exec the new process.  Make sure we exit.  */
+	execve (p->argv[0], p->argv, envp);
+	perror ("execve");
+	exit (1);
+}
+```
 #### 1.2.1 La mise en place des pipes et des redirections
 Avant de pouvoir enfin exécuter nos commandes, il faut mettre en place tous les
 pipes et redirections. Pour ce faire, nous allons procéder de droite à gauche en
@@ -561,6 +594,7 @@ non ? <sub><sup>dites oui svp, j'en suis fier</sup></sub>
 - [42Docs - minishell](https://harm-smits.github.io/42docs/projects/minishell)
 - [Normes POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/contents.html)
 - [Write a shell in C](https://brennan.io/2015/01/16/write-a-shell-in-c/)
+- [Implementing a job control shell](https://www.gnu.org/software/libc/manual/html_mono/libc.html#Implementing-a-Shell)
 
 ### Lexing / Parsing
 - [Writing your own shell](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
