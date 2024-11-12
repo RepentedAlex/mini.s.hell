@@ -14,10 +14,11 @@
 #include "../Libft/include/libft.h"
 
 /**
- * @brief 
+ * @brief Checks if single and double quotes are in pairs
  *
- * @param str 
- * @return 
+ * @param str The word.
+ * @return `true` if there is an even number of quotes for single and double
+ * `false` otherwise.
  */
 bool	check_good_number_quotes(const char *str)
 {
@@ -39,6 +40,7 @@ bool	check_good_number_quotes(const char *str)
 		return (false);
 	return (true);
 }
+
 
 void	do_work(char *str, char *ret, int *quotes)
 {
@@ -68,7 +70,7 @@ void	do_work(char *str, char *ret, int *quotes)
 }
 
 /**
- * @brief Remove "quotting" quotes.
+ * @brief Removes "quotting" quotes.
  *
  * @param str The string we want to get rid of quotes.
  * @return The remaining of the string without quotes or NULL on error 
@@ -91,10 +93,10 @@ char	*remove_quotes(char *str)
 }
 
 /**
- * @brief 
+ * @brief Checks if word is quoted.
  *
- * @param word 
- * @return 
+ * @param word The word.
+ * @return `true` if the word is quoted, `false` otherwise.
  */
 bool	check_if_word_is_quoted(const char *word)
 {
@@ -110,11 +112,12 @@ bool	check_if_word_is_quoted(const char *word)
 }
 
 /**
- * @brief 
+ * @brief Checks if the word is quoted and unquotes it necessary, otherwise
+ * it expands the word if pertinent.
  *
- * @param str 
- * @param envp 
- * @param mo_shell 
+ * @param str The heredoc's word.
+ * @param envp The environment variables.
+ * @param mo_shell The mo_shell structure.
  */
 void	heredoc_expand_word(char *str, char *envp[], t_mo_shell *mo_shell)
 {
@@ -127,11 +130,11 @@ void	heredoc_expand_word(char *str, char *envp[], t_mo_shell *mo_shell)
 }
 
 /**
- * @brief 
+ * @brief Handles the heredoc.
  *
- * @param block 
- * @param cmd 
- * @param envp 
+ * @param block The current t_block node we're on.
+ * @param cmd The current t_cmd node we're on.
+ * @param envp The environment variables.
  */
 void	heredoc(t_block *block, t_cmd *cmd, char **envp)
 {
