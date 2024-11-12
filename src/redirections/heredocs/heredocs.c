@@ -186,6 +186,7 @@ int	heredoc(t_block *block, t_cmd *cmd, char **envp)
 		write(heredoc_fd, line, ft_strlen(line));
 		write(heredoc_fd, "\n", 1);
 	}
+	cmd->fd_i = heredoc_fd;
 	return (heredoc_fd);
 }
 
