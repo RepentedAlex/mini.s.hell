@@ -166,9 +166,9 @@ int	execution_sequence(t_mo_shell *mo_shell)
 	i = -1;
 	while (++i <= pids_array.pid_i)
 		if (pids_array.pid[i] != 0)
-			waitpid(pids_array.pid[i], &exit_status, 0);
-	if (WIFEXITED(exit_status))
-		mo_shell->last_exit_status = WIFEXITED(exit_status);
+			waitpid(pids_array.pid[i], &exit_status, WIFEXITED(exit_status));
+//	if (WIFEXITED(exit_status))
+//		mo_shell->last_exit_status = WIFEXITED(exit_status);
 		// printf("Exit status: %d\n", WEXITSTATUS(exit_status));
 	return (exit_status);
 }
