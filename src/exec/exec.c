@@ -110,6 +110,7 @@ int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell, int
 		return (mo_shell->last_exit_status);
 		// return (EXIT_FAILURE);
 	}
+	 return (EXIT_FAILURE);
 }
 
 /// @brief Runs a command that is not builtin into the shell.
