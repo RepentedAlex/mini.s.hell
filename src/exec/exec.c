@@ -96,7 +96,7 @@ int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell)
 	if (f_builtin(to_launch->args, mo_shell, to_launch) == 0)
 		exit(EXIT_SUCCESS);
 	perror("mini.s.hell");
-	exit(EXIT_FAILURE);
+	exit(EXIT_FAILUREe);
 	// return (mo_shell->last_exit_status);
 }
 
@@ -111,6 +111,8 @@ int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 	int		ret;
 
 	ret = mo_shell->last_exit_status;
+	//TODO Fill heredoc for command here
+
 	if (is_builtin(to_launch->cmd) == false || to_launch->prev || to_launch->next)
 	{
 		pids_array->pid[pids_array->pid_i] = fork();
@@ -165,7 +167,8 @@ int	execution_sequence(t_mo_shell *mo_shell)
 	while (++i <= pids_array.pid_i)
 		if (pids_array.pid[i] != 0)
 			waitpid(pids_array.pid[i], &exit_status, 0);
-	// if (WIFEXITED(exit_status))
+	if (WIFEXITED(exit_status))
+		mo_shell->last_exit_status = WIFEXITED(exit_status);
 		// printf("Exit status: %d\n", WEXITSTATUS(exit_status));
 	return (exit_status);
 }
