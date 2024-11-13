@@ -127,7 +127,7 @@ int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 
 	if (is_builtin(to_launch->cmd) == true || !to_launch->prev || !to_launch->next)
 	{
-		child_process_bi(to_launch, pipes_array, mo_shell, 1π);
+		child_process_bi(to_launch, pipes_array, mo_shell, 1);
 	}
 	else
 	{
