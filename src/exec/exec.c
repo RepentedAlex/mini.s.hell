@@ -136,14 +136,13 @@ int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 		pids_array->pid[pids_array->pid_i] = fork();
 		if (pids_array->pid[pids_array->pid_i] == -1)
 			(perror("fork error\n"), exit(EXIT_FAILURE));
-	}
-	if (pids_array->pid[pids_array->pid_i] == 0)
-	{
-		if (is_builtin(to_launch->cmd) == false)
-			child_process_ext(to_launch, pipes_array, mo_shell->shell_env);
-		if (is_builtin(to_launch->cmd) == true)
-			child_process_bi(to_launch, pipes_array, mo_shell, 0);
-	}
+		if (pids_array->pid[pids_array->pid_i] == 0)
+		{
+			if (is_builtin(to_launch->cmd) == false)
+				child_process_ext(to_launch, pipes_array, mo_shell->shell_env);
+			if (is_builtin(to_launch->cmd) == true)
+				child_process_bi(to_launch, pipes_array, mo_shell, 0);
+		}
 	return (ret);
 }
 
