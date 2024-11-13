@@ -87,30 +87,17 @@ int child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 	return (1);
 }
 
-int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell, int mode)
+int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell)
 {
 	int	(*f_builtin)(char **, t_mo_shell *mo_shell, t_cmd *cmd);
 
-	if (mode == 0)
-	{
-		handler_dup2(to_launch, pipes);
-		f_builtin = (g_launch_builtins(to_launch));
-		if (f_builtin(to_launch->args, mo_shell, to_launch) == 0)
-			exit(EXIT_SUCCESS);
-		perror("mini.s.hell");
-		exit(EXIT_FAILURE);
-	}
-	if (mode == 1)
-	{
-		handler_dup2(to_launch, pipes);
-		f_builtin = (g_launch_builtins(to_launch));
-		if (f_builtin(to_launch->args, mo_shell, to_launch) == 0)
-			return (EXIT_SUCCESS);
-		perror("mini.s.hell");
-		return (mo_shell->last_exit_status);
-		// return (EXIT_FAILURE);
-	}
-	 return (EXIT_FAILURE);
+	handler_dup2(to_launch, pipes);
+	f_builtin = (g_launch_builtins(to_launch));
+	if (f_builtin(to_launch->args, mo_shell, to_launch) == 0)
+		exit(EXIT_SUCCESS);
+	perror("mini.s.hell");
+	exit(EXIT_FAILURE);
+//	 return (EXIT_FAILURE);
 }
 
 /// @brief Runs a command that is not builtin into the shell.
@@ -141,7 +128,7 @@ int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 		if (is_builtin(to_launch->cmd) == false)
 			child_process_ext(to_launch, pipes_array, mo_shell->shell_env);
 		if (is_builtin(to_launch->cmd) == true)
-			child_process_bi(to_launch, pipes_array, mo_shell, 0);
+			child_process_bi(to_launch, pipes_array, mo_shell);
 	}
 	return (ret);
 }
