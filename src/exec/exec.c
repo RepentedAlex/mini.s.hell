@@ -143,6 +143,7 @@ int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 			if (is_builtin(to_launch->cmd) == true)
 				child_process_bi(to_launch, pipes_array, mo_shell, 0);
 		}
+	}
 	return (ret);
 }
 
