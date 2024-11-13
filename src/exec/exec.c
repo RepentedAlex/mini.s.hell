@@ -96,7 +96,7 @@ int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell)
 	if (f_builtin(to_launch->args, mo_shell, to_launch) == 0)
 		exit(EXIT_SUCCESS);
 	perror("mini.s.hell");
-	exit(EXIT_FAILUREe);
+	exit(EXIT_FAILURE);
 	// return (mo_shell->last_exit_status);
 }
 
