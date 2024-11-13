@@ -83,8 +83,8 @@ int child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 	handler_dup2(to_launch, pipes);
 	execve(to_launch->cmd, to_launch->args, envp);
 	perror("execve");
-//	 exit(EXIT_FAILURE);
-	return (1);
+	 exit(EXIT_FAILURE);
+//	return (1);
 }
 
 int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell, int mode)
