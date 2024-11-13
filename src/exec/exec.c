@@ -90,7 +90,7 @@ int child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell, int mode)
 {
 	int	(*f_builtin)(char **, t_mo_shell *mo_shell, t_cmd *cmd);
-	if (ft_strcmp(to_launch->cmd, "exit") == 0)
+	if (ft_strcmp(to_launch->cmd, "exit") != 0)
 		mode = 1;
 	if (mode == 0)
 	{
