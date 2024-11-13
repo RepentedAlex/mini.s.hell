@@ -126,16 +126,16 @@ int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 	ret = mo_shell->last_exit_status;
 	//TODO Fill heredoc for command here
 
-	if (is_builtin(to_launch->cmd) == true && !to_launch->prev && !to_launch->next)
-	{
-		child_process_bi(to_launch, pipes_array, mo_shell, 1);
-	}
-	else
-	{
+//	if (is_builtin(to_launch->cmd) == true && !to_launch->prev && !to_launch->next)
+//	{
+//		child_process_bi(to_launch, pipes_array, mo_shell, 1);
+//	}
+//	else
+//	{
 		pids_array->pid[pids_array->pid_i] = fork();
 		if (pids_array->pid[pids_array->pid_i] == -1)
 			(perror("fork error\n"), exit(EXIT_FAILURE));
-	}
+//	}
 	if (pids_array->pid[pids_array->pid_i] == 0)
 	{
 		if (is_builtin(to_launch->cmd) == false)
