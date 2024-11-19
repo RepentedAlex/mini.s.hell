@@ -61,6 +61,23 @@ int	find_var(char *src, char *envp[])
 	return (var_index);
 }
 
+char	*get_var_content(char *var_name, char **env)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (ft_strncmp(var_name, env[i], ft_strlen(var_name)))
+		i++;
+	if (env[i] == NULL)
+		return (NULL);
+	j = 0;
+	while (env[i][j] != '=')
+		j++;
+	j++;
+	return (ft_strdup(&env[i][j]));
+}
+
 /// @brief
 /// @param ret
 /// @param src
@@ -75,13 +92,13 @@ char	*var_expander(char *ret, char *src, int *i, char *envp[])
 	int		j;
 
 	j = 0;
-	while (src && src[j] && !ft_is_ifs(src[j]))
+	while (src && src[j] && src[j] != '$' &&!ft_is_ifs(src[j]))
 	{
 		var_name[j] = src[j];
 		j++;
 	}
 	var_name[j] = '\0';
-	var_content = getenv(var_name);
+	var_content = get_var_content(var_name, envp);
 	ret = append(ret, var_content, ft_strlen(var_content));
 	*i += j;
 	return (ret);
