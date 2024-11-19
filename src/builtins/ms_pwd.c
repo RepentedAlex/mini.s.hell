@@ -30,5 +30,6 @@ int	ms_pwd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 		var_content++;
 	var_content++;
 	write(1, var_content, ft_strlen(var_content));
+	write(1, "\n", 1);
 	return (0);
 }
