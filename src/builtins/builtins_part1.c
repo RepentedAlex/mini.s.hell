@@ -28,19 +28,6 @@ int	ms_cd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	return (i);
 }
 
-// /// @brief
-// /// @param args
-// /// @return
-// int	ms_echo(char **args, t_mo_shell *mo_shell)
-// {
-// 	int	i;
-// 	(void)mo_shell;
-//
-// 	(void)args;
-// 	i = 0;
-// 	return (i);
-// }
-
 /// @brief
 /// @param args
 /// @param cmd
@@ -55,19 +42,6 @@ int	ms_env(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	i = 0;
 	return (i);
 }
-
-// /// @brief
-// /// @param args
-// /// @return
-// int	ms_exit(char **args, t_mo_shell *mo_shell)
-// {
-// 	(void)mo_shell;
-// 	int	i;
-
-// 	(void)args;
-// 	i = 0;
-// 	return (i);
-// }
 
 /// @brief
 /// @param args
