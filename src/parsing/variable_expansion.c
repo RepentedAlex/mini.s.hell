@@ -71,13 +71,19 @@ char	*var_expander(char *ret, char *src, int *i, char *envp[])
 {
 	(void)envp;
 	char	*var_content;
+	char	var_name[1024];
+	int		j;
 
-	var_content = getenv(&src[1]);
-	if (!var_content)
-		return (NULL);
+	j = 0;
+	while (src && src[j] && !ft_is_ifs(src[j]))
+	{
+		var_name[j] = src[j];
+		j++;
+	}
+	var_name[j] = '\0';
+	var_content = getenv(var_name);
 	ret = append(ret, var_content, ft_strlen(var_content));
-	while (ft_is_alpha(src[++*i + 1]))
-		src += 0;
+	*i += j;
 	return (ret);
 }
 
@@ -109,23 +115,28 @@ char	*expand_variables(char *src, char *envp[], t_mo_shell *mo_shell)
 	les_len = ft_strlen(les);
 	ret = str_init();
 	quotes = 0;
-	i = -1;
-	while (src[++i])
+	i = 0;
+	while (src[i])
 	{
 		check_in_quotes(src[i], &quotes);
 		if (quotes != 1 && '$' == src[i])
 		{
-			if (src[++i] == '$')
-				i += 2;
+			i++;
+			if (src[i] == '$')
+				i++;
 			else if (src[i] == '?')
-				ret = append(ret, les, les_len);
-			else
 			{
-				ret = var_expander(ret, src, &i, envp);
+				ret = append(ret, les, les_len);
+				i++;
 			}
+			else
+				ret = var_expander(ret, &src[i], &i, envp);
 		}
 		else
+		{
 			ret = append(ret, &src[i], 1);
+			i++;
+		}
 	}
 	free(les);
 	return (ret);
