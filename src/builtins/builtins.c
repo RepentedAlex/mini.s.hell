@@ -45,7 +45,7 @@ bool	is_builtin(char *str)
 		return (false);
 	builtins_array = get_builtin_array();
 	i = 0;
-	while (str[i])
+	while (builtins_array[i].name != NULL)
 	{
 		if (ft_strcmp(str, builtins_array[i].name) == 0)
 			return (true);
