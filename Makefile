@@ -1,6 +1,6 @@
 ## SETTINGS
 NAME	= minishell
-VAL		= valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --child-silent-after-fork=yes
+VAL		= valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --child-silent-after-fork=yes
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 DFLAGS	= -MMD -MP
