@@ -100,6 +100,8 @@ char	*var_expander(char *ret, char *src, int *i, char *envp[])
 	var_name[j] = '\0';
 	var_content = get_var_content(var_name, envp);
 	ret = append(ret, var_content, ft_strlen(var_content));
+	if (var_content)
+		free(var_content);
 	*i += j;
 	return (ret);
 }
