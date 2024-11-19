@@ -72,8 +72,8 @@ int	handle_no_symbols_no_ifs(t_block *nav, int *i)
 	int		quotes;
 
 	quotes = 0;
-	while (nav->str[*i] && nav->str[*i] != '>' && nav->str[*i] != '<' && \
-		nav->str[*i] != '|' && !ft_is_ifs(nav->str[*i]))
+	while ((nav->str[*i] && nav->str[*i] != '>' && nav->str[*i] != '<' && \
+		nav->str[*i] != '|' && !ft_is_ifs(nav->str[*i])) || (quotes && ft_is_ifs(nav->str[*i])))
 	{
 		check_in_quotes(nav->str[*i], &quotes);
 		(*i)++;
