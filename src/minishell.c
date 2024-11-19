@@ -69,7 +69,6 @@ int	main(const int argc, char *argv[], char *envp[])
 {
 	t_mo_shell	mo_shell;
 
-	ft_bzero(&mo_shell, sizeof(t_mo_shell));
 	mo_shell.shell_env = copy_env(envp);
 	mo_shell.last_exit_status = 0;
 	mo_shell.og_input = NULL;
