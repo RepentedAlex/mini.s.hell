@@ -58,6 +58,7 @@ t_error	init_shell()
 	int	shell_is_interactive;
 
 	shell_terminal = STDIN_FILENO;
+	shell_is_interactive = 0;
 	shell_is_interactive = isatty(shell_terminal);
 	if (!shell_is_interactive)
 		return (ERROR);
