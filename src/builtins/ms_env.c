@@ -33,5 +33,5 @@ int	ms_env(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 		i++;
 	}
 	write(1, "\n", 1);
-	return (i);
+	return (0);
 }
