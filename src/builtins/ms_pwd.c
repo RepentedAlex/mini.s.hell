@@ -13,7 +13,8 @@
 #include "minishell.h"
 #include <libft.h>
 
-/// @brief
+/// @brief Prints the current working dir as per the PWD variable in the shell
+/// environment.
 /// @param args
 /// @param cmd
 /// @return
