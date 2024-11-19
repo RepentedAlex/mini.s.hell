@@ -47,7 +47,6 @@ int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 		if (parsing(mo_shell) == ERROR)
 			continue ;
 		execution(mo_shell);
-		printf("last_exit_status: %d\n", mo_shell->last_exit_status);
 	}
 	garbage_collect(mo_shell, 1);
 	return (EXIT_SUCCESS);
