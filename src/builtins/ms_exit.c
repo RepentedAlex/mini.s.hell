@@ -90,6 +90,6 @@ int	ms_exit(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 		else
 			exit_s = exit_gen(args[0], mo_shell);
 	}	
-	(garbage_collect(mo_shell, 1), exit(exit_s));
+	garbage_collect(mo_shell, 1);
 	return (0);
 }
