@@ -27,18 +27,3 @@ int	ms_cd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	i = 0;
 	return (i);
 }
-
-/// @brief
-/// @param args
-/// @param cmd
-/// @return
-int	ms_export(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
-{
-	int	i;
-
-	(void)mo_shell;
-	(void)cmd;
-	(void)args;
-	i = 0;
-	return (i);
-}
