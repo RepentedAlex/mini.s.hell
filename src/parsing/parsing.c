@@ -51,6 +51,8 @@ void	clean_empty_nodes(t_block **head)
 
 t_error	lexcat_redir_handler(t_block **head)
 {
+	if (!head || !*head)
+		return (ERROR);
 	lexcat_redir_i(head);
 	lexcat_redir_o(head);
 	return (NO_ERROR);
