@@ -22,7 +22,6 @@ int	ms_pwd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	int		var_index;
 	char	*var_content;
 
-	mo_shell;
 	(void)cmd;
 	(void)args;
 	var_index = var_exst("PWD", mo_shell->shell_env);
