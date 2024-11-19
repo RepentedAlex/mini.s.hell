@@ -52,27 +52,25 @@ int	ms_export(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	int		i;
 	int		args_iterator;
-	char	**env;
 	bool	valid_id;
 
 	(void)cmd;
 	(void)args;
-	env = mo_shell->shell_env;
 	args_iterator = 0;
-	valid_id = false;
 	while (args[args_iterator] != NULL)
 	{
 		i = 0;
+		valid_id = false;
 		while (args[args_iterator][i] && args[args_iterator][i] != '=')
 		{
-			if (ft_isalpha(args[args_iterator][i]))
+			if (valid_id == false && ft_isalpha(args[args_iterator][i]))
 				valid_id = true;
 			i++;
 		}
 		if (valid_id == false)
 			continue ;
 		strip_quotes(args[args_iterator]);
-		mo_shell->shell_env = add_str_to_array(env, args[args_iterator]);
+		mo_shell->shell_env = add_str_to_array(mo_shell->shell_env, args[args_iterator]);
 		args_iterator++;
 	}
 	return (0);
