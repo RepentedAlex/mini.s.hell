@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 #include <libft.h>
-//autre
 
 static bool	ft_isnumber(char *s)
 {
