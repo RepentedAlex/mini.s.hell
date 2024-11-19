@@ -35,6 +35,7 @@ SRC_FIL	= 	minishell \
 			builtins/error_msg \
 			builtins/ms_exit \
 			builtins/ms_echo \
+			builtins/ms_pwd \
 			exec/cmd_blocks \
 			exec/exec \
 			exec/exec_preparations \
