@@ -13,6 +13,11 @@
 #include "minishell.h"
 #include "libft.h"
 
+/// @brief
+/// @param var The name of the variable we want to get the index of
+/// @param envp The environment in which we will look for the variable
+/// @return The index of the variable if it exists, -1 if the variable doesn't
+/// exists and -2 if there's no variable name provided.
 int	var_exst(char *var, char *envp[])
 {
 	int		i;
@@ -35,6 +40,10 @@ int	var_exst(char *var, char *envp[])
 	return (-1);
 }
 
+/// @brief
+/// @param src The name of the variable we want to find
+/// @param envp The environment in which we will look for the variable
+/// @return The environment index of the variable if it exists, -1 otherwise
 int	find_var(char *src, char *envp[])
 {
 	int		i;
@@ -52,6 +61,12 @@ int	find_var(char *src, char *envp[])
 	return (var_index);
 }
 
+/// @brief
+/// @param ret
+/// @param src
+/// @param i
+/// @param envp
+/// @return
 char	*var_expander(char *ret, char *src, int *i, char *envp[])
 {
 	(void)envp;
