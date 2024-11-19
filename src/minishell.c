@@ -72,6 +72,11 @@ int	main(const int argc, char *argv[], char *envp[])
 	ft_bzero(&mo_shell, sizeof(t_mo_shell));
 	mo_shell.shell_env = copy_env(envp);
 	mo_shell.last_exit_status = 0;
+	mo_shell.og_input = NULL;
+	mo_shell.clean_input = NULL;
+	mo_shell.expanded_input = NULL;
+	mo_shell.splitted_input = NULL;
+	mo_shell.cmds_table = NULL;
 	if (init_shell() == ERROR)
 		return (ERROR);
 	return (mini_s_hell(argc, argv, envp, &mo_shell));
