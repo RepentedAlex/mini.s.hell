@@ -69,11 +69,16 @@ int	handle_ro(t_block *nav, int *i)
 int	handle_no_symbols_no_ifs(t_block *nav, int *i)
 {
 	t_block	*tmp;
+	int		quotes;
 
+	quotes = 0;
 	while (nav->str[*i] && nav->str[*i] != '>' && nav->str[*i] != '<' && \
 		nav->str[*i] != '|' && !ft_is_ifs(nav->str[*i]))
+	{
+		check_in_quotes(nav->str[*i], &quotes);
 		(*i)++;
-	if (ft_is_ifs(nav->str[*i]))
+	}
+	if (!quotes && ft_is_ifs(nav->str[*i]))
 	{
 		nav->str[*i] = '\0';
 		(*i)++;
