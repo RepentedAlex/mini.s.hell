@@ -75,5 +75,5 @@ int	ms_export(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 		mo_shell->shell_env = add_str_to_array(env, args[args_iterator]);
 		args_iterator++;
 	}
-	return (i);
+	return (0);
 }
