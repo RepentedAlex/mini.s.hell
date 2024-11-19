@@ -1,44 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_part1.c                                   :+:      :+:    :+:   */
+/*   ms_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/21 17:21:11 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/05 16:17:54 by llabonde         ###   ########.fr       */
+/*   Created: 2024/11/19 13:44:23 by apetitco          #+#    #+#             */
+/*   Updated: 2024/11/19 13:44:25 by apetitco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "minishell_builtins.h"
+#include <libft.h>
 
-/// @brief
+/// @brief Lists all the variable of the current environment
 /// @param args
 /// @param cmd
 /// @return
-int	ms_cd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
+int	ms_env(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
-	int	i;
+	int		i;
+	char	**env;
 
-	(void)mo_shell;
 	(void)cmd;
 	(void)args;
+	env = mo_shell->shell_env;
 	i = 0;
-	return (i);
-}
-
-/// @brief
-/// @param args
-/// @param cmd
-/// @return
-int	ms_export(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
-{
-	int	i;
-
-	(void)mo_shell;
-	(void)cmd;
-	(void)args;
-	i = 0;
+	while (mo_shell->shell_env[i] != NULL)
+	{
+		write(1, env[i], ft_strlen(env[i]));
+		write(1, "\n", 1);
+		i++;
+	}
+	write(1, "\n", 1);
 	return (i);
 }
