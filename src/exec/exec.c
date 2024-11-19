@@ -188,7 +188,8 @@ int	execution_sequence(t_mo_shell *mo_shell)
 //	if (WIFEXITED(exit_status))
 //		mo_shell->last_exit_status = WIFEXITED(exit_status);
 		// printf("Exit status: %d\n", WEXITSTATUS(exit_status));
-	return (exit_status);
+	mo_shell->last_exit_status = exit_status;
+	return (0);
 }
 
 /// @brief This function handles all things related to the execution.
