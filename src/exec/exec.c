@@ -127,7 +127,7 @@ int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 	ret = mo_shell->last_exit_status;
 	//TODO Fill heredoc for command here
 
-	if (is_builtin(to_launch->cmd) == true && !to_launch->prev && !to_launch->next)
+	if (is_builtin(to_launch->cmd) == true || (!to_launch->prev && !to_launch->next))
 	{
 		child_process_bi(to_launch, pipes_array, mo_shell, 1);
 	}
