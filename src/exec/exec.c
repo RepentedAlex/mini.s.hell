@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:39:02 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/20 16:21:03 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:01:24 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell, int
 		f_builtin = (g_launch_builtins(to_launch));
 		if (f_builtin(to_launch->args, mo_shell, to_launch) == 0)
 			exit(EXIT_SUCCESS);
-		perror("mini.s.hell");
+		// perror("mini.s.hell");
 		exit(EXIT_FAILURE);
 	}
 	if (mode == 1)
@@ -106,7 +106,7 @@ int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell, int
 		f_builtin = (g_launch_builtins(to_launch));
 		if (f_builtin(to_launch->args, mo_shell, to_launch) == 0)
 			return (EXIT_SUCCESS);
-		perror("mini.s.hell");
+		// perror("mini.s.hell");
 		return (mo_shell->last_exit_status);
 		// return (EXIT_FAILURE);
 	}
@@ -183,8 +183,9 @@ int	execution_sequence(t_mo_shell *mo_shell)
 	i = 0;
 	while (i <= pids_array.pid_i)
 	{
-		if (waitpid(pids_array.pid[i], &status, 0) == -1)
-			(perror("waitpid"), exit(EXIT_FAILURE));
+		if (pids_array.pid[i])
+			if (waitpid(pids_array.pid[i], &status, 0) == -1)
+				(perror("waitpid"), exit(EXIT_FAILURE));
 		if (WIFEXITED(status))
 			exit_status = WEXITSTATUS(status);
 		i++;
