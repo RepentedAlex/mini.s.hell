@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 00:47:55 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/09 00:47:57 by apetitco         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:06:21 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@ char	*create_hdoc_filename(const t_cmd *cmd)
 	hdoc_id = NULL;
 	path = ft_strdup("/tmp/heredoc");
 	hash = ft_hash_djb2((const void *)cmd, ft_strlen((char *)cmd));
-	hdoc_id = (char *)malloc(sizeof(char) * 2);
+	hdoc_id = (char *)malloc(sizeof(char) * 3);
 	if (!hdoc_id)
 		return (NULL);
 	hdoc_id[0] = (char)((char)hash % 256);
-	hdoc_id[1] = '\0';
+	hdoc_id[1] = (char)((char)hash % 100);
+	hdoc_id[2] = '\0';
 	return (append(path, hdoc_id, 1));
 }
 
