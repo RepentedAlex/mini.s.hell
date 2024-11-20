@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:50:10 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/05 15:58:38 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:52:00 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head)
 		{
 			block_has_cmd = true;
 			nav_cmd->cmd = ft_strdup(nav_block->str);
+			nav_cmd->args = add_str_to_array(nav_cmd->args, nav_block->str);
 			nav_block->type = CMD;
 		}
 		else if (block_has_cmd && nav_block->type == RAW)
