@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:40:39 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/19 15:40:41 by apetitco         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:25:30 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ms_unset(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	(void)cmd;
 	(void)args;
 	env = mo_shell->shell_env;
-	args_iterator = 0;
+	args_iterator = 1;
 	while (args && args[args_iterator])
 	{
 		var_index = find_var(args[args_iterator], env);
