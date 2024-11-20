@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ms_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:12:03 by llabonde          #+#    #+#             */
-/*   Updated: 2024/11/05 16:16:20 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:27:48 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,16 @@ int	ms_exit(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 
 	(void)cmd;
 	exit_s = mo_shell->last_exit_status;
-	if (args && args[0])
+	if (args && args[1])
 	{
-		if (args[1] && ft_isnumber(args[0]))
+		if (args[1] && ft_isnumber(args[1]))
 		{
 			exit_s = ft_err_msg((t_err){ENO_GENERAL, \
 				ERRMSG_TOO_MANY_ARGS, NULL});
 			(garbage_collect(mo_shell, 1), exit(exit_s));
 		}
 		else
-			exit_s = exit_gen(args[0], mo_shell);
+			exit_s = exit_gen(args[1], mo_shell);
 	}	
 	garbage_collect(mo_shell, 1);
 	exit(exit_s);
