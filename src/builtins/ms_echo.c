@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 16:19:56 by llabonde          #+#    #+#             */
-/*   Updated: 2024/11/05 16:27:18 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/20 19:06:04 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ms_echo(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 
 	(void)mo_shell;
 	(void)cmd;
-	i = 0;
+	i = 1;
 	option = false;
 	while (args && args[i] && args[i][0] == '-')
 	{
@@ -51,7 +51,7 @@ int	ms_echo(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	}
 	while (args && args[i])
 	{
-		if (i == 0)
+		if (i == 1)
 		{
 			if (args[i][0] == '-' && args[i][1] == 'n' && args[i][2] == '\0')
 			{

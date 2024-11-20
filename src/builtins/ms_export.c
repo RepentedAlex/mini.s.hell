@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:55:09 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/19 13:55:11 by apetitco         ###   ########.fr       */
+/*   Updated: 2024/11/20 19:12:25 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	ms_export(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 
 	(void)cmd;
 	(void)args;
-	args_iterator = 0;
+	args_iterator = 1;
 	while (args[args_iterator] != NULL)
 	{
 		i = 0;
