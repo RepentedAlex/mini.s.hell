@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:33:51 by apetitco          #+#    #+#             */
-/*   Updated: 2024/10/14 14:33:53 by apetitco         ###   ########.fr       */
+/*   Updated: 2024/11/20 19:25:03 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,12 @@ char	*var_expander(char *ret, char *src, int *i, char *envp[])
 	}
 	var_name[j] = '\0';
 	var_content = get_var_content(var_name, envp);
-	ret = append(ret, var_content, ft_strlen(var_content));
+	
 	if (var_content)
+	{
+		ret = append(ret, var_content, ft_strlen(var_content));
 		free(var_content);
+	}
 	*i += j;
 	return (ret);
 }
