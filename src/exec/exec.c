@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:39:02 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/20 18:01:24 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:59:42 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,11 @@ int	execution_sequence(t_mo_shell *mo_shell)
 	{
 		pipes_array.pipe_i++;
 		pids_array.pid_i++;
+		if (!to_launch->cmd)
+		{
+			to_launch = to_launch->next;
+			continue ;
+		}
 		if (to_launch->next && pipe(pipes_array.pipe[pipes_array.pipe_i]) == -1)
 		{
 			perror("pipe error");
