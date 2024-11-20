@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:39:02 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/05 15:51:32 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:21:03 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 	execve(to_launch->cmd, to_launch->args, envp);
 	perror("execve");
 	 exit(EXIT_FAILURE);
-//	return (1);
 }
 
 int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell, int mode)
@@ -127,7 +126,7 @@ int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 	ret = mo_shell->last_exit_status;
 	//TODO Fill heredoc for command here
 
-	if (is_builtin(to_launch->cmd) == true || (!to_launch->prev && !to_launch->next))
+	if (is_builtin(to_launch->cmd) == true)
 	{
 		child_process_bi(to_launch, pipes_array, mo_shell, 1);
 	}
@@ -155,6 +154,7 @@ int	execution_sequence(t_mo_shell *mo_shell)
 	t_pipes	pipes_array;
 	t_pids	pids_array;
 	int		i;
+	int		status;
 	int		exit_status;
 
 	to_launch = mo_shell->cmds_table;
@@ -180,15 +180,16 @@ int	execution_sequence(t_mo_shell *mo_shell)
 		close(pipes_array.pipe[pipes_array.pipe_i - 1][1]);
 		pipes_array.pipe_i--;
 	}
-	//Wait for all children to finish their task
-	i = -1;
-	while (++i <= pids_array.pid_i)
-		if (pids_array.pid[i] != 0)
-			waitpid(pids_array.pid[i], &exit_status, WIFEXITED(exit_status));
-//	if (WIFEXITED(exit_status))
-//		mo_shell->last_exit_status = WIFEXITED(exit_status);
-		// printf("Exit status: %d\n", WEXITSTATUS(exit_status));
-	mo_shell->last_exit_status = exit_status;
+	i = 0;
+	while (i <= pids_array.pid_i)
+	{
+		if (waitpid(pids_array.pid[i], &status, 0) == -1)
+			(perror("waitpid"), exit(EXIT_FAILURE));
+		if (WIFEXITED(status))
+			exit_status = WEXITSTATUS(status);
+		i++;
+	}
+	mo_shell->last_exit_status = status;
 	return (0);
 }
 
