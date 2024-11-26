@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:55:09 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/20 19:12:25 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:08:26 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,25 +95,33 @@ int	ms_export(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	int		i;
 	int		args_iterator;
-	bool	valid_id;
+	char	var_name[DEF_BUF_SIZ];
 
 	(void)cmd;
 	(void)args;
 	args_iterator = 1;
+	ft_bzero(var_name, DEF_BUF_SIZ);
 	while (args[args_iterator] != NULL)
 	{
 		i = 0;
-		valid_id = false;
 		while (args[args_iterator][i] && args[args_iterator][i] != '=')
 		{
-			if (valid_id == false && ft_isalpha(args[args_iterator][i]))
-				valid_id = true;
+			var_name[i] = args[args_iterator][i];
 			i++;
 		}
-		if (valid_id == false)
-			continue ;
+		if (is_valid_variable_name(var_name) == false)
+				break ;
+		if (args[args_iterator][i] != '=')
+			{
+				printf("No value to assign to variable $%s\n", var_name);
+				break ;
+			}
+		i++;
 		strip_quotes(args[args_iterator]);
-		mo_shell->shell_env = add_str_to_array(mo_shell->shell_env, args[args_iterator]);
+		if (var_exst(var_name, mo_shell->shell_env) == -1)
+			mo_shell->shell_env = add_str_to_array(mo_shell->shell_env, args[args_iterator]);
+		else
+			update_var(var_name, &args[args_iterator][i], mo_shell->shell_env);
 		args_iterator++;
 	}
 	return (0);
