@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:40:39 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/20 17:25:30 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:15:12 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ms_unset(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	args_iterator = 1;
 	while (args && args[args_iterator])
 	{
-		var_index = find_var(args[args_iterator], env);
+		var_index = var_exst(args[args_iterator], env);
 		var_after = 0;
 		while (env[var_index + 1 + var_after] != NULL)
 			var_after++;
