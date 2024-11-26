@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:47:04 by llabonde          #+#    #+#             */
-/*   Updated: 2024/11/26 15:11:07 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:02:07 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ static void	handle_sigint(int code)
 		rl_redisplay();
 }
 
-static void	handle_sigsegv(int code)
-{
-	(void)code;
-	write(2, "Segmentation fault\n", 19);
-	exit(11);
-}
+// static void	handle_sigsegv(int code)
+// {
+// 	(void)code;
+// 	write(2, "Segmentation fault\n", 19);
+// 	exit(11);
+// }
 
 static void	handle_sigabrt(int code)
 {
@@ -43,7 +43,8 @@ static void	handle_sigabrt(int code)
 void	signals(void)
 {
 	signal(SIGINT, &handle_sigint);
-	signal(SIGSEGV, &handle_sigsegv);
+	// signal(SIGSEGV, &handle_sigsegv);
+	signal(SIGSEGV, SIG_DFL);
 	signal(SIGABRT, &handle_sigabrt);
 	signal(SIGQUIT, SIG_IGN);
 }
