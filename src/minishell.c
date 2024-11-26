@@ -6,11 +6,13 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:49:16 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/26 15:00:15 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:18:29 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+pid_t	g_signal_pid;
 
 bool	words_in_str(char *str)
 {
@@ -71,6 +73,7 @@ int	main(const int argc, char *argv[], char *envp[])
 	t_mo_shell	mo_shell;
 
 	mo_shell.shell_env = copy_env(envp);
+	g_signal_pid = 0;
 	signals();
 	mo_shell.last_exit_status = 0;
 	mo_shell.og_input = NULL;
