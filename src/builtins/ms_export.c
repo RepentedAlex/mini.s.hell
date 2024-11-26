@@ -44,6 +44,49 @@ static void	strip_quotes(char *str)
 		str[i - 1] = '\0';
 }
 
+t_error	update_var(char *var_name, char *var_content, char *envp[])
+{
+	char	*tmp;
+	char	*equal;
+	int		var_index;
+
+	var_index = var_exst(var_name, envp);
+	// tmp = malloc(sizeof(char) * (ft_strlen(var_name) + ft_strlen(var_content) + 2));
+	// if (!tmp)
+	// 	return (ERROR);
+	equal = ft_strdup("=");
+	if (!equal)
+		return (ERROR);
+	tmp = ft_strdup(var_name);
+	if (!tmp)
+		return (ERROR);
+	tmp = append(tmp, "=", 1);
+	if (!tmp)
+		return (ERROR);
+	tmp = append(tmp, var_content, ft_strlen(var_content));
+	if (!tmp)
+		return (ERROR);
+	free(envp[var_index]);
+	envp[var_index] = NULL;
+	envp[var_index] = tmp;
+	return (0);
+}
+
+bool	is_valid_variable_name(char *var_name)
+{
+	int	i;
+
+	i = 0;
+	if (!var_name[i] || (ft_isalpha(var_name[i]) == false && var_name[i] != '_'))
+		return (false);
+	i++;
+	while (var_name[i] && (ft_isalnum(var_name[i]) || var_name[i] == '_'))
+		i++;
+	if (!var_name[i])
+		return (true);
+	return (false);
+}
+
 /// @brief Sets variable in the environment
 /// @param args
 /// @param cmd
