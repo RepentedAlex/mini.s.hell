@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:24:40 by llabonde          #+#    #+#             */
-/*   Updated: 2024/11/26 18:48:16 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/26 19:23:26 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,12 @@ int	ms_cd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	char	*user;
 	char	*user_path;
+	char	*new_pwd;
+	char	*export_args[2];
 
 	(void)cmd;
 	user_path = ft_strdup("/home/");
+	new_pwd = ft_strdup("PWD=");
 	if (!user_path)
 		return (-1);
 	user = getenv("USER");
@@ -60,9 +63,17 @@ int	ms_cd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 		return (ft_putstr_fd("mini.s.hell: cd: invalid argument.s\n", 2), 0);
 	if (!args[1])
 	{
-				res = chdir(user_path);
+		res = chdir(user_path);
 		if (res == 0)
-			update_pwd(mo_shell, args[1], cmd, &args[1]);
+			if (var_exst("PWD", mo_shell->shell_env) == -1)
+			{
+				new_pwd = append(new_pwd, user_path, ft_strlen(user_path));
+				export_args[0] = "lol";
+				export_args[1] = new_pwd;
+				ms_export(export_args, mo_shell, cmd);
+			}
+			else
+				update_pwd(mo_shell, args[1], cmd, &args[1]);
 		else
 			return (res);
 	}
@@ -70,7 +81,15 @@ int	ms_cd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	{
 		res = chdir(args[1]);
 		if (res == 0)
-			update_pwd(mo_shell, args[1], cmd, &args[1]);
+			if (var_exst("PWD", mo_shell->shell_env) == -1)
+			{
+				new_pwd = append(new_pwd, args[1], ft_strlen(user_path));
+				export_args[0] = "lol";
+				export_args[1] = new_pwd;
+				ms_export(export_args, mo_shell, cmd);
+			}
+			else
+				update_pwd(mo_shell, args[1], cmd, &args[1]);
 		else
 			return (res);
 	}
