@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:49:16 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/26 15:13:24 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:15:52 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ extern pid_t	g_signal_pid;
 // IFS = Internal Fields Separator
 // Par défaut <space><tab><newline> sont utilisés pour délimiter chaque token.
 # define IFS " \t\n"
+
+# define DEF_BUF_SIZ 1024
 
 // == == == TYPEDEFS == == ==
 
