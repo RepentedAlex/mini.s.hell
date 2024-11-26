@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:33:51 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/20 19:25:03 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:51:03 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /// @brief
 /// @param var The name of the variable we want to get the index of
 /// @param envp The environment in which we will look for the variable
-/// @return The index of the variable if it exists, -1 if the variable doesn't
+/// @return The index of the variable if it exist, -1 if the variable doesn't
 /// exists and -2 if there's no variable name provided.
 int	var_exst(char *var, char *envp[])
 {
