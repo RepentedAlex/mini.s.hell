@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:47:04 by llabonde          #+#    #+#             */
-/*   Updated: 2024/11/26 16:02:07 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:20:39 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	signals(void)
 {
 	signal(SIGINT, &handle_sigint);
 	// signal(SIGSEGV, &handle_sigsegv);
-	signal(SIGSEGV, SIG_DFL);
 	signal(SIGABRT, &handle_sigabrt);
 	signal(SIGQUIT, SIG_IGN);
 }
