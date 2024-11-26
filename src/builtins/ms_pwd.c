@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 11:53:08 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/19 11:53:11 by apetitco         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:51:22 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	ms_pwd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	(void)cmd;
 	(void)args;
 	var_index = var_exst("PWD", mo_shell->shell_env);
+	if (var_index == -1)
+		return (write(1, "\n", 1), 1);
 	var_content = mo_shell->shell_env[var_index];
 	while (*var_content != '=')
 		var_content++;
