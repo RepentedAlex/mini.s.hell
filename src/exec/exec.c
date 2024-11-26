@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:39:02 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/26 15:09:17 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:50:39 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ int child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell, int mode)
 {
 	int	(*f_builtin)(char **, t_mo_shell *mo_shell, t_cmd *cmd);
-	if (ft_strcmp(to_launch->cmd, "exit") != 0)
-		mode = 1;
+	if (mode == 1 && ft_strcmp(to_launch->cmd, "exit") == 0)
+		mode = 0;
 	if (mode == 0)
 	{
 		handler_dup2(to_launch, pipes);
@@ -126,7 +126,7 @@ int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 	ret = mo_shell->last_exit_status;
 	//TODO Fill heredoc for command here
 
-	if (is_builtin(to_launch->cmd) == true)
+	if (is_builtin(to_launch->cmd) == true && !to_launch->prev && !to_launch->next)
 	{
 		child_process_bi(to_launch, pipes_array, mo_shell, 1);
 	}
