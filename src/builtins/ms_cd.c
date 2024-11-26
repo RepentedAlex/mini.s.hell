@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:24:40 by llabonde          #+#    #+#             */
-/*   Updated: 2024/11/20 18:02:32 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:48:16 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,26 @@ static void update_pwd(t_mo_shell *mo_shell, char *new_path, t_cmd *cmd, char **
 /// @return
 int	ms_cd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
+	char	*user;
+	char	*user_path;
+
 	(void)cmd;
+	user_path = ft_strdup("/home/");
+	if (!user_path)
+		return (-1);
+	user = getenv("USER");
+	user_path = append(user_path, user, ft_strlen(user));
 	int	res;
-	if (!args[1] || args[2])
-		return (ft_putstr_fd("mini.s.hell: cd: missing or invalid argument.s\n", 2), 0);
+	if (args[1] && args[2])
+		return (ft_putstr_fd("mini.s.hell: cd: invalid argument.s\n", 2), 0);
+	if (!args[1])
+	{
+				res = chdir(user_path);
+		if (res == 0)
+			update_pwd(mo_shell, args[1], cmd, &args[1]);
+		else
+			return (res);
+	}
 	else
 	{
 		res = chdir(args[1]);
