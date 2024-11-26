@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:49:16 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/05 15:54:05 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:00:15 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 		if (parsing(mo_shell) == ERROR)
 			continue ;
 		execution(mo_shell);
+		g_signal_pid = 0;
 	}
 	garbage_collect(mo_shell, 1);
 	return (EXIT_SUCCESS);
@@ -70,6 +71,7 @@ int	main(const int argc, char *argv[], char *envp[])
 	t_mo_shell	mo_shell;
 
 	mo_shell.shell_env = copy_env(envp);
+	signals();
 	mo_shell.last_exit_status = 0;
 	mo_shell.og_input = NULL;
 	mo_shell.clean_input = NULL;
