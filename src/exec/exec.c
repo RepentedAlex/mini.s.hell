@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:39:02 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/20 18:59:42 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:09:17 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 			(perror("fork error\n"), exit(EXIT_FAILURE));
 		if (pids_array->pid[pids_array->pid_i] == 0)
 		{
+			signal(SIGQUIT, SIG_DFL);
 			if (is_builtin(to_launch->cmd) == false)
 				child_process_ext(to_launch, pipes_array, mo_shell->shell_env);
 			if (is_builtin(to_launch->cmd) == true)

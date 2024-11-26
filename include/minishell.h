@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:49:16 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/26 14:56:52 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:05:32 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,9 @@ bool	look_for_redir(t_block **head);
 t_error	lexcat_redir_handler(t_block **head);
 t_error	lexcat_redir_i(t_block **head);
 t_error	lexcat_redir_o(t_block **head);
+
+//Signals
+void	signals(void);
 
 // splitters
 int		handle_ap(t_block *nav, int *i);

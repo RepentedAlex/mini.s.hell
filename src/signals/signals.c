@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:47:04 by llabonde          #+#    #+#             */
-/*   Updated: 2024/11/26 14:56:08 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:11:07 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	clear_rl_line(void)
 static void	handle_sigint(int code)
 {
 	(void)code;
-	pritnf("\n");
+	printf("\n");
 	clear_rl_line();
 	if(g_signal_pid == 0)
 		rl_redisplay();
