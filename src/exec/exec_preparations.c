@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:50:10 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/20 15:52:00 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/29 18:14:35 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,7 @@ void	expand_cmd_path(t_cmd **head, char *envp[])
 		{
 			tmp = get_path(nav->cmd, envp);
 			if (tmp)
-			{
-				(free(tmp), cmd_path = get_path(nav->cmd, envp));
-				(free(nav->cmd), nav->cmd = cmd_path);
-			}
-			else
-				(perror(nav->cmd), free(tmp));
+				(nav->cmd = tmp, tmp = NULL);
 			nav = nav->next;
 		}
 	}
