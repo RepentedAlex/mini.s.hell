@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:58:50 by apetitco          #+#    #+#             */
-/*   Updated: 2024/10/21 14:58:52 by apetitco         ###   ########.fr       */
+/*   Updated: 2024/11/29 18:06:46 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <libft.h>
 
 bool	syntax_check_handler(t_mo_shell *mo_shell, int *error_ret, \
 	t_error *value1)
@@ -44,7 +45,11 @@ void	clean_empty_nodes(t_block **head)
 	{
 		tmp = nav->next;
 		if (nav->str[0] == '\0' || ft_string_is_only_ifs(nav->str))
-			block_pop(&nav);
+			{
+				if (!nav->prev)
+					*head = tmp;
+				block_pop(&nav);
+			}
 		nav = tmp;
 	}
 }
@@ -55,6 +60,58 @@ t_error	lexcat_redir_handler(t_block **head)
 		return (ERROR);
 	lexcat_redir_i(head);
 	lexcat_redir_o(head);
+	return (NO_ERROR);
+}
+
+char	*unquote_string(char *str)
+{
+	int		i;
+	int		j;
+	int		quotes;
+	char	tmp[DEF_BUF_SIZ];
+	char	*ret;
+
+	ft_bzero(tmp, DEF_BUF_SIZ);
+	quotes = 0;
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if ((quotes == 1 && str[i] == '\'') || (quotes == 2 && str[i] == '\"'))
+		{
+			check_in_quotes(str[i], &quotes);
+			i++;
+			continue ;
+		}
+		check_in_quotes(str[i], &quotes);
+		if (!quotes || (quotes == 1 && str[i] != '\'') || (quotes == 2 && str[i] != '\"'))
+		{
+			tmp[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	tmp[i] = '\0';
+	ret = ft_strdup(tmp);
+	if (!ret)
+		return (NULL);
+	return (ret);
+	
+}
+
+t_error	nodes_unquote_strings(t_block **head)
+{
+	t_block	*nav;
+	char	*tmp;
+
+	nav = *head;
+	while (nav)
+	{
+		tmp = unquote_string(nav->str);
+		free(nav->str);
+		nav->str = tmp;
+		nav = nav->next;
+	}
 	return (NO_ERROR);
 }
 
@@ -79,8 +136,8 @@ token '|'\n"), ERROR);
 	clean_empty_nodes(&mo_shell->splitted_input);
 	if (lexcat_redir_handler(&mo_shell->splitted_input) == ERROR) //Surely redundant
 		return (ERROR);
-	// if (check_not_dirfile(&mo_shell->splitted_input) == ERROR)
-		// return (ERROR);
+	check_not_dirfile(&mo_shell->splitted_input);
+	nodes_unquote_strings(&mo_shell->splitted_input);
 	return (NO_ERROR);
 }
 
@@ -94,7 +151,7 @@ t_error	parsing(t_mo_shell *mo_shell)
 	mo_shell->expanded_input = expand_variables(mo_shell->clean_input, \
 		mo_shell->shell_env, mo_shell);
 	mo_shell->splitted_input = block_setup_first(mo_shell);
-	if (splitter(mo_shell))
+	if (splitter(mo_shell) == ERROR)
 		return (ERROR);
 	return (NO_ERROR);
 }
