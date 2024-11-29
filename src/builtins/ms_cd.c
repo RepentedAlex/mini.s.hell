@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:24:40 by llabonde          #+#    #+#             */
-/*   Updated: 2024/11/26 19:23:26 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/29 18:36:41 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	ms_cd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	{
 		res = chdir(args[1]);
 		if (res == 0)
+		{
 			if (var_exst("PWD", mo_shell->shell_env) == -1)
 			{
 				new_pwd = append(new_pwd, args[1], ft_strlen(user_path));
@@ -88,10 +89,13 @@ int	ms_cd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 				export_args[1] = new_pwd;
 				ms_export(export_args, mo_shell, cmd);
 			}
-			else
-				update_pwd(mo_shell, args[1], cmd, &args[1]);
+		}
 		else
-			return (res);
+		{
+			printf("mini.s.hell: %s: No such file or directory\n", args[0]);
+			update_pwd(mo_shell, args[1], cmd, &args[1]);
+		}
+		return (res);
 	}
 	return (0);
 }
