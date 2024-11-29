@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:33:51 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/26 18:51:03 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/29 19:02:51 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,10 @@ char	*get_var_content(char *var_name, char **env)
 	int	j;
 
 	i = 0;
-	while (ft_strncmp(var_name, env[i], ft_strlen(var_name)))
-		i++;
+	if (var_name[0] == '\0')
+		return (NULL);
+	while (env[i] && ft_strncmp(var_name, env[i], ft_strlen(var_name)) != ('\0' -'='))
+			i++;
 	if (env[i] == NULL)
 		return (NULL);
 	j = 0;
@@ -92,15 +94,24 @@ char	*var_expander(char *ret, char *src, int *i, char *envp[])
 	int		j;
 
 	j = 0;
-	while (src && src[j] && src[j] != '$' &&!ft_is_ifs(src[j]))
+	while (src && src[j] && src[j] != '$' && (ft_isalnum(src[j]) || src[j] == '_'))
 	{
 		var_name[j] = src[j];
 		j++;
 	}
 	var_name[j] = '\0';
+	if (ft_strlen(var_name) == 0)
+		{
+			ret = append(ret, "$", 1);
+			return (ret);
+		}
 	var_content = get_var_content(var_name, envp);
-	
-	if (var_content)
+	if (!var_content)
+	{
+		*i += j;
+		return (ret);
+	}
+	else
 	{
 		ret = append(ret, var_content, ft_strlen(var_content));
 		free(var_content);
@@ -144,8 +155,19 @@ char	*expand_variables(char *src, char *envp[], t_mo_shell *mo_shell)
 		if (quotes != 1 && '$' == src[i])
 		{
 			i++;
-			if (src[i] == '$')
+			if (ft_is_ifs(src[i]) == true)
+			{
+				ret = append(ret, "$", 1);
 				i++;
+				continue ;
+			}
+			if (src[i] == '\'' || src[i] == '\"')
+			{
+				i++;
+				continue ;
+			}
+			if (src[i] == '$')
+				(ret = append(ret, "$$", 2), i++);
 			else if (src[i] == '?')
 			{
 				ret = append(ret, les, les_len);
