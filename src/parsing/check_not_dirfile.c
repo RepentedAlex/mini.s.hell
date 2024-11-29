@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_not_dirfile.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 15:35:43 by apetitco          #+#    #+#             */
-/*   Updated: 2024/10/23 15:35:45 by apetitco         ###   ########.fr       */
+/*   Updated: 2024/11/29 18:10:21 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ bool	check_not_dirfile(t_block **head)
 		return (0);
 	if (ft_strchr(nav->str, '/'))
 	{
-		check_if_dirfile_exist(nav->str);
-		return (false);
+		if (check_if_dirfile_exist(nav->str) == true)
+			return (false);
 	}
 	nav = nav->next;
 	while (nav)
@@ -61,8 +61,8 @@ bool	check_not_dirfile(t_block **head)
 		{
 			if (ft_strchr(nav->str, '/'))
 			{
-				check_if_dirfile_exist(nav->str);
-				return (true);
+				if (check_if_dirfile_exist(nav->str) == true)
+					return (true);
 			}
 		}
 		nav = nav->next;
