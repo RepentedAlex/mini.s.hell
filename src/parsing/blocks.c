@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   blocks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 13:22:22 by apetitco          #+#    #+#             */
-/*   Updated: 2024/10/15 13:22:25 by apetitco         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:14:56 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	for_space(t_block *nav)
 	i = 0;
 	while (nav->str[i])
 	{
-		if ((nav->str[i] == '\'' || nav->str[i] == '"') && handle_quotes(nav, &i))
-			break ;
+		// if ((nav->str[i] == '\'' || nav->str[i] == '"') && handle_quotes(nav, &i))
+		// 	break ;
 		if (!ft_is_symbol(&nav->str[i]) && handle_no_symbols_no_ifs(nav, &i))
 			break ;
 		if (!ft_strncmp(&nav->str[i], "<<", 2) && handle_hd(nav, &i))
