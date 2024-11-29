@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   block_nodes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:26:20 by apetitco          #+#    #+#             */
-/*   Updated: 2024/10/15 17:26:35 by apetitco         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:14:08 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	block_pop(t_block **block)
 		free(tmp->str);
 		tmp->str = NULL;
 	}
-	tmp->prev->next = save_next;
+	if (tmp->prev)
+		tmp->prev->next= save_next;
 	if (tmp->next)
 		tmp->next->prev = save_prev;
 	free(tmp);
