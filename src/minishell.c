@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:49:16 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/26 15:18:29 by llabonde         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:51:31 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,17 @@ pid_t	g_signal_pid;
 bool	words_in_str(char *str)
 {
 	int		i;
+	int		flag;
 
 	i = 0;
+	flag = 0;
 	while (str[i])
 	{
-		if (str[i] != ':' || str[i] != '!')
+		if ((str[i] == ':' && flag == 0) || (str[i] == '!' && flag == 0))
+			flag = 1;
+		else if((str[i] == ':' && flag == 1) || (str[i] == '!' && flag == 1))
+			return (true);
+		if (str[i] != ':' && str[i] != '!')
 			return (true);
 		i++;
 	}
@@ -42,6 +48,11 @@ int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 	{
 		garbage_collect(mo_shell, 0);
 		mo_shell->og_input = readline(PROMPT);
+		if (mo_shell->og_input[0] == '!' && !mo_shell->og_input[1])
+		{
+			mo_shell->last_exit_status = 1;
+			continue ;
+		}
 		if (mo_shell->og_input[0] == '\0' || words_in_str(mo_shell->og_input) == false)
 			continue ;
 		if (mo_shell->og_input && *mo_shell->og_input)
