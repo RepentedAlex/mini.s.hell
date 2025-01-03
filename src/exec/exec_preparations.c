@@ -48,10 +48,10 @@ void	fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head)
 void	expand_cmd_path(t_cmd **head, char *envp[])
 {
 	t_cmd	*nav;
-	char	*cmd_path;
+	// char	*cmd_path;
 	char	*tmp;
 
-	cmd_path = NULL;
+	// cmd_path = NULL;
 	nav = *head;
 	while (nav)
 	{
