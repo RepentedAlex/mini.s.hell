@@ -112,7 +112,9 @@ int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell, int
 	{
 		handler_dup2(to_launch, pipes);
 		f_builtin = (g_launch_builtins(to_launch));
-		if (f_builtin(to_launch->args, mo_shell, to_launch) == 0)
+		// if (f_builtin(to_launch->args, mo_shell, to_launch) == 0)
+		mo_shell->last_exit_status = f_builtin(to_launch->args, mo_shell, to_launch);
+		if (mo_shell->last_exit_status == 0)
 			return (EXIT_SUCCESS);
 		// perror("mini.s.hell");
 		return (mo_shell->last_exit_status);
@@ -186,6 +188,7 @@ int	execution_sequence(t_mo_shell *mo_shell)
 			exit(EXIT_FAILURE);
 		}
 		fork_for_cmd(mo_shell, to_launch, &pipes_array, &pids_array);
+		exit_status = mo_shell->last_exit_status;
 		to_launch = to_launch->next;
 	}
 	while (pipes_array.pipe_i > 0)
@@ -195,17 +198,19 @@ int	execution_sequence(t_mo_shell *mo_shell)
 		pipes_array.pipe_i--;
 	}
 	i = 0;
-	while (i <= pids_array.pid_i)
+	while ((pids_array.pid_i > 1 && (is_builtin(mo_shell->cmds_table->cmd) == false)) || i <= pids_array.pid_i)
 	{
 		if (pids_array.pid[i])
+		{
 			if (waitpid(pids_array.pid[i], &status, 0) == -1)
 				(perror("waitpid"), exit(EXIT_FAILURE));
-		if (WIFEXITED(status))
-			exit_status = WEXITSTATUS(status);
+			if (WIFEXITED(status))
+				exit_status = WEXITSTATUS(status);
+		}
 		i++;
 	}
-	mo_shell->last_exit_status = status;
-	return (0);
+	mo_shell->last_exit_status = exit_status;
+	return (mo_shell->last_exit_status);
 }
 
 /// @brief This function handles all things related to the execution.
