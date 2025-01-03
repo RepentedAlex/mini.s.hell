@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 18:37:25 by apetitco          #+#    #+#             */
-/*   Updated: 2025/01/03 16:10:53 by llabonde         ###   ########.fr       */
+/*   Updated: 2025/01/03 17:06:35 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,13 @@ void	close_fds(t_cmd **head)
 		if (nav->fd_i != STDIN_FILENO)
 			(dup2(nav->cp_i, STDIN_FILENO), close(nav->fd_i), nav->fd_i = STDIN_FILENO);
 		if (nav->fd_o != STDOUT_FILENO)
-			(dup2(nav->cp_o, STDOUT_FILENO), close(nav->fd_o), nav->fd_o = STDOUT_FILENO);
+			(dup2(nav->cp_o, STDOUT_FILENO), close(nav->fd_o), nav->fd_o = -2);
 		nav = nav->next;
 	}
-	close((*head)->cp_i);
-	close((*head)->cp_o);
+	if ((*head)->cp_i != 0)
+		close((*head)->cp_i);
+	if ((*head)->cp_o != 0)
+		close((*head)->cp_o);
 }
 
 void	garbage_collect(t_mo_shell *data, int mode)
