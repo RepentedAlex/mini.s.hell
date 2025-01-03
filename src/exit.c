@@ -86,9 +86,9 @@ void	close_fds(t_cmd **head)
 		nav = nav->next;
 	}
 	if ((*head)->cp_i != 0)
-		close((*head)->cp_i);
+		(close((*head)->cp_i), (*head)->cp_i = 0);
 	if ((*head)->cp_o != 0)
-		close((*head)->cp_o);
+		(close((*head)->cp_o), (*head)->cp_o = 0);
 }
 
 void	garbage_collect(t_mo_shell *data, int mode)
@@ -102,7 +102,13 @@ void	garbage_collect(t_mo_shell *data, int mode)
 	if (data->expanded_input)
 		(free(data->expanded_input), data->expanded_input = NULL);
 	if (data->cmds_table)
+	{
+		if (data->cmds_table->cp_i != 0)
+			(close(data->cmds_table->cp_i), data->cmds_table->cp_i = 0);
+		if (data->cmds_table->cp_o != 0)
+			(close(data->cmds_table->cp_o), data->cmds_table->cp_o = 0);
 		(free_cmd_table(&data->cmds_table), data->cmds_table = NULL);
+	}
 	if (mode == 1)
 	{
 		clear_history();
