@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_finder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:17:55 by apetitco          #+#    #+#             */
-/*   Updated: 2024/10/30 17:18:00 by apetitco         ###   ########.fr       */
+/*   Updated: 2025/01/03 17:30:51 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ char	*get_path(char *cmd, char *envp[])
 		return (cmd);
 	i = 0;
 	all_paths = ft_split(get_env(envp), ':');
-	cmds_array = ft_split(cmd, ' ');
+	cmds_array = malloc(sizeof(char *));
+	*cmds_array = ft_strdup(cmd);
+	// cmds_array = ft_split(cmd, ' ');
 	while (all_paths[i])
 	{
 		part_path = ft_strjoin(all_paths[i], "/");
