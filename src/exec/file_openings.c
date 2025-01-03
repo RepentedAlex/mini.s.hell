@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_openings.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apetitco <apetitco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:19:36 by apetitco          #+#    #+#             */
-/*   Updated: 2024/10/29 16:19:38 by apetitco         ###   ########.fr       */
+/*   Updated: 2025/01/03 18:12:50 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,13 +152,13 @@ t_error	open_redir_i(t_cmd **cmd_head, t_block **block_head)
 		{
 			nav_block = nav_block->next;
 			if (open_file_in(nav_block, nav_cmd, 1) == ERROR)
-				return (ERROR);
+				return (ft_putstr_fd("No such file or directory\n", STDERR_FILENO), ERROR);
 		}
 		else if (nav_block->type == HEREDOC)
 		{
 			nav_block = nav_block->next;
 			if (open_file_in(nav_block, nav_cmd, 2) == ERROR)
-				return (ERROR);
+				return (ft_putstr_fd("No such file or directory\n", STDERR_FILENO), ERROR);
 		}
 		nav_block = nav_block->next;
 	}
