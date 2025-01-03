@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:12:13 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/05 15:47:22 by llabonde         ###   ########.fr       */
+/*   Updated: 2025/01/03 16:06:30 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ typedef struct s_cmd
 	char			**args;
 	bool			heredoc;
 	int				fd_i;
+	int				cp_i;
 	int				fd_o;
+	int				cp_o;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }		t_cmd;

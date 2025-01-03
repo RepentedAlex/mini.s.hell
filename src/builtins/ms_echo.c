@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 16:19:56 by llabonde          #+#    #+#             */
-/*   Updated: 2024/11/20 19:06:04 by llabonde         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:56:46 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,17 @@ int	ms_echo(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 			break ;
 		i++;
 	}
-	while (args && args[i])
+	while (args && args[i] && args[i][0] != '>')
 	{
-		if (i == 1)
-		{
-			if (args[i][0] == '-' && args[i][1] == 'n' && args[i][2] == '\0')
-			{
-				// Gestion des erreurs a preciser
-				option = true;
-				i++;
-			}
-		}
+		// if (i == 1)
+		// {
+		// 	if (args[i][0] == '-' && args[i][1] == 'n' && args[i][2] == '\0')
+		// 	{
+		// 		// Gestion des erreurs a preciser
+		// 		option = true;
+		// 		i++;
+		// 	}
+		// }
 		ft_putstr_fd(args[i], 1);
 		if (args[i + 1])
 			ft_putstr_fd(" ", 1);

@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:39:02 by apetitco          #+#    #+#             */
-/*   Updated: 2025/01/03 14:17:34 by llabonde         ###   ########.fr       */
+/*   Updated: 2025/01/03 16:06:49 by llabonde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ char	**add_str_to_array(char **array, char *str)
 
 void	handler_dup2(t_cmd *to_launch, t_pipes *pipes)
 {
+	to_launch->cp_i = dup(STDIN_FILENO);
+	to_launch->cp_o = dup(STDOUT_FILENO);
 	if (to_launch->fd_i != STDIN_FILENO)
 		dup2(to_launch->fd_i, STDIN_FILENO);
 	else if (to_launch->prev)
