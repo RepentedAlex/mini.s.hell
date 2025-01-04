@@ -59,7 +59,7 @@ int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 		}
 		if (mo_shell->og_input[0] == '\0' || words_in_str(mo_shell->og_input) == false)
 			continue ;
-		if (mo_shell->og_input && *mo_shell->og_input)
+		if (*mo_shell->og_input)
 			add_history(mo_shell->og_input);
 		if (parsing(mo_shell) == ERROR)
 			continue ;
