@@ -165,7 +165,7 @@ void	heredoc_expand_word(char *str, char *envp[], t_mo_shell *mo_shell)
  * @param cmd The current t_cmd node we're on.
  * @param envp The environment variables.
  */
-int	heredoc(t_block *block, t_cmd *cmd, char **envp)
+int	heredoc(t_block *block, t_cmd *cmd, t_mo_shell *mo_shell)
 {
 	int		heredoc_fd;
 	char	*line;
@@ -177,13 +177,14 @@ int	heredoc(t_block *block, t_cmd *cmd, char **envp)
 	if (quoted_word)
 		block->str = remove_quotes(block->str);
 	else
-		heredoc_expand_word(block->str, envp, NULL);
+		heredoc_expand_word(block->str, mo_shell->shell_env, NULL);
 	heredoc_fd = open(create_hdoc_filename(cmd), O_CREAT | O_RDWR | O_TRUNC, 0666);
 	while (1)
 	{
 		line = readline("> ");
 		if (ft_strcmp(line, block->str) == 0)
 			break ;
+
 		write(heredoc_fd, line, ft_strlen(line));
 		write(heredoc_fd, "\n", 1);
 	}

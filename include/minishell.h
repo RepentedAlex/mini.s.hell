@@ -117,8 +117,8 @@ char	*get_path(char *cmd, char *envp[]);
 void	setup_redirs(t_cmd *to_launch, t_pipes *pipes, int mode);
 
 void	fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head);
-t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head);
-t_error	open_redir_i(t_cmd **cmd_head, t_block **block_head);
+t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head, t_mo_shell *mo_shell);
+t_error	open_redir_i(t_cmd **cmd_head, t_block **block_head, t_mo_shell *mo_shell);
 t_error	open_redir_o(t_cmd **cmd_head, t_block **block_head);
 t_error	pipeline_setup(t_mo_shell *mo_shell);
 void	setup_pipes(t_cmd **cmd_head);
@@ -136,6 +136,7 @@ char	*append(char *s1, char *s2, size_t n);
 t_error	split_spaces(t_block **head);
 char	*ft_strnjoin(char *src, char *dst, size_t n);
 char	*string_tidyer(char *s);
+char	*unquote_string(char *str);
 bool	ft_string_is_ifs(char *str);
 
 // pipe inspection

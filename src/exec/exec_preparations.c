@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:50:10 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/29 18:14:35 by llabonde         ###   ########.fr       */
+/*   Updated: 2025/01/04 18:09:32 by apetitco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_error	pipeline_setup(t_mo_shell *mo_shell)
 {
 	mo_shell->cmds_table = spltd_in_to_cmd_blocks(&mo_shell->splitted_input);
 	fill_cmd_and_args(&mo_shell->cmds_table, &mo_shell->splitted_input);
-	open_redir_files(&mo_shell->cmds_table, &mo_shell->splitted_input);
+	open_redir_files(&mo_shell->cmds_table, &mo_shell->splitted_input, mo_shell);
 	expand_cmd_path(&mo_shell->cmds_table, mo_shell->shell_env);
 	//TODO Setup pipes and redirections from right to left, redirections steal the pipe
 	// setup_pipes(&mo_shell->cmds_table);
@@ -121,9 +121,9 @@ t_cmd	*spltd_in_to_cmd_blocks(t_block **head)
 /// @param cmd_head The command table list's head.
 /// @param block_head The block list's head.
 /// @return ERROR if file couldn't be opened, NO_ERROR otherwise.
-t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head)
+t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head, t_mo_shell *mo_shell)
 {
-	if (open_redir_i(cmd_head, block_head) == ERROR)
+	if (open_redir_i(cmd_head, block_head, mo_shell) == ERROR)
 		return (ERROR);
 	if (open_redir_o(cmd_head, block_head) == ERROR)
 		return (ERROR);

@@ -69,7 +69,7 @@ char	*get_var_content(char *var_name, char **env)
 	i = 0;
 	if (var_name[0] == '\0')
 		return (NULL);
-	while (env[i] && ft_strncmp(var_name, env[i], ft_strlen(var_name)) != ('\0' -'='))
+	while (env[i] && (ft_strncmp(var_name, env[i], ft_strlen(var_name) + 1) != ('\0' - '=')))
 			i++;
 	if (env[i] == NULL)
 		return (NULL);

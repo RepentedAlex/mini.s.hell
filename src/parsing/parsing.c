@@ -107,9 +107,12 @@ t_error	nodes_unquote_strings(t_block **head)
 	nav = *head;
 	while (nav)
 	{
-		tmp = unquote_string(nav->str);
-		free(nav->str);
-		nav->str = tmp;
+		if (nav->type != EOFHD)
+		{
+			tmp = unquote_string(nav->str);
+			free(nav->str);
+			nav->str = tmp;
+		}
 		nav = nav->next;
 	}
 	return (NO_ERROR);

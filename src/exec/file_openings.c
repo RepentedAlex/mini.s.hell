@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:19:36 by apetitco          #+#    #+#             */
-/*   Updated: 2025/01/03 18:12:50 by llabonde         ###   ########.fr       */
+/*   Updated: 2025/01/04 18:09:15 by apetitco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,34 +55,67 @@ int	numerator(char **filename)
 	return (-1);
 }
 
-void	heredoc_filler(char *delimiter, int fd)
+char	*unquote_delimiter(char *str)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	tmp = unquote_string(str);
+	free(str);
+	return (tmp);
+}
+
+void	heredoc_filler(char *delimiter, int fd, t_mo_shell *mo_shell)
 {
 	char	*line;
+	char	*expanded_line;
+	char	*tmp;
+	int		i;
+	bool	expand_mode;
 
 	line = NULL;
+	expanded_line = NULL;
+	expand_mode = true;
+	i = 0;
+	while (delimiter[i])
+	{
+		if (delimiter[i] == '\'' || delimiter[i] == '\"')
+		{
+			expand_mode = false;
+			tmp = unquote_delimiter(delimiter);
+			delimiter = tmp;
+			break ;
+		}
+		i++;
+	}
 	while (1)
 	{
 		line = readline("> ");
 		if (ft_strcmp(delimiter, line) == 0)
-		{
 			break ;
+		if (line && expand_mode == true)
+		{
+			expanded_line = expand_variables(line, mo_shell->shell_env, mo_shell);
+			ft_putstr_fd(expanded_line, fd);
 		}
-		ft_putstr_fd(line, fd);
+		else
+			ft_putstr_fd(line, fd);
 		ft_putstr_fd("\n", fd);
 	}
-	free(line);
+	if (line)
+		(free(line), line = NULL);
+	if (expanded_line)
+		(free(expanded_line), expanded_line = NULL);
 }
 
-void	heredoc_handler(t_block *nav_block, t_cmd *nav_cmd)
+void	heredoc_handler(t_block *nav_block, t_cmd *nav_cmd, t_mo_shell *mo_shell)
 {
 	char	*heredoc_name;
 
 	(void)nav_block;
 	heredoc_name = NULL;
 	nav_cmd->fd_i = numerator(&heredoc_name);
-
-	//Fill heredoc
-	heredoc_filler(nav_block->str, nav_cmd->fd_i);
+	heredoc_filler(nav_block->str, nav_cmd->fd_i, mo_shell);
 	close(nav_cmd->fd_i);
 	open(heredoc_name, O_RDONLY);
 	free(heredoc_name);
@@ -96,7 +129,7 @@ void	heredoc_handler(t_block *nav_block, t_cmd *nav_cmd)
  * @param mode 
  * @return 
  */
-t_error	open_file_in(t_block *nav_block, t_cmd *nav_cmd, int mode)
+t_error	open_file_in(t_block *nav_block, t_cmd *nav_cmd, int mode, t_mo_shell *mo_shell)
 {
 	if (mode == 1)
 	{
@@ -111,7 +144,7 @@ t_error	open_file_in(t_block *nav_block, t_cmd *nav_cmd, int mode)
 		if (nav_cmd->fd_i != STDIN_FILENO)
 			(close(nav_cmd->fd_i), nav_cmd->fd_i = STDIN_FILENO);
 		//TODO Fill heredoc
-		heredoc_handler(nav_block, nav_cmd);
+		heredoc_handler(nav_block, nav_cmd, mo_shell);
 	}
 	return (NO_ERROR);
 }
@@ -137,7 +170,7 @@ t_error	open_file_out(t_block *nav_block, t_cmd *nav_cmd, int mode)
 	return (NO_ERROR);
 }
 
-t_error	open_redir_i(t_cmd **cmd_head, t_block **block_head)
+t_error	open_redir_i(t_cmd **cmd_head, t_block **block_head, t_mo_shell *mo_shell)
 {
 	t_block	*nav_block;
 	t_cmd	*nav_cmd;
@@ -151,13 +184,13 @@ t_error	open_redir_i(t_cmd **cmd_head, t_block **block_head)
 		else if (nav_block->type == REDIR_I)
 		{
 			nav_block = nav_block->next;
-			if (open_file_in(nav_block, nav_cmd, 1) == ERROR)
+			if (open_file_in(nav_block, nav_cmd, 1, mo_shell) == ERROR)
 				return (ft_putstr_fd("No such file or directory\n", STDERR_FILENO), ERROR);
 		}
 		else if (nav_block->type == HEREDOC)
 		{
 			nav_block = nav_block->next;
-			if (open_file_in(nav_block, nav_cmd, 2) == ERROR)
+			if (open_file_in(nav_block, nav_cmd, 2, mo_shell) == ERROR)
 				return (ft_putstr_fd("No such file or directory\n", STDERR_FILENO), ERROR);
 		}
 		nav_block = nav_block->next;
