@@ -132,7 +132,7 @@ bool	ft_is_alpha(const char c);
 bool	ft_is_ifs(char c);
 int		ft_is_symbol(const char *str);
 
-char	*append(char *s1, char *s2, size_t n);
+char	*append(char *dest, char *src, size_t n);
 t_error	split_spaces(t_block **head);
 char	*ft_strnjoin(char *src, char *dst, size_t n);
 char	*string_tidyer(char *s);

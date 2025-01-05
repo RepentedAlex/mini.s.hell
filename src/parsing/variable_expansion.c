@@ -111,11 +111,8 @@ char	*var_expander(char *ret, char *src, int *i, char *envp[])
 		*i += j;
 		return (ret);
 	}
-	else
-	{
-		ret = append(ret, var_content, ft_strlen(var_content));
-		free(var_content);
-	}
+	ret = append(ret, var_content, ft_strlen(var_content));
+	free(var_content);
 	*i += j;
 	return (ret);
 }

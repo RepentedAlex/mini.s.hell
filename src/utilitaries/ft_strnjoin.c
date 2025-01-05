@@ -41,17 +41,38 @@ char	*ft_strnjoin(char *src, char *dst, size_t n)
 }
 
 ///
-/// \param s1
-/// \param s2
+/// \param dest
+/// \param src
 /// \param n The number of characters we want to append from s2 to the end of s1
 /// \return
-char	*append(char *s1, char *s2, size_t n)
+char	*append(char *dest, char *src, size_t n)
 {
-	char	*ret;
+	char	*new_str;
+	size_t	dest_len;
+	size_t	i;
+	size_t	j;
 
-	ret = ft_strnapp(s1, s2, n);
-	if (!ret)
+	if (!dest)
+		dest_len = 0;
+	else
+		dest_len = ft_strlen(dest);
+	new_str = (char *)malloc(sizeof(char) * (dest_len + n + 1));
+	if (!new_str)
 		return (NULL);
-	free(s1);
-	return (ret);
+	i = 0;
+	while (i < dest_len)
+	{
+		new_str[i] = dest[i];
+		i++;
+	}
+	j = 0;
+	while (j < n)
+	{
+		new_str[i] = src[j];
+		j++;
+		i++;
+	}
+	new_str[i] = '\0';
+	free(dest);
+	return (new_str);
 }
