@@ -20,12 +20,16 @@ t_cmd	*cmd_new(char *str)
 	node = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!node)
 		return (NULL);
-	node->cmd = ft_strdup(str);
+	node->cmd = NULL;
+	if (str)
+		node->cmd = ft_strdup(str);
 	node->args = NULL;
 	node->next = NULL;
 	node->prev = NULL;
-	node->fd_i = 0;
-	node->fd_o = 1;
+	node->fd_i = STDIN_FILENO;
+	node->fd_o = STDOUT_FILENO;
+	node->cp_i = 0;
+	node->cp_o = 0;
 	return (node);
 }
 

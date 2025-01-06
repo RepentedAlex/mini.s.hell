@@ -54,16 +54,28 @@ char	**add_str_to_array(char **array, char *str)
 
 void	handler_dup2(t_cmd *to_launch, t_pipes *pipes)
 {
-	to_launch->cp_i = dup(STDIN_FILENO);
-	to_launch->cp_o = dup(STDOUT_FILENO);
+	// to_launch->cp_i = dup(STDIN_FILENO);
+	// to_launch->cp_o = dup(STDOUT_FILENO);
 	if (to_launch->fd_i != STDIN_FILENO)
+	{
+		// printf("fd_i: %d, fd_o: %d\n", to_launch->fd_i, to_launch->fd_o);
 		dup2(to_launch->fd_i, STDIN_FILENO);
+	}
 	else if (to_launch->prev)
+	{
+		// printf("fd_i: %d, fd_o: %d\n", to_launch->fd_i, to_launch->fd_o);
 		dup2(pipes->pipe[pipes->pipe_i - 1][0], STDIN_FILENO);
+	}
 	if (to_launch->fd_o != STDOUT_FILENO)
+	{
+		// printf("fd_i: %d, fd_o: %d\n", to_launch->fd_i, to_launch->fd_o);
 		dup2(to_launch->fd_o, STDOUT_FILENO);
+	}
 	else if (to_launch->next)
+	{
+		// printf("fd_i: %d, fd_o: %d\n", to_launch->fd_i, to_launch->fd_o);
 		dup2(pipes->pipe[pipes->pipe_i][1], STDOUT_FILENO);
+	}
 	if (to_launch->prev)
 	{
 		close(pipes->pipe[pipes->pipe_i - 1][0]);	//Close read end of previous pipe
@@ -173,6 +185,8 @@ int	execution_sequence(t_mo_shell *mo_shell)
 	ft_memset(pipes_array.pipe, -1, sizeof(pipes_array.pipe));
 	pipes_array.pipe_i = -1;
 	pids_array.pid_i = -1;
+	to_launch->cp_i = dup(STDIN_FILENO);
+	to_launch->cp_o = dup(STDOUT_FILENO);
 	while (to_launch)
 	{
 		pipes_array.pipe_i++;
@@ -182,11 +196,15 @@ int	execution_sequence(t_mo_shell *mo_shell)
 			to_launch = to_launch->next;
 			continue ;
 		}
-		if (to_launch->next && pipe(pipes_array.pipe[pipes_array.pipe_i]) == -1)
+		if (to_launch->next)
 		{
-			perror("pipe error");
-			exit(EXIT_FAILURE);
+			if (pipe(pipes_array.pipe[pipes_array.pipe_i]) == -1)
+			{
+				perror("pipe error");
+				exit(EXIT_FAILURE);
+			}
 		}
+		// printf("Pipe [%d] created: [%d, %d]\n", pipes_array.pipe_i, pipes_array.pipe[pipes_array.pipe_i][0], pipes_array.pipe[pipes_array.pipe_i][1]);
 		fork_for_cmd(mo_shell, to_launch, &pipes_array, &pids_array);
 		exit_status = mo_shell->last_exit_status;
 		to_launch = to_launch->next;

@@ -59,14 +59,15 @@ char	*get_path(char *cmd, char *envp[])
 		return (cmd);
 	i = 0;
 	all_paths = ft_split(get_env(envp), ':');
-	cmds_array = malloc(sizeof(char *));
+	cmds_array = malloc(sizeof(char *) * 2);
 	*cmds_array = ft_strdup(cmd);
+	cmds_array[1] = NULL;
 	// cmds_array = ft_split(cmd, ' ');
 	while (all_paths[i])
 	{
 		part_path = ft_strjoin(all_paths[i], "/");
 		exec = ft_strjoin(part_path, cmds_array[0]);
-		free(part_path);
+		(free(part_path), part_path = NULL);
 		if (access(exec, F_OK | X_OK) == 0)
 			return (ft_free_tab(cmds_array), ft_free_tab(all_paths), exec);
 		free(exec);
