@@ -55,16 +55,10 @@ void	free_cmd_table(t_cmd **head)
 	nav = *head;
 	while (nav)
 	{
-		if (nav->cmd != NULL)
-		{
-			free(nav->cmd);
-			nav->cmd = NULL;
-		}
+		if (nav->cmd)
+			(free(nav->cmd), nav->cmd = NULL);
 		if (nav->args)
-		{
-			free_2d_tab(nav->args);
-			nav->args = NULL;
-		}
+			(free_2d_tab(nav->args), nav->args = NULL);
 		tmp = nav->next;
 		free(nav);
 		nav = tmp;

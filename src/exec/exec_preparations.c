@@ -30,6 +30,8 @@ void	fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head)
 		if (!block_has_cmd && nav_block->type == RAW)
 		{
 			block_has_cmd = true;
+			if (nav_cmd->cmd)
+				free(nav_cmd->cmd);
 			nav_cmd->cmd = ft_strdup(nav_block->str);
 			nav_cmd->args = add_str_to_array(nav_cmd->args, nav_block->str);
 			nav_block->type = CMD;
@@ -67,7 +69,7 @@ void	expand_cmd_path(t_cmd **head, char *envp[])
 		{
 			tmp = get_path(nav->cmd, envp);
 			if (tmp)
-				(nav->cmd = tmp, tmp = NULL);
+				(free(nav->cmd), nav->cmd = tmp, tmp = NULL);
 			nav = nav->next;
 		}
 	}
