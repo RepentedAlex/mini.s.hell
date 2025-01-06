@@ -27,6 +27,7 @@ int	numerator(char **filename)
 	num = (char *)malloc(sizeof(char) * 4);
 	if (!num)
 		return (-1);
+	ft_memset(num, '\0', 4);
 	num[0] = '0';
 	while (num[0] <= '9')
 	{
