@@ -67,24 +67,30 @@ char	*unquote_string(char *str)
 {
 	int		i;
 	int		j;
-	int		quotes;
+	// int		quotes;
 	char	tmp[DEF_BUF_SIZ];
 	char	*ret;
 
 	ft_bzero(tmp, DEF_BUF_SIZ);
-	quotes = 0;
+	// quotes = 0;
 	i = 0;
 	j = 0;
 	while (str[i])
 	{
-		if ((quotes == 1 && str[i] == '\'') || (quotes == 2 && str[i] == '\"'))
-		{
-			check_in_quotes(str[i], &quotes);
-			i++;
-			continue ;
-		}
-		check_in_quotes(str[i], &quotes);
-		if (!quotes || (quotes == 1 && str[i] != '\'') || (quotes == 2 && str[i] != '\"'))
+		// if ((quotes == 1 && str[i] == '\'') || (quotes == 2 && str[i] == '\"'))
+		// {
+			// check_in_quotes(str[i], &quotes);
+			// i++;
+			// continue ;
+		// }
+		// check_in_quotes(str[i], &quotes);
+		// if (!quotes || (quotes == 1 && str[i] != '\'') || (quotes == 2 && str[i] != '\"'))
+		// {
+			// tmp[j] = str[i];
+			// j++;
+		// }
+		// i++;
+		if (str[i] != '\'' && str[i] != '"')
 		{
 			tmp[j] = str[i];
 			j++;
