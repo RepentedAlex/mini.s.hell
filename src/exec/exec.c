@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:39:02 by apetitco          #+#    #+#             */
-/*   Updated: 2025/01/03 16:06:49 by llabonde         ###   ########.fr       */
+/*   Updated: 2025/01/07 11:29:56 by apetitco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,12 @@ int child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 {
 	handler_dup2(to_launch, pipes);
 	execve(to_launch->cmd, to_launch->args, envp);
-	if (!ft_strchr(to_launch->args[0], '/'))
-	{
+	// if (!ft_strchr(to_launch->args[0], '/'))
+	// {
 		ft_putstr_fd("mini.s.hell: ", 2);
 		ft_putstr_fd(to_launch->args[0], 2);
 		ft_putstr_fd(": command not found\n", 2);		
-	}
+	// }
 
 	 exit(EXIT_FAILURE);
 }
