@@ -140,6 +140,7 @@ token '|'\n"), ERROR);
 	if (lexcat_redir_handler(&mo_shell->splitted_input) == ERROR) //Surely redundant
 		return (ERROR);
 	check_not_dirfile(&mo_shell->splitted_input);
+	new_expand_variables(&mo_shell->splitted_input, mo_shell);
 	nodes_unquote_strings(&mo_shell->splitted_input);
 	return (NO_ERROR);
 }
@@ -151,8 +152,7 @@ t_error	parsing(t_mo_shell *mo_shell)
 	mo_shell->clean_input = string_tidyer(mo_shell->og_input);
 	if (mo_shell->clean_input == NULL)
 		return (ERROR);
-	mo_shell->expanded_input = expand_variables(mo_shell->clean_input, \
-		mo_shell->shell_env, mo_shell);
+	// mo_shell->expanded_input = expand_variables(mo_shell->clean_input, mo_shell->shell_env, mo_shell);
 	mo_shell->splitted_input = block_setup_first(mo_shell);
 	if (splitter(mo_shell) == ERROR)
 		return (ERROR);

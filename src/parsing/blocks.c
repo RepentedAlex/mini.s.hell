@@ -20,7 +20,8 @@ t_block	*block_setup_first(t_mo_shell *mo_shell)
 	block = malloc(sizeof(t_block));
 	if (!block)
 		return (NULL);
-	block->str = ft_strdup(mo_shell->expanded_input);
+	// block->str = ft_strdup(mo_shell->expanded_input);
+	block->str = ft_strdup(mo_shell->clean_input);
 	if (!block->str)
 		return (NULL);
 	block->next = NULL;
