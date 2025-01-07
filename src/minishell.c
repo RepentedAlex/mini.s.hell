@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <libft.h>
 
 pid_t	g_signal_pid;
 
@@ -66,6 +67,7 @@ int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 		execution(mo_shell);
 	}
 	garbage_collect(mo_shell, 1);
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	return (EXIT_SUCCESS);
 }
 
