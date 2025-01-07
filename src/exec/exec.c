@@ -183,6 +183,7 @@ int	execution_sequence(t_mo_shell *mo_shell)
 	to_launch = mo_shell->cmds_table;
 	ft_memset(pids_array.pid, 0, sizeof(pids_array.pid));
 	ft_memset(pipes_array.pipe, -1, sizeof(pipes_array.pipe));
+	exit_status = mo_shell->last_exit_status;
 	pipes_array.pipe_i = -1;
 	pids_array.pid_i = -1;
 	to_launch->cp_i = dup(STDIN_FILENO);
