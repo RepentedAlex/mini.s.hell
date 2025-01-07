@@ -88,6 +88,7 @@ void	garbage_collect(t_mo_shell *data, int mode);
 void	splash_screen(void);
 void	split_str(char *str, char **ret, int *nb_token, bool *in_word);
 void	trim_leading_whitespace(char *str, const int leading_whitespaces);
+char	*str_init(void);
 
 // blocks
 t_error	block_add_after(t_block *ref, t_block *to_insert);
