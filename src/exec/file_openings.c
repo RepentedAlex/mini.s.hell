@@ -56,13 +56,44 @@ int	numerator(char **filename)
 	return (-1);
 }
 
+
+//TODO Rajouter mecanisme pour enlever les '$' situés avant des quotes
+//(s'il y a `$$"hola", on ne les enleve pas car on se base sur le premier '$'
+//de la séquence. Ca marche en paires, donc `$$$'hola' donnera $$hola`)
+char	*hd_unquote_string(char *str)
+{
+	int		i;
+	int		j;
+	char	tmp[DEF_BUF_SIZ];
+	char	*ret;
+
+	ft_bzero(tmp, DEF_BUF_SIZ);
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] != '\'' && str[i] != '"')
+		{
+			tmp[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	tmp[i] = '\0';
+	ret = ft_strdup(tmp);
+	if (!ret)
+		return (NULL);
+	return (ret);
+
+}
+
 char	*unquote_delimiter(char *str)
 {
 	char	*tmp;
 
 	tmp = NULL;
-	tmp = unquote_string(str);
-	free(str);
+	tmp = hd_unquote_string(str);
+	// free(str);
 	return (tmp);
 }
 
@@ -78,7 +109,7 @@ void	heredoc_filler(char *delimiter, int fd, t_mo_shell *mo_shell)
 	expanded_line = NULL;
 	expand_mode = true;
 	i = 0;
-	while (delimiter[i])
+	while (true)
 	{
 		if (delimiter[i] == '\'' || delimiter[i] == '\"')
 		{
@@ -87,8 +118,14 @@ void	heredoc_filler(char *delimiter, int fd, t_mo_shell *mo_shell)
 			delimiter = tmp;
 			break ;
 		}
+		if (!delimiter[i])
+		{
+			delimiter = ft_strdup(delimiter); //Pour pouvoir free simplement, sinon ca fait un double free
+			break ;
+		}
 		i++;
 	}
+
 	while (1)
 	{
 		line = readline("> ");
@@ -107,6 +144,8 @@ void	heredoc_filler(char *delimiter, int fd, t_mo_shell *mo_shell)
 		(free(line), line = NULL);
 	if (expanded_line)
 		(free(expanded_line), expanded_line = NULL);
+	free(delimiter);
+	delimiter = NULL;
 }
 
 void	heredoc_handler(t_block *nav_block, t_cmd *nav_cmd, t_mo_shell *mo_shell)

@@ -142,6 +142,8 @@ char	*expand_variables(char *src, char *envp[], t_mo_shell *mo_shell)
 	char	*les;
 
 	les = ft_itoa(mo_shell->last_exit_status);
+	if (!les)
+		les = 0;
 	les_len = ft_strlen(les);
 	ret = str_init();
 	quotes = 0;
