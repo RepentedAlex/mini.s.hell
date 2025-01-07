@@ -124,6 +124,64 @@ t_error	nodes_unquote_strings(t_block **head)
 	return (NO_ERROR);
 }
 
+char	*exp_for_hd(char *src)
+{
+	int		i;
+	char	*ret;
+	int		quotes;
+
+	ret = str_init();
+	quotes = 0;
+	i = 0;
+	while (src[i])
+	{
+		check_in_quotes(src[i], &quotes);
+		if (quotes != 1 && '$' == src[i])
+		{
+			i++;
+			if (src[i] == '\'' || src[i] == '\"')
+			{
+				if (src[i] == '\'')
+					quotes = 1;
+				else
+					quotes = 2;
+				while (quotes)
+				{
+					i++;
+					if (src[i] == '\'' && quotes == 1)
+						quotes = 0;
+					else if (src[i] == '\"' && quotes == 2)
+						quotes = 0;
+				}
+				i++;
+			}
+		}
+		else
+		{
+			ret = append(ret, &src[i], 1);
+			i++;
+		}
+	}
+	return (ret);
+}
+
+void	new_expand_variables(t_block **head, t_mo_shell *mo_shell)
+{
+	t_block	*nav;
+
+	nav = *head;
+	while (nav)
+	{
+		if (nav->type != EOFHD)
+			nav->str = expand_variables(nav->str, mo_shell->shell_env, mo_shell);
+		// if (nav->type == EOFHD)
+		// {
+		// 	exp_for_hd(nav->str);
+		// }
+		nav = nav->next;
+	}
+}
+
 t_error	splitter(t_mo_shell *mo_shell)
 {
 	int		error_ret;
