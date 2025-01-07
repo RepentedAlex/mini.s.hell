@@ -88,11 +88,15 @@ int	ms_exit(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 				return (1);
 			// (garbage_collect(mo_shell, 1), exit(exit_s));
 		}
-		else
-			exit_s = exit_gen(args[1], mo_shell);
 	}
-	if (args[1])	
+	if (args && args[1])
+	{
+		if (!ft_isnumber(args[1]))
+		{
+			exit_s = exit_gen(args[1], mo_shell);
+		}
 		exit_s = ft_atoi(args[1]);
+	}
 	garbage_collect(mo_shell, 1);
 	exit(exit_s);
 }
