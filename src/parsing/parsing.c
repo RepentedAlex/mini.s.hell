@@ -19,19 +19,19 @@ bool	syntax_check_handler(t_mo_shell *mo_shell, int *error_ret, \
 	*error_ret = check_redir_syntax(&mo_shell->splitted_input);
 	if (*error_ret == 1)
 		return (*value1 = printf("mini.s.hell: syntax error near \
-unexpected token '>'\n"), true);
+unexpected token '>'\n"), mo_shell->last_exit_status = 2, true);
 	if (*error_ret == 2)
 		return (*value1 = printf("mini.s.hell: syntax error near \
-unexpected token '>>'\n"), true);
+unexpected token '>>'\n"), mo_shell->last_exit_status = 2, true);
 	if (*error_ret == 3)
 		return (*value1 = printf("mini.s.hell: syntax error near \
-unexpected token '<'\n"), true);
+unexpected token '<'\n"), mo_shell->last_exit_status = 2, true);
 	if (*error_ret == 4)
 		return (*value1 = printf("mini.s.hell: syntax error near \
-unexpected token '<<'\n"), true);
+unexpected token '<<'\n"), mo_shell->last_exit_status = 2, true);
 	if (*error_ret == 5)
 		return (*value1 = printf("mini.s.hell: syntax error near \
-unexpected token 'newline'\n"), true);
+unexpected token 'newline'\n"), mo_shell->last_exit_status = 2, true);
 	return (false);
 }
 
