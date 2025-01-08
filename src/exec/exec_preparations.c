@@ -82,6 +82,8 @@ void	expand_cmd_path(t_cmd **head, char *envp[])
 t_error	pipeline_setup(t_mo_shell *mo_shell)
 {
 	mo_shell->cmds_table = spltd_in_to_cmd_blocks(&mo_shell->splitted_input);
+	if (mo_shell->cmds_table == NULL)
+		return (ERROR);
 	fill_cmd_and_args(&mo_shell->cmds_table, &mo_shell->splitted_input);
 	open_redir_files(&mo_shell->cmds_table, &mo_shell->splitted_input, mo_shell);
 	expand_cmd_path(&mo_shell->cmds_table, mo_shell->shell_env);
@@ -108,11 +110,15 @@ t_cmd	*spltd_in_to_cmd_blocks(t_block **head)
 		nav = nav->next;
 	}
 	tmp = cmd_new(NULL);
+	if (!tmp)
+		return (NULL);
 	ret = tmp;
 	number_of_cmds--;
 	while (number_of_cmds > 0)
 	{
 		tmp = cmd_new(NULL);
+		if (!tmp)
+			return (NULL);
 		cmd_add_back(ret, tmp);
 		number_of_cmds--;
 	}
