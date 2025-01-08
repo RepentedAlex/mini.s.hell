@@ -4,7 +4,7 @@ VAL		= valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --tr
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 DFLAGS	= -MMD -MP
-FFLAGS	= -fsanitize=address
+FFLAGS	= -fsanitize=leak -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined
 IFLAGS	= -Iinclude -ILibft/include
 LFLAGS	= -lreadline
 DEBUG	= -g3
@@ -104,7 +104,7 @@ fclean: clean
 	@$(MAKE) fclean -C ./Libft
 	@rm -f $(NAME)
 
-re:
+re: fclean
 	@$(MAKE) --no-print-directory fclean
 	@$(MAKE) re -C ./Libft
 	@echo "Making $(NAME) again"
