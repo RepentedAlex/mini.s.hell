@@ -85,8 +85,7 @@ int	ms_exit(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 		{
 			exit_s = ft_err_msg((t_err){ENO_GENERAL, \
 				ERRMSG_TOO_MANY_ARGS, NULL});
-				return (1);
-			// (garbage_collect(mo_shell, 1), exit(exit_s));
+			return (1);
 		}
 	}
 	if (args && args[1])
