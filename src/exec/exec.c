@@ -208,28 +208,20 @@ int	execution_sequence(t_mo_shell *mo_shell)
 		if (to_launch->prev)
 		{
 			if (pipes_array.pipe[pipes_array.pipe_i - 1][0] != -1)
-				close(pipes_array.pipe[pipes_array.pipe_i - 1][0]); // Close read end of previous pipe
+				close(pipes_array.pipe[pipes_array.pipe_i - 1][0]);
 			if (pipes_array.pipe[pipes_array.pipe_i - 1][1] != -1)
-				close(pipes_array.pipe[pipes_array.pipe_i - 1][1]); // Close write end of previous pipe
+				close(pipes_array.pipe[pipes_array.pipe_i - 1][1]);
 		}
-		// exit_status = mo_shell->last_exit_status;
 		to_launch = to_launch->next;
 	}
 	if (pipes_array.pipe_i >= 0)
 	{
 		if (pipes_array.pipe[pipes_array.pipe_i][0] != -1)
-			close(pipes_array.pipe[pipes_array.pipe_i][0]); // Close read end of last pipe
+			close(pipes_array.pipe[pipes_array.pipe_i][0]);
 		if (pipes_array.pipe[pipes_array.pipe_i][1] != -1)
-			close(pipes_array.pipe[pipes_array.pipe_i][1]); // Close write end of last pipe
+			close(pipes_array.pipe[pipes_array.pipe_i][1]);
 	}
-	// while (pipes_array.pipe_i > 0)
-	// {
-	// 	close(pipes_array.pipe[pipes_array.pipe_i - 1][0]);
-	// 	close(pipes_array.pipe[pipes_array.pipe_i - 1][1]);
-	// 	pipes_array.pipe_i--;
-	// }
 	i = 0;
-	// while ((pids_array.pid_i > 1 && (is_builtin(mo_shell->cmds_table->cmd) == false)) || i <= pids_array.pid_i)
 	while (i <= pids_array.pid_i)
 	{
 		if (pids_array.pid[i])
