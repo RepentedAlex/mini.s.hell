@@ -61,8 +61,8 @@ static char	**get_splash_screen_part3(void)
 		"                          ██░",
 		"░█                                                       "
 		"                     █▒",
-		"▒█                                                     "
-		"                       ██",
+		"▒█                    Made with <3 by apetitco && llabonde"
+		"                    ██",
 		"\e[0;0m",
 		NULL
 	};
