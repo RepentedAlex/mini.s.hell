@@ -72,7 +72,7 @@ void	remove_space(char *s, char *ret, int *j, int quotes)
 	i = 0;
 	while (ft_is_ifs(s[i]))
 	{
-		check_in_quotes(s[i], &quotes); //ft_is_ifs ne donnera jamais true sur des quotes donc ca peut sauter + ligne en dessous
+		check_in_quotes(s[i], &quotes);
 		if (!quotes)
 			i++;
 	}
