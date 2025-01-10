@@ -158,7 +158,7 @@ char	*expand_variables(char *src, char *envp[], t_mo_shell *mo_shell)
 			i++;
 			if (ft_is_ifs(src[i]) == true)
 			{
-				ret = append(ret, "$", 1);
+				ret = append(ret, "$ ", 2);
 				i++;
 				continue ;
 			}
