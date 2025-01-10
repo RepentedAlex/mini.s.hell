@@ -74,7 +74,8 @@ void	close_fds(t_cmd **head)
 	while (nav)
 	{
 		if (nav->fd_i != STDIN_FILENO)
-			(dup2(nav->cp_i, STDIN_FILENO), close(nav->fd_i), nav->fd_i = STDIN_FILENO);
+			(dup2(nav->cp_i, STDIN_FILENO), close(nav->fd_i), \
+				nav->fd_i = STDIN_FILENO);
 		if (nav->fd_o != STDOUT_FILENO)
 			(dup2(nav->cp_o, STDOUT_FILENO), close(nav->fd_o), nav->fd_o = -2);
 		nav = nav->next;
