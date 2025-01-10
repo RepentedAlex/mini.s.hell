@@ -51,15 +51,6 @@ int	ms_echo(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	}
 	while (args && args[i] && args[i][0] != '>')
 	{
-		// if (i == 1)
-		// {
-		// 	if (args[i][0] == '-' && args[i][1] == 'n' && args[i][2] == '\0')
-		// 	{
-		// 		// Gestion des erreurs a preciser
-		// 		option = true;
-		// 		i++;
-		// 	}
-		// }
 		ft_putstr_fd(args[i], 1);
 		if (args[i + 1])
 			ft_putstr_fd(" ", 1);
