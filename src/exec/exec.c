@@ -207,16 +207,20 @@ int	execution_sequence(t_mo_shell *mo_shell)
 		fork_for_cmd(mo_shell, to_launch, &pipes_array, &pids_array);
 		if (to_launch->prev)
 		{
-			close(pipes_array.pipe[pipes_array.pipe_i - 1][0]); // Close read end of previous pipe
-			close(pipes_array.pipe[pipes_array.pipe_i - 1][1]); // Close write end of previous pipe
+			if (pipes_array.pipe[pipes_array.pipe_i - 1][0] != -1)
+				close(pipes_array.pipe[pipes_array.pipe_i - 1][0]); // Close read end of previous pipe
+			if (pipes_array.pipe[pipes_array.pipe_i - 1][1] != -1)
+				close(pipes_array.pipe[pipes_array.pipe_i - 1][1]); // Close write end of previous pipe
 		}
 		// exit_status = mo_shell->last_exit_status;
 		to_launch = to_launch->next;
 	}
 	if (pipes_array.pipe_i >= 0)
 	{
-		close(pipes_array.pipe[pipes_array.pipe_i][0]); // Close read end of last pipe
-		close(pipes_array.pipe[pipes_array.pipe_i][1]); // Close write end of last pipe
+		if (pipes_array.pipe[pipes_array.pipe_i][0] != -1)
+			close(pipes_array.pipe[pipes_array.pipe_i][0]); // Close read end of last pipe
+		if (pipes_array.pipe[pipes_array.pipe_i][1] != -1)
+			close(pipes_array.pipe[pipes_array.pipe_i][1]); // Close write end of last pipe
 	}
 	// while (pipes_array.pipe_i > 0)
 	// {
