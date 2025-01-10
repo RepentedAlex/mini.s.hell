@@ -60,31 +60,35 @@ void	handler_dup2(t_cmd *to_launch, t_pipes *pipes)
 	{
 		// printf("fd_i: %d, fd_o: %d\n", to_launch->fd_i, to_launch->fd_o);
 		dup2(to_launch->fd_i, STDIN_FILENO);
+		close(to_launch->fd_i);
 	}
 	else if (to_launch->prev)
 	{
 		// printf("fd_i: %d, fd_o: %d\n", to_launch->fd_i, to_launch->fd_o);
 		dup2(pipes->pipe[pipes->pipe_i - 1][0], STDIN_FILENO);
+		close(pipes->pipe[pipes->pipe_i - 1][0]);
 	}
 	if (to_launch->fd_o != STDOUT_FILENO)
 	{
 		// printf("fd_i: %d, fd_o: %d\n", to_launch->fd_i, to_launch->fd_o);
 		dup2(to_launch->fd_o, STDOUT_FILENO);
+		close(to_launch->fd_o);
 	}
 	else if (to_launch->next)
 	{
 		// printf("fd_i: %d, fd_o: %d\n", to_launch->fd_i, to_launch->fd_o);
 		dup2(pipes->pipe[pipes->pipe_i][1], STDOUT_FILENO);
+		close(pipes->pipe[pipes->pipe_i][1]);
 	}
 	if (to_launch->prev)
 	{
-		close(pipes->pipe[pipes->pipe_i - 1][0]);	//Close read end of previous pipe
+		// close(pipes->pipe[pipes->pipe_i - 1][0]);	//Close read end of previous pipe
 		close(pipes->pipe[pipes->pipe_i - 1][1]);	//Close write end of previous pipe
 	}
 	if (to_launch->next)
 	{
-		close(pipes->pipe[pipes->pipe_i][0]);	//Close read end of previous pipe
-		close(pipes->pipe[pipes->pipe_i][1]);	//Close write end of previous pipe
+		close(pipes->pipe[pipes->pipe_i][0]);	//Close read end of current pipe
+		// close(pipes->pipe[pipes->pipe_i][1]);	//Close write end of current pipe
 	}
 }
 
@@ -198,26 +202,31 @@ int	execution_sequence(t_mo_shell *mo_shell)
 			continue ;
 		}
 		if (to_launch->next)
-		{
-			if (pipe(pipes_array.pipe[pipes_array.pipe_i]) == -1)
-			{
-				perror("pipe error");
-				exit(EXIT_FAILURE);
-			}
-		}
-		// printf("Pipe [%d] created: [%d, %d]\n", pipes_array.pipe_i, pipes_array.pipe[pipes_array.pipe_i][0], pipes_array.pipe[pipes_array.pipe_i][1]);
+			if (pipe(pipes_array.pipe[pipes_array.pipe_i]) == -1) //If pipe() fails
+				(perror("pipe error"), exit(EXIT_FAILURE));
 		fork_for_cmd(mo_shell, to_launch, &pipes_array, &pids_array);
-		exit_status = mo_shell->last_exit_status;
+		if (to_launch->prev)
+		{
+			close(pipes_array.pipe[pipes_array.pipe_i - 1][0]); // Close read end of previous pipe
+			close(pipes_array.pipe[pipes_array.pipe_i - 1][1]); // Close write end of previous pipe
+		}
+		// exit_status = mo_shell->last_exit_status;
 		to_launch = to_launch->next;
 	}
-	while (pipes_array.pipe_i > 0)
+	if (pipes_array.pipe_i >= 0)
 	{
-		close(pipes_array.pipe[pipes_array.pipe_i - 1][0]);
-		close(pipes_array.pipe[pipes_array.pipe_i - 1][1]);
-		pipes_array.pipe_i--;
+		close(pipes_array.pipe[pipes_array.pipe_i][0]); // Close read end of last pipe
+		close(pipes_array.pipe[pipes_array.pipe_i][1]); // Close write end of last pipe
 	}
+	// while (pipes_array.pipe_i > 0)
+	// {
+	// 	close(pipes_array.pipe[pipes_array.pipe_i - 1][0]);
+	// 	close(pipes_array.pipe[pipes_array.pipe_i - 1][1]);
+	// 	pipes_array.pipe_i--;
+	// }
 	i = 0;
-	while ((pids_array.pid_i > 1 && (is_builtin(mo_shell->cmds_table->cmd) == false)) || i <= pids_array.pid_i)
+	// while ((pids_array.pid_i > 1 && (is_builtin(mo_shell->cmds_table->cmd) == false)) || i <= pids_array.pid_i)
+	while (i <= pids_array.pid_i)
 	{
 		if (pids_array.pid[i])
 		{
