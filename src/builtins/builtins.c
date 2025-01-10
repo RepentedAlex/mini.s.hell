@@ -14,9 +14,6 @@
 #include "minishell_builtins.h"
 #include "libft.h"
 
-// apetitco
-// Bon le tableau peut pas être déclaré et initialisé en même temps donc faudra
-//faire autrement
 t_builtin	*get_builtin_array(void)
 {
 	static t_builtin	builtins_array[] = {\
@@ -57,7 +54,7 @@ bool	is_builtin(char *str)
 /// @brief Check if the command block is a builtin or not
 /// @param command The block.
 /// @return true if it's a builtin, false if not in the builtins_array.
-int (*g_launch_builtins(t_cmd *command))(char **str, t_mo_shell *mo_shell, \
+int	(*g_launch_builtins(t_cmd *command))(char **str, t_mo_shell *mo_shell, \
 	t_cmd *cmd)
 {
 	t_builtin	*builtins_array;
