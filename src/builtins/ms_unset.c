@@ -37,7 +37,8 @@ int	ms_unset(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 		if (!var_after)
 			(free(env[var_index]), env[var_index] = NULL);
 		else
-			ft_memmove(&env[var_index], &env[var_index + 1], sizeof(char *) * (var_after + 1));
+			ft_memmove(&env[var_index], &env[var_index + 1], sizeof(char *) \
+				* (var_after + 1));
 		args_iterator++;
 	}
 	return (0);
