@@ -142,6 +142,10 @@ char	*string_tidyer(char *s);
 char	*unquote_string(char *str);
 bool	ft_string_is_ifs(char *str);
 
+// heredocs
+bool	check_if_word_is_quoted(const char *word);
+char	*remove_quotes(char *str);
+
 // pipe inspection
 t_error	check_pipes_syntax(t_block **head);
 bool	look_for_pipes(t_block **head);

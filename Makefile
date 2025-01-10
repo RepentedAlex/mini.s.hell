@@ -57,6 +57,7 @@ SRC_FIL	= 	minishell \
 			parsing/splitters_2 \
 			parsing/variable_expansion \
 			redirections/heredocs/heredocs \
+			redirections/heredocs/heredoc_utils \
 			signals/signals \
 			utilitaries/block_nodes \
 			utilitaries/ft_is \
