@@ -168,12 +168,17 @@ char	*exp_for_hd(char *src)
 void	new_expand_variables(t_block **head, t_mo_shell *mo_shell)
 {
 	t_block	*nav;
+	char	*tmp;
 
 	nav = *head;
 	while (nav)
 	{
 		if (nav->type != EOFHD)
-			nav->str = expand_variables(nav->str, mo_shell->shell_env, mo_shell);
+		{
+			tmp = expand_variables(nav->str, mo_shell->shell_env, mo_shell);
+			free(nav->str);
+			nav->str = tmp;
+		}
 		// if (nav->type == EOFHD)
 		// {
 		// 	exp_for_hd(nav->str);
