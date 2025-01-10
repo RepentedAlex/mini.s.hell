@@ -14,7 +14,8 @@
 #include "minishell_builtins.h"
 #include <libft.h>
 
-// static void update_pwd(t_mo_shell *mo_shell, char *new_path, t_cmd *cmd, char **args)
+// static void update_pwd(t_mo_shell *mo_shell, char *new_path,
+// t_cmd *cmd, char **args)
 // {
 // 	char	cwd[DEF_BUF_SIZ];
 // 	char	**for_export;
@@ -37,60 +38,69 @@
 // 	free(for_export[1]);
 // }
 
+static int	cd_to_home(t_mo_shell *mo_shell, t_cmd *cmd)
+{
+	char	*user_path;
+	char	*new_pwd;
+	char	*export_args[3];
+
+	user_path = append(ft_strdup("/home/"), getenv("USER"), \
+		ft_strlen(getenv("USER")));
+	if (!user_path)
+		return (-1);
+	if (chdir(user_path) == 0)
+	{
+		new_pwd = append(ft_strdup("PWD="), user_path, \
+			ft_strlen(user_path));
+		export_args[0] = "lol";
+		export_args[1] = new_pwd;
+		export_args[2] = NULL;
+		ms_export(export_args, mo_shell, cmd);
+		free(new_pwd);
+	}
+	else
+		return (free(user_path), -1);
+	free(user_path);
+	return (0);
+}
+
+static int	cd_to_path(char *path, t_mo_shell *mo_shell, t_cmd *cmd)
+{
+	char	*new_pwd;
+	char	*export_args[3];
+	int		res;
+
+	new_pwd = getcwd(NULL, DEF_BUF_SIZ);
+	if (!new_pwd)
+		return (perror("mini.s.hell: cd "), 1);
+	res = chdir(path);
+	if (res != 0)
+	{
+		printf("mini.s.hell: %s: No such file or directory\n", path);
+		return (-res);
+	}
+	if (var_exst("PWD", mo_shell->shell_env) != -1)
+	{
+		export_args[0] = "lol";
+		export_args[1] = append(ft_strdup("PWD="), new_pwd, \
+			ft_strlen(new_pwd));
+		export_args[2] = NULL;
+		ms_export(export_args, mo_shell, cmd);
+		(free(new_pwd), free(export_args[1]));
+	}
+	return (0);
+}
+
 /// @brief
 /// @param args
 /// @param cmd
 /// @return
 int	ms_cd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
-	char	*user;
-	char	*user_path;
-	char	*new_pwd;
-	char	*export_args[3];
-
-	user_path = ft_strdup("/home/");
-	new_pwd = NULL;
-	if (!user_path)
-		return (-1);
-	user = getenv("USER");
-	user_path = append(user_path, user, ft_strlen(user));
-	int	res;
 	if (args[1] && args[2])
-		return (ft_putstr_fd("mini.s.hell: cd: invalid argument.s\n", 2), 0);
+		return (ft_putstr_fd("mini.s.hell: cd: invalid arguments\n", 2), \
+			0);
 	if (!args[1])
-	{
-		res = chdir(user_path);
-		if (res == 0)
-		{
-			new_pwd = ft_strdup("PWD=");
-			new_pwd = append(new_pwd, user_path, ft_strlen(user_path));
-			export_args[0] = "lol";
-			export_args[1] = new_pwd;
-			export_args[2] = NULL;
-			ms_export(export_args, mo_shell, cmd);
-		}
-		else
-			return (-res);
-	}
-	else
-	{
-		if (getcwd(new_pwd, DEF_BUF_SIZ) == NULL)
-			return (perror("mini.s.hell: cd "), 1);
-		(free(new_pwd), new_pwd = NULL);
-		res = chdir(args[1]);
-		if (res == 0 && var_exst("PWD", mo_shell->shell_env) == -1)
-			return (res);
-		else if (res == 0)
-		{
-			new_pwd = getcwd(new_pwd, DEF_BUF_SIZ);
-			export_args[0] = "lol";
-			export_args[1] = append(ft_strdup("PWD="), new_pwd, ft_strlen(new_pwd));
-			export_args[2] = NULL;
-			ms_export(export_args, mo_shell, cmd);
-		}
-		else
-			printf("mini.s.hell: %s: No such file or directory\n", args[1]);
-		return (-res);
-	}
-	return (0);
+		return (cd_to_home(mo_shell, cmd));
+	return (cd_to_path(args[1], mo_shell, cmd));
 }
