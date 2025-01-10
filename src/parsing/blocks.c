@@ -20,10 +20,7 @@ t_block	*block_setup_first(t_mo_shell *mo_shell)
 	block = malloc(sizeof(t_block));
 	if (!block)
 		return (NULL);
-	// block->str = ft_strdup(mo_shell->expanded_input);
 	block->str = ft_strdup(mo_shell->clean_input);
-	// free(mo_shell->clean_input);
-	// mo_shell->clean_input = NULL;
 	if (!block->str)
 		return (NULL);
 	block->next = NULL;
@@ -39,8 +36,6 @@ void	for_space(t_block *nav)
 	i = 0;
 	while (nav->str[i])
 	{
-		// if ((nav->str[i] == '\'' || nav->str[i] == '"') && handle_quotes(nav, &i))
-		// 	break ;
 		if (!ft_is_symbol(&nav->str[i]) && handle_no_symbols_no_ifs(nav, &i))
 			break ;
 		if (!ft_strncmp(&nav->str[i], "<<", 2) && handle_hd(nav, &i))

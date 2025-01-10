@@ -14,7 +14,7 @@
 
 #include "minishell.h"
 
-int check_if_dirfile_exist(char *path, t_mo_shell *mo_shell)
+int	check_if_dirfile_exist(char *path, t_mo_shell *mo_shell)
 {
 	DIR	*dir;
 	int	fd;
@@ -39,11 +39,10 @@ int check_if_dirfile_exist(char *path, t_mo_shell *mo_shell)
 		close(fd);
 		return (1);
 	}
-	// printf("%s: No such file or directory\n", path);
 	return (0);
 }
 
-int check_not_dirfile(t_block **head, t_mo_shell *mo_shell)
+int	check_not_dirfile(t_block **head, t_mo_shell *mo_shell)
 {
 	t_block	*nav;
 
