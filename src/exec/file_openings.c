@@ -72,6 +72,17 @@ char	*hd_unquote_string(char *str)
 	j = 0;
 	while (str[i])
 	{
+		if (str[i] == '$')
+		{
+			if (str[i + 1] == '$')
+			{
+				tmp[j++] = '$';
+				tmp[j++] = '$';
+				i += 2;
+			}
+			else if (str[i + 1] == '\'' || str[i + 1] == '\"')
+				i++;
+		}
 		if (str[i] != '\'' && str[i] != '"')
 		{
 			tmp[j] = str[i];
