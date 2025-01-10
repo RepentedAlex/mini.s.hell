@@ -89,7 +89,7 @@ int	ms_cd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 			ms_export(export_args, mo_shell, cmd);
 		}
 		else
-			printf("mini.s.hell: %s: No such file or directory\n", args[0]);
+			printf("mini.s.hell: %s: No such file or directory\n", args[1]);
 		return (-res);
 	}
 	return (0);
