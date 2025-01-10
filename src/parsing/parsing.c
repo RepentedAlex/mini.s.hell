@@ -45,11 +45,11 @@ void	clean_empty_nodes(t_block **head)
 	{
 		tmp = nav->next;
 		if (nav->str[0] == '\0' || ft_string_is_only_ifs(nav->str))
-			{
-				if (!nav->prev)
-					*head = tmp;
-				block_pop(&nav);
-			}
+		{
+			if (!nav->prev)
+				*head = tmp;
+			block_pop(&nav);
+		}
 		nav = tmp;
 	}
 }
@@ -67,29 +67,14 @@ char	*unquote_string(char *str)
 {
 	int		i;
 	int		j;
-	// int		quotes;
 	char	tmp[DEF_BUF_SIZ];
 	char	*ret;
 
 	ft_bzero(tmp, DEF_BUF_SIZ);
-	// quotes = 0;
 	i = 0;
 	j = 0;
 	while (str[i])
 	{
-		// if ((quotes == 1 && str[i] == '\'') || (quotes == 2 && str[i] == '\"'))
-		// {
-			// check_in_quotes(str[i], &quotes);
-			// i++;
-			// continue ;
-		// }
-		// check_in_quotes(str[i], &quotes);
-		// if (!quotes || (quotes == 1 && str[i] != '\'') || (quotes == 2 && str[i] != '\"'))
-		// {
-			// tmp[j] = str[i];
-			// j++;
-		// }
-		// i++;
 		if (str[i] != '\'' && str[i] != '"')
 		{
 			tmp[j] = str[i];
@@ -102,7 +87,6 @@ char	*unquote_string(char *str)
 	if (!ret)
 		return (NULL);
 	return (ret);
-	
 }
 
 t_error	nodes_unquote_strings(t_block **head)
@@ -179,10 +163,6 @@ void	new_expand_variables(t_block **head, t_mo_shell *mo_shell)
 			free(nav->str);
 			nav->str = tmp;
 		}
-		// if (nav->type == EOFHD)
-		// {
-		// 	exp_for_hd(nav->str);
-		// }
 		nav = nav->next;
 	}
 }
@@ -222,7 +202,6 @@ t_error	parsing(t_mo_shell *mo_shell)
 	mo_shell->clean_input = string_tidyer(mo_shell->og_input);
 	if (mo_shell->clean_input == NULL)
 		return (ERROR);
-	// mo_shell->expanded_input = expand_variables(mo_shell->clean_input, mo_shell->shell_env, mo_shell);
 	mo_shell->splitted_input = block_setup_first(mo_shell);
 	if (splitter(mo_shell) == ERROR)
 		return (ERROR);

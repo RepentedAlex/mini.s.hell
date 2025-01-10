@@ -70,7 +70,7 @@ char	*get_var_content(char *var_name, char **env)
 	if (var_name[0] == '\0')
 		return (NULL);
 	while (env[i] && (ft_strncmp(var_name, env[i], ft_strlen(var_name) + 1) != ('\0' - '=')))
-			i++;
+		i++;
 	if (env[i] == NULL)
 		return (NULL);
 	j = 0;
@@ -88,7 +88,6 @@ char	*get_var_content(char *var_name, char **env)
 /// @return
 char	*var_expander(char *ret, char *src, int *i, char *envp[])
 {
-	(void)envp;
 	char	*var_content;
 	char	var_name[1024];
 	int		j;
@@ -103,10 +102,10 @@ char	*var_expander(char *ret, char *src, int *i, char *envp[])
 	}
 	var_name[j] = '\0';
 	if (ft_strlen(var_name) == 0)
-		{
-			ret = append(ret, "$", 1);
-			return (ret);
-		}
+	{
+		ret = append(ret, "$", 1);
+		return (ret);
+	}
 	var_content = get_var_content(var_name, envp);
 	if (!var_content)
 	{
@@ -168,7 +167,10 @@ char	*expand_variables(char *src, char *envp[], t_mo_shell *mo_shell)
 				continue ;
 			}
 			if (src[i] == '$')
-				(ret = append(ret, "$$", 2), i++);
+			{
+				ret = append(ret, "$$", 2);
+				i++;
+			}
 			else if (src[i] == '?')
 			{
 				ret = append(ret, les, les_len);
