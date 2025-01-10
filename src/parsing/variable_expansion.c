@@ -94,6 +94,8 @@ char	*var_expander(char *ret, char *src, int *i, char *envp[])
 	int		j;
 
 	j = 0;
+	if (src && src[j] && ft_isdigit(src[j]))
+		return (*i += 1, ret);
 	while (src && src[j] && src[j] != '$' && (ft_isalnum(src[j]) || src[j] == '_'))
 	{
 		var_name[j] = src[j];
