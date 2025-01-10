@@ -26,13 +26,32 @@ bool	words_in_str(char *str)
 	{
 		if (str[i] == ':' && flag == 0)
 			flag = 1;
-		else if(str[i] == ':' && flag == 1)
+		else if (str[i] == ':' && flag == 1)
 			return (true);
 		if (str[i] != ':')
 			return (true);
 		i++;
 	}
 	return (false);
+}
+
+static int	handle_input(t_mo_shell *mo_shell)
+{
+	if (!mo_shell->og_input)
+		return (0);
+	if (mo_shell->og_input[0] == '!' && !mo_shell->og_input[1])
+	{
+		mo_shell->last_exit_status = 1;
+		return (1);
+	}
+	if (mo_shell->og_input[0] == '\0' || !words_in_str(mo_shell->og_input))
+	{
+		mo_shell->last_exit_status = 0;
+		return (1);
+	}
+	if (*mo_shell->og_input)
+		add_history(mo_shell->og_input);
+	return (2);
 }
 
 /// @brief The main mini.s.hell function ! :D
@@ -50,29 +69,14 @@ int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 		garbage_collect(mo_shell, 0);
 		g_signal_pid = 0;
 		mo_shell->og_input = readline(PROMPT);
-		if (!mo_shell->og_input)
+		if (!handle_input(mo_shell))
 			break ;
 		g_signal_pid = 1;
-		if (mo_shell->og_input[0] == '!' && !mo_shell->og_input[1])
-		{
-			mo_shell->last_exit_status = 1;
-			continue ;
-		}
-		if (mo_shell->og_input[0] == '\0' || words_in_str(mo_shell->og_input) == false)
-		{
-			mo_shell->last_exit_status = 0;
-			continue ;
-		}
-		if (*mo_shell->og_input)
-			add_history(mo_shell->og_input);
-		if (parsing(mo_shell) == ERROR)
-			continue ;
-		if (execution(mo_shell) == ERROR)
+		if (parsing(mo_shell) == ERROR || execution(mo_shell) == ERROR)
 			continue ;
 	}
 	garbage_collect(mo_shell, 1);
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
-	return (EXIT_SUCCESS);
+	return (ft_putstr_fd("exit\n", STDOUT_FILENO), EXIT_SUCCESS);
 }
 
 t_error	init_shell(void)
@@ -97,7 +101,6 @@ t_error	create_minimal_env(char **shell_env)
 	// ms_export();
 	return (NO_ERROR);
 }
-
 
 int	main(const int argc, char *argv[], char *envp[])
 {
