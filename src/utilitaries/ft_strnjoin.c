@@ -59,17 +59,13 @@ char	*append(char *dest, char *src, size_t n)
 	new_str = (char *)malloc(sizeof(char) * (dest_len + n + 1));
 	if (!new_str)
 		return (NULL);
-	i = 0;
-	while (i < dest_len)
-	{
+	i = -1;
+	while (++i < dest_len)
 		new_str[i] = dest[i];
-		i++;
-	}
-	j = 0;
-	while (j < n)
+	j = -1;
+	while (++j < n)
 	{
 		new_str[i] = src[j];
-		j++;
 		i++;
 	}
 	new_str[i] = '\0';

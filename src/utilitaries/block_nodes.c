@@ -28,7 +28,7 @@ void	block_pop(t_block **block)
 		tmp->str = NULL;
 	}
 	if (tmp->prev)
-		tmp->prev->next= save_next;
+		tmp->prev->next = save_next;
 	if (tmp->next)
 		tmp->next->prev = save_prev;
 	free(tmp);
