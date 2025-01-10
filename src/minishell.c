@@ -24,11 +24,11 @@ bool	words_in_str(char *str)
 	flag = 0;
 	while (str[i])
 	{
-		if ((str[i] == ':' && flag == 0) || (str[i] == '!' && flag == 0))
+		if (str[i] == ':' && flag == 0)
 			flag = 1;
-		else if((str[i] == ':' && flag == 1) || (str[i] == '!' && flag == 1))
+		else if(str[i] == ':' && flag == 1)
 			return (true);
-		if (str[i] != ':' && str[i] != '!')
+		if (str[i] != ':')
 			return (true);
 		i++;
 	}
@@ -59,7 +59,10 @@ int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 			continue ;
 		}
 		if (mo_shell->og_input[0] == '\0' || words_in_str(mo_shell->og_input) == false)
+		{
+			mo_shell->last_exit_status = 0;
 			continue ;
+		}
 		if (*mo_shell->og_input)
 			add_history(mo_shell->og_input);
 		if (parsing(mo_shell) == ERROR)

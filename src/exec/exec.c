@@ -104,10 +104,10 @@ int child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 	// {
 		ft_putstr_fd("mini.s.hell: ", 2);
 		ft_putstr_fd(to_launch->args[0], 2);
-		ft_putstr_fd(": command not found\n", 2);		
+		ft_putstr_fd(": command not found\n", 2);
 	// }
 
-	 exit(EXIT_FAILURE);
+	 exit(127);
 }
 
 int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell, int mode)
@@ -154,7 +154,7 @@ int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 
 	if (is_builtin(to_launch->cmd) == true && !to_launch->prev && !to_launch->next)
 	{
-		child_process_bi(to_launch, pipes_array, mo_shell, 1);
+		ret = child_process_bi(to_launch, pipes_array, mo_shell, 1);
 	}
 	else
 	{
@@ -204,7 +204,7 @@ int	execution_sequence(t_mo_shell *mo_shell)
 		if (to_launch->next)
 			if (pipe(pipes_array.pipe[pipes_array.pipe_i]) == -1) //If pipe() fails
 				(perror("pipe error"), exit(EXIT_FAILURE));
-		fork_for_cmd(mo_shell, to_launch, &pipes_array, &pids_array);
+		exit_status = fork_for_cmd(mo_shell, to_launch, &pipes_array, &pids_array);
 		if (to_launch->prev)
 		{
 			if (pipes_array.pipe[pipes_array.pipe_i - 1][0] != -1)

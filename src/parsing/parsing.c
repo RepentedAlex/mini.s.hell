@@ -197,7 +197,7 @@ t_error	splitter(t_mo_shell *mo_shell)
 	{
 		if (check_pipes_syntax(&mo_shell->splitted_input) == ERROR)
 			return (printf("mini.s.hell: syntax error near unexpected \
-token '|'\n"), ERROR);
+token '|'\n"), mo_shell->last_exit_status = 2, ERROR);
 		split_pipes(&mo_shell->splitted_input);
 	}
 	if (look_for_redir(&mo_shell->splitted_input) == true)
@@ -208,7 +208,8 @@ token '|'\n"), ERROR);
 	clean_empty_nodes(&mo_shell->splitted_input);
 	if (lexcat_redir_handler(&mo_shell->splitted_input) == ERROR) //Surely redundant
 		return (ERROR);
-	check_not_dirfile(&mo_shell->splitted_input);
+	if (check_not_dirfile(&mo_shell->splitted_input, mo_shell) == -1)
+		return (ERROR);
 	new_expand_variables(&mo_shell->splitted_input, mo_shell);
 	nodes_unquote_strings(&mo_shell->splitted_input);
 	return (NO_ERROR);
