@@ -47,16 +47,16 @@ static void	strip_quotes(char *str)
 t_error	update_var(char *var_name, char *var_content, char *envp[])
 {
 	char	*tmp;
-	char	*equal;
+	// char	*equal;
 	int		var_index;
 
 	var_index = var_exst(var_name, envp);
 	// tmp = malloc(sizeof(char) * (ft_strlen(var_name) + ft_strlen(var_content) + 2));
 	// if (!tmp)
 	// 	return (ERROR);
-	equal = ft_strdup("=");
-	if (!equal)
-		return (ERROR);
+	// equal = ft_strdup("=");
+	// if (!equal)
+		// return (ERROR);
 	tmp = ft_strdup(var_name);
 	if (!tmp)
 		return (ERROR);
