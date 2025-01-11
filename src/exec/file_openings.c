@@ -146,9 +146,16 @@ void	heredoc_filler(char *delimiter, int fd, t_mo_shell *mo_shell)
 		{
 			expanded_line = expand_variables(line, mo_shell->shell_env, mo_shell);
 			ft_putstr_fd(expanded_line, fd);
+			if (expanded_line)
+			{
+				free(expanded_line);
+				expanded_line = NULL;
+			}
 		}
 		else
+		{
 			ft_putstr_fd(line, fd);
+		}
 		ft_putstr_fd("\n", fd);
 	}
 	if (line)
