@@ -119,7 +119,7 @@ static	t_error	update_env_var(char *arg, char *var_name, t_mo_shell *shell)
 /// extracted from the argument.
 /// @return `true` if the `=` character (indicating the end of the variable
 /// name) is found, otherwise `false`.
-bool iterate_through_str(char **args, int *i, int args_iterator, \
+bool	iterate_through_str(char **args, int *i, int args_iterator, \
 						char var_name[DEF_BUF_SIZ])
 {
 	if (args[args_iterator][(*i)] == '=')
