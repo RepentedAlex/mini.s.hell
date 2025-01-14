@@ -18,6 +18,8 @@ void	ft_free_tab(char **array)
 	int	i;
 
 	i = 0;
+	if (!array)
+		return ;
 	while (array[i])
 		free(array[i++]);
 	free(array);
@@ -30,7 +32,7 @@ char	*get_env(char *envp[])
 	char	*env_string;
 
 	i = 0;
-	while (envp[i])
+	while (envp && envp[i])
 	{
 		j = 0;
 		while (envp[i][j] && envp[i][j] != '=')
@@ -63,7 +65,7 @@ char	*get_path(char *cmd, char *envp[])
 	*cmds_array = ft_strdup(cmd);
 	cmds_array[1] = NULL;
 	// cmds_array = ft_split(cmd, ' ');
-	while (all_paths[i])
+	while (all_paths && all_paths[i])
 	{
 		part_path = ft_strjoin(all_paths[i], "/");
 		exec = ft_strjoin(part_path, cmds_array[0]);
