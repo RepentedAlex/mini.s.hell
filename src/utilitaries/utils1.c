@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <libft.h>
 
 void	ft_bzero(void *s, const size_t n)
 {
@@ -39,4 +40,19 @@ void	check_in_quotes(const char c, int *quotes)
 		return (*quotes = 2, (void)2);
 	else if ((*quotes == 1 && c == '\'') || (*quotes == 2 && c == '"'))
 		return (*quotes = 0, (void)0);
+}
+
+bool	is_valid_variable_name(char *vr_name)
+{
+	int	i;
+
+	i = 0;
+	if (!vr_name[i] || (ft_isalpha(vr_name[i]) == false && vr_name[i] != '_'))
+		return (false);
+	i++;
+	while (vr_name[i] && (ft_isalnum(vr_name[i]) || vr_name[i] == '_'))
+		i++;
+	if (!vr_name[i])
+		return (true);
+	return (false);
 }

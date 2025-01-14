@@ -183,6 +183,7 @@ int		handle_no_symbols_no_ifs(t_block *nav, int *i);
 // utilitaries
 t_error add_str_to_array(char ***array, char *str);
 bool	ft_string_is_only_ifs(char *str);
+bool	is_valid_variable_name(char *vr_name);
 
 // variables expansion
 char	*expand_variables(char *src, char *envp[], t_mo_shell *mo_shell);
