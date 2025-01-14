@@ -13,7 +13,7 @@
 #include <libft.h>
 #include "minishell.h"
 
-t_error for_first_arg(char *str, char ***env)
+t_error	for_first_arg(char *str, char ***env)
 {
 	char	**ret;
 
@@ -28,7 +28,7 @@ t_error for_first_arg(char *str, char ***env)
 	return (NO_ERROR);
 }
 
-t_error add_str_to_array(char ***array, char *str)
+t_error	add_str_to_array(char ***array, char *str)
 {
 	char	**nav;
 	char	**ret;
@@ -56,41 +56,33 @@ t_error add_str_to_array(char ***array, char *str)
 
 void	handler_dup2(t_cmd *to_launch, t_pipes *pipes)
 {
-	// to_launch->cp_i = dup(STDIN_FILENO);
-	// to_launch->cp_o = dup(STDOUT_FILENO);
 	if (to_launch->fd_i != STDIN_FILENO)
 	{
-		// printf("fd_i: %d, fd_o: %d\n", to_launch->fd_i, to_launch->fd_o);
 		dup2(to_launch->fd_i, STDIN_FILENO);
 		close(to_launch->fd_i);
 	}
 	else if (to_launch->prev)
 	{
-		// printf("fd_i: %d, fd_o: %d\n", to_launch->fd_i, to_launch->fd_o);
 		dup2(pipes->pipe[pipes->pipe_i - 1][0], STDIN_FILENO);
 		close(pipes->pipe[pipes->pipe_i - 1][0]);
 	}
 	if (to_launch->fd_o != STDOUT_FILENO)
 	{
-		// printf("fd_i: %d, fd_o: %d\n", to_launch->fd_i, to_launch->fd_o);
 		dup2(to_launch->fd_o, STDOUT_FILENO);
 		close(to_launch->fd_o);
 	}
 	else if (to_launch->next)
 	{
-		// printf("fd_i: %d, fd_o: %d\n", to_launch->fd_i, to_launch->fd_o);
 		dup2(pipes->pipe[pipes->pipe_i][1], STDOUT_FILENO);
 		close(pipes->pipe[pipes->pipe_i][1]);
 	}
 	if (to_launch->prev)
 	{
-		// close(pipes->pipe[pipes->pipe_i - 1][0]);	//Close read end of previous pipe
-		close(pipes->pipe[pipes->pipe_i - 1][1]);	//Close write end of previous pipe
+		close(pipes->pipe[pipes->pipe_i - 1][1]);
 	}
 	if (to_launch->next)
 	{
-		close(pipes->pipe[pipes->pipe_i][0]);	//Close read end of current pipe
-		// close(pipes->pipe[pipes->pipe_i][1]);	//Close write end of current pipe
+		close(pipes->pipe[pipes->pipe_i][0]);
 	}
 }
 
@@ -102,14 +94,10 @@ int child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 {
 	handler_dup2(to_launch, pipes);
 	execve(to_launch->cmd, to_launch->args, envp);
-	// if (!ft_strchr(to_launch->args[0], '/'))
-	// {
-		ft_putstr_fd("mini.s.hell: ", 2);
-		ft_putstr_fd(to_launch->args[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-	// }
-
-	 exit(127);
+	ft_putstr_fd("mini.s.hell: ", 2);
+	ft_putstr_fd(to_launch->args[0], 2);
+	ft_putstr_fd(": command not found\n", 2);
+	exit(127);
 }
 
 int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell, int mode)
@@ -123,20 +111,16 @@ int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell, int
 		f_builtin = (g_launch_builtins(to_launch));
 		if (f_builtin(to_launch->args, mo_shell, to_launch) == 0)
 			exit(EXIT_SUCCESS);
-		// perror("mini.s.hell");
 		exit(EXIT_FAILURE);
 	}
 	if (mode == 1)
 	{
 		handler_dup2(to_launch, pipes);
 		f_builtin = (g_launch_builtins(to_launch));
-		// if (f_builtin(to_launch->args, mo_shell, to_launch) == 0)
 		mo_shell->last_exit_status = f_builtin(to_launch->args, mo_shell, to_launch);
 		if (mo_shell->last_exit_status == 0)
 			return (EXIT_SUCCESS);
-		// perror("mini.s.hell");
 		return (mo_shell->last_exit_status);
-		// return (EXIT_FAILURE);
 	}
 	 return (EXIT_FAILURE);
 }
@@ -152,8 +136,6 @@ int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 	int		ret;
 
 	ret = mo_shell->last_exit_status;
-	//TODO Fill heredoc for command here
-
 	if (is_builtin(to_launch->cmd) == true && !to_launch->prev && !to_launch->next)
 	{
 		ret = child_process_bi(to_launch, pipes_array, mo_shell, 1);
