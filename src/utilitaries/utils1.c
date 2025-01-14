@@ -13,24 +13,24 @@
 #include "minishell.h"
 #include <libft.h>
 
-void	ft_bzero(void *s, const size_t n)
-{
-	size_t	i;
-
-	i = -1;
-	while (++i < n)
-		((char *)s)[i] = 0;
-}
-
-void	*ft_memset(void *s, const int c, const size_t n)
-{
-	size_t	i;
-
-	i = -1;
-	while (++i < n)
-		((char *)s)[i] = (char)c;
-	return (s);
-}
+// void	ft_bzero(void *s, const size_t n)
+// {
+// 	size_t	i;
+//
+// 	i = -1;
+// 	while (++i < n)
+// 		((char *)s)[i] = 0;
+// }
+//
+// void	*ft_memset(void *s, const int c, const size_t n)
+// {
+// 	size_t	i;
+//
+// 	i = -1;
+// 	while (++i < n)
+// 		((char *)s)[i] = (char)c;
+// 	return (s);
+// }
 
 void	check_in_quotes(const char c, int *quotes)
 {

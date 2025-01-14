@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
 
 static char	**get_splash_screen_part1(void)
 {
