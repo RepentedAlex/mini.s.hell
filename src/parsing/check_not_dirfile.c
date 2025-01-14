@@ -29,17 +29,17 @@ int	check_if_dirfile_exist(char *path, t_mo_shell *mo_shell)
 		mo_shell->last_exit_status = 126;
 		return (1);
 	}
-	fd = open(path, O_RDONLY);
-	if (fd > -1)
+	if (access(path, R_OK | X_OK) == -1)
 	{
-		if (access(path, R_OK | X_OK) == -1)
-		{
-			printf("%s: Permission denied\n", path);
-		}
-		close(fd);
+		printf("%s: Permission denied\n", path);
 		return (1);
+	}
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+	{
 		return (-1);
 	}
+	close(fd);
 	return (0);
 }
 
