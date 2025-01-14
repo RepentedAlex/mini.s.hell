@@ -32,16 +32,20 @@ bool	look_for_pipes(t_block **head)
 	return (false);
 }
 
-void	for_pipe(t_block **head, t_block **nav)
+t_error for_pipe(t_block **head, t_block **nav)
 {
 	int		i;
 	t_block	*tmp;
 
 	i = 0;
 	tmp = block_new("|");
+	if (!tmp)
+		return (ERROR);
 	tmp->type = PIPE;
 	block_add_back(head, tmp);
 	tmp = block_new(ft_strchr((*nav)->str, '|') + 1);
+	if (!tmp)
+		return (ERROR);
 	block_add_back(head, tmp);
 	i = 0;
 	while ((*nav)->str[i] && (*nav)->str[i] != '|')
@@ -49,6 +53,7 @@ void	for_pipe(t_block **head, t_block **nav)
 	(*nav)->str[i] = '\0';
 	*nav = (*nav)->next;
 	*nav = (*nav)->next;
+	return (NO_ERROR);
 }
 
 /// @brief Takes a list of t_block and create new nodes when it finds a '|'.
@@ -68,7 +73,8 @@ t_error	split_pipes(t_block **head)
 			nav = nav->next;
 			continue ;
 		}
-		for_pipe(head, &nav);
+		if (for_pipe(head, &nav) == ERROR)
+			return (ERROR);
 	}
 	return (NO_ERROR);
 }

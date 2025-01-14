@@ -62,6 +62,8 @@ char	*get_path(char *cmd, char *envp[])
 	i = 0;
 	all_paths = ft_split(get_env(envp), ':');
 	cmds_array = malloc(sizeof(char *) * 2);
+	if (!cmds_array)
+		return (NULL);
 	*cmds_array = ft_strdup(cmd);
 	cmds_array[1] = NULL;
 	// cmds_array = ft_split(cmd, ' ');

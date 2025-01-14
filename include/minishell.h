@@ -119,7 +119,7 @@ void	execute_cl(t_mo_shell *mo_shell);
 char	*get_path(char *cmd, char *envp[]);
 void	setup_redirs(t_cmd *to_launch, t_pipes *pipes, int mode);
 
-void	fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head);
+t_error fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head);
 t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head, t_mo_shell *mo_shell);
 t_error	open_redir_i(t_cmd **cmd_head, t_block **block_head, t_mo_shell *mo_shell);
 t_error	open_redir_o(t_cmd **cmd_head, t_block **block_head);
@@ -169,17 +169,19 @@ t_error	lexcat_redir_o(t_block **head);
 void	signals(void);
 
 // splitters
-int		handle_ap(t_block *nav, int *i);
+t_error handle_ap(t_block *nav, int *i);
 int		handle_else(t_block *nav, int *i);
-int		handle_hd(t_block *nav, int *i);
+
+t_error handle_hd(t_block *nav, int *i);
 int		handle_ifs(t_block *nav, int *i);
 int		handle_quotes(t_block *nav, int *i);
 int		handle_ri(t_block *nav, int *i);
-int		handle_ro(t_block *nav, int *i);
+
+t_error handle_ro(t_block *nav, int *i);
 int		handle_no_symbols_no_ifs(t_block *nav, int *i);
 
 // utilitaries
-char	**add_str_to_array(char **array, char *str);
+t_error add_str_to_array(char ***array, char *str);
 bool	ft_string_is_only_ifs(char *str);
 
 // variables expansion

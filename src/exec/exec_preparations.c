@@ -16,7 +16,7 @@
 /// @brief Fills the cmd and args fields of each t_cmd node.
 /// @param cmd_head The command table list's head.
 /// @param block_head The block list's head.
-void	fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head)
+t_error fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head)
 {
 	t_block	*nav_block;
 	t_cmd	*nav_cmd;
@@ -33,11 +33,17 @@ void	fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head)
 			if (nav_cmd->cmd)
 				free(nav_cmd->cmd);
 			nav_cmd->cmd = ft_strdup(nav_block->str);
-			nav_cmd->args = add_str_to_array(nav_cmd->args, nav_block->str);
+			add_str_to_array(&nav_cmd->args, nav_block->str);
+			if (!nav_cmd->args)
+				return (ERROR);
 			nav_block->type = CMD;
 		}
 		else if (block_has_cmd && nav_block->type == RAW)
-			nav_cmd->args = add_str_to_array(nav_cmd->args, nav_block->str);
+		{
+			add_str_to_array(&nav_cmd->args, nav_block->str);
+			if (!nav_cmd->args)
+				return (ERROR);
+		}
 		if (nav_block->type == PIPE)
 		{
 			nav_cmd = nav_cmd->next;
@@ -45,9 +51,10 @@ void	fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head)
 		}
 		nav_block = nav_block->next;
 	}
+	return (NO_ERROR);
 }
 
-void	expand_cmd_path(t_cmd **head, char *envp[])
+t_error expand_cmd_path(t_cmd **head, char *envp[])
 {
 	t_cmd	*nav;
 	// char	*cmd_path;
@@ -68,11 +75,13 @@ void	expand_cmd_path(t_cmd **head, char *envp[])
 		else
 		{
 			tmp = get_path(nav->cmd, envp);
-			if (tmp)
-				(free(nav->cmd), nav->cmd = tmp, tmp = NULL);
+			if (!tmp)
+				return (ERROR);
+			(free(nav->cmd), nav->cmd = tmp, tmp = NULL);
 			nav = nav->next;
 		}
 	}
+	return (NO_ERROR);
 }
 
 /// @brief Handles the setup of the pipes and redirections. Handles heredoc
@@ -84,12 +93,12 @@ t_error	pipeline_setup(t_mo_shell *mo_shell)
 	mo_shell->cmds_table = spltd_in_to_cmd_blocks(&mo_shell->splitted_input);
 	if (mo_shell->cmds_table == NULL)
 		return (ERROR);
-	fill_cmd_and_args(&mo_shell->cmds_table, &mo_shell->splitted_input);
+	if (fill_cmd_and_args(&mo_shell->cmds_table, &mo_shell->splitted_input) == ERROR)
+		return (ERROR);
 	if (open_redir_files(&mo_shell->cmds_table, &mo_shell->splitted_input, mo_shell) == ERROR)
 		return (ERROR);
-	expand_cmd_path(&mo_shell->cmds_table, mo_shell->shell_env);
-	//TODO Setup pipes and redirections from right to left, redirections steal the pipe
-	// setup_pipes(&mo_shell->cmds_table);
+	if (expand_cmd_path(&mo_shell->cmds_table, mo_shell->shell_env) == ERROR)
+		return (ERROR);
 	return (NO_ERROR);
 }
 

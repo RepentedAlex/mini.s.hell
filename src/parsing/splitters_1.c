@@ -14,12 +14,14 @@
 
 #include "minishell.h"
 
-int	handle_ap(t_block *nav, int *i)
+t_error handle_ap(t_block *nav, int *i)
 {
 	t_block	*tmp;
 
 	nav->type = APPEND;
 	tmp = block_new(&nav->str[2]);
+	if (!tmp)
+		return (ERROR);
 	tmp->type = OUTFILE;
 	block_add_after(nav, tmp);
 	*i = 2;
@@ -29,13 +31,15 @@ int	handle_ap(t_block *nav, int *i)
 	if (nav->str[*i])
 	{
 		tmp = block_new(&nav->str[*i]);
+		if (!tmp)
+			return (ERROR);
 		tmp->type = RAW;
 		block_add_after(nav->next, tmp);
 		nav->str[2] = '\0';
 		nav->next->str[*i - 2] = '\0';
 	}
 	nav->str[2] = '\0';
-	return (1);
+	return (NO_ERROR);
 }
 
 int	handle_else(t_block *nav, int *i)
@@ -63,12 +67,14 @@ int	handle_else(t_block *nav, int *i)
 	return (1);
 }
 
-int	handle_hd(t_block *nav, int *i)
+t_error handle_hd(t_block *nav, int *i)
 {
 	t_block	*tmp;
 
 	nav->type = HEREDOC;
 	tmp = block_new(&nav->str[2]);
+	if (!tmp)
+		return (ERROR);
 	tmp->type = EOFHD;
 	block_add_after(nav, tmp);
 	*i = 2;
@@ -78,13 +84,15 @@ int	handle_hd(t_block *nav, int *i)
 	if (nav->str[*i])
 	{
 		tmp = block_new(&nav->str[*i]);
+		if (!tmp)
+			return (ERROR);
 		tmp->type = RAW;
 		block_add_after(nav->next, tmp);
 		nav->str[2] = '\0';
 		nav->next->str[*i - 2] = '\0';
 	}
 	nav->str[2] = '\0';
-	return (1);
+	return (NO_ERROR);
 }
 
 int	handle_ifs(t_block *nav, int *i)

@@ -158,7 +158,7 @@ char	*exp_for_hd(char *src)
 	return (ret);
 }
 
-void	new_expand_variables(t_block **head, t_mo_shell *mo_shell)
+t_error new_expand_variables(t_block **head, t_mo_shell *mo_shell)
 {
 	t_block	*nav;
 	char	*tmp;
@@ -169,11 +169,14 @@ void	new_expand_variables(t_block **head, t_mo_shell *mo_shell)
 		if (nav->type != EOFHD)
 		{
 			tmp = expand_variables(nav->str, mo_shell->shell_env, mo_shell);
+			if (!tmp)
+				return (ERROR);
 			free(nav->str);
 			nav->str = tmp;
 		}
 		nav = nav->next;
 	}
+	return (NO_ERROR);
 }
 
 t_error	splitter(t_mo_shell *mo_shell)
@@ -187,19 +190,22 @@ t_error	splitter(t_mo_shell *mo_shell)
 		if (check_pipes_syntax(&mo_shell->splitted_input) == ERROR)
 			return (printf("mini.s.hell: syntax error near unexpected \
 token '|'\n"), mo_shell->last_exit_status = 2, ERROR);
-		split_pipes(&mo_shell->splitted_input);
+		if (split_pipes(&mo_shell->splitted_input) == ERROR)
+			return (mo_shell->last_exit_status = 2, ERROR);
 	}
 	if (look_for_redir(&mo_shell->splitted_input) == true)
 		if (syntax_check_handler(mo_shell, &error_ret, &sch_ret))
 			return (sch_ret);
 	block_string_tidyer(&mo_shell->splitted_input);
-	split_spaces(&mo_shell->splitted_input);
+	if (split_spaces(&mo_shell->splitted_input) == ERROR)
+		return (mo_shell->last_exit_status = 2, ERROR);
 	clean_empty_nodes(&mo_shell->splitted_input);
 	if (lexcat_redir_handler(&mo_shell->splitted_input) == ERROR) //Surely redundant
 		return (ERROR);
 	if (check_not_dirfile(&mo_shell->splitted_input, mo_shell) != 0)
 		return (ERROR);
-	new_expand_variables(&mo_shell->splitted_input, mo_shell);
+	if (new_expand_variables(&mo_shell->splitted_input, mo_shell) == ERROR)
+		return (ERROR);
 	nodes_unquote_strings(&mo_shell->splitted_input);
 	return (NO_ERROR);
 }

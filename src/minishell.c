@@ -107,8 +107,8 @@ t_error	create_minimal_env(t_mo_shell *mo_shell)
 	mo_shell->shell_env = (char **)malloc(sizeof(char *));
 	mo_shell->shell_env[0] = ft_strdup("PWD=");
 	mo_shell->shell_env[0] = append(mo_shell->shell_env[0], cwd, ft_strlen(cwd));
-	mo_shell->shell_env = add_str_to_array(mo_shell->shell_env, "SHLVL=1");
-	mo_shell->shell_env = add_str_to_array(mo_shell->shell_env, "_=/usr/bin/env");
+	add_str_to_array(&mo_shell->shell_env, "SHLVL=1");
+	add_str_to_array(&mo_shell->shell_env, "_=/usr/bin/env");
 
 	return (NO_ERROR);
 }
@@ -121,7 +121,11 @@ int	main(const int argc, char *argv[], char *envp[])
 	if (envp[0] == NULL)
 		create_minimal_env(&mo_shell);
 	else
+	{
 		mo_shell.shell_env = copy_env(envp);
+		if (!mo_shell.shell_env)
+			return (ERROR);
+	}
 	g_signal_pid = 0;
 	signals();
 	mo_shell.last_exit_status = 0;
@@ -130,7 +134,7 @@ int	main(const int argc, char *argv[], char *envp[])
 	mo_shell.expanded_input = NULL;
 	mo_shell.splitted_input = NULL;
 	mo_shell.cmds_table = NULL;
-	if (init_shell() == ERROR)
-		return (ERROR);
+	// if (init_shell() == ERROR)
+		// return (ERROR);
 	return (mini_s_hell(argc, argv, envp, &mo_shell));
 }

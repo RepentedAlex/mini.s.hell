@@ -48,7 +48,7 @@ int	ms_pwd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 		created_wd= NULL;
 		created_wd = append(created_wd, cwd, ft_strlen(cwd));
 		free(cwd);
-		add_str_to_array(mo_shell->shell_env, created_wd);
+		add_str_to_array(&mo_shell->shell_env, created_wd);
 		return (1);
 	}
 	var_content = mo_shell->shell_env[var_index];

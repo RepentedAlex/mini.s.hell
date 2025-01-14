@@ -71,6 +71,8 @@ void	close_fds(t_cmd **head)
 	t_cmd	*nav;
 
 	nav = *head;
+	if (!nav)
+		return ;
 	while (nav)
 	{
 		if (nav->fd_i >= 0 && nav->fd_i != STDIN_FILENO)

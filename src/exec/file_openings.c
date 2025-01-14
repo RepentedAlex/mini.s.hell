@@ -207,6 +207,11 @@ t_error	open_file_in(t_block *nav_block, t_cmd *nav_cmd, int mode, t_mo_shell *m
 	return (NO_ERROR);
 }
 
+/// @brief 
+/// @param nav_block
+/// @param nav_cmd 
+/// @param mode 1 == truncate ; 2 == append
+/// @return 
 t_error	open_file_out(t_block *nav_block, t_cmd *nav_cmd, int mode)
 {
 	if (mode == 1)

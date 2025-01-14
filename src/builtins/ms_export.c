@@ -78,7 +78,7 @@ bool	is_valid_variable_name(char *vr_name)
 	return (false);
 }
 
-static void	update_env_var(char *arg, char *var_name, t_mo_shell *shell)
+static t_error update_env_var(char *arg, char *var_name, t_mo_shell *shell)
 {
 	int	i;
 
@@ -88,9 +88,14 @@ static void	update_env_var(char *arg, char *var_name, t_mo_shell *shell)
 	i++;
 	strip_quotes(arg);
 	if (var_exst(var_name, shell->shell_env) == -1)
-		shell->shell_env = add_str_to_array(shell->shell_env, arg);
+	{
+		add_str_to_array(&shell->shell_env, arg);
+		if (!shell->shell_env)
+			return (ERROR);
+	}
 	else
 		update_var(var_name, &arg[i], shell->shell_env);
+	return (NO_ERROR);
 }
 
 /// @brief Sets variable in the environment
@@ -133,8 +138,9 @@ int	ms_export(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 			continue ;
 		}
 
-		update_env_var(args[args_iterator], var_name, mo_shell);
+		if (update_env_var(args[args_iterator], var_name, mo_shell) == ERROR)
+			return (-1);
 		args_iterator++;
 	}
-	return (0);
+	return (NO_ERROR);
 }

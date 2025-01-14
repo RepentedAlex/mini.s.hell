@@ -29,29 +29,46 @@ t_block	*block_setup_first(t_mo_shell *mo_shell)
 	return (block);
 }
 
-void	for_space(t_block *nav)
+t_error for_space(t_block *nav)
 {
 	int		i;
 
 	i = 0;
 	while (nav->str[i])
 	{
-		if (!ft_is_symbol(&nav->str[i]) && handle_no_symbols_no_ifs(nav, &i))
+		if (!ft_is_symbol(&nav->str[i]))
+		{
+			if (handle_no_symbols_no_ifs(nav, &i) == ERROR)
+				return (ERROR);
 			break ;
-		if (!ft_strncmp(&nav->str[i], "<<", 2) && handle_hd(nav, &i))
+		}
+		if (!ft_strncmp(&nav->str[i], "<<", 2))
+		{
+			if (handle_hd(nav, &i) == ERROR)
+				return (ERROR);
 			break ;
-		if (!ft_strncmp(&nav->str[i], ">>", 2) && handle_ap(nav, &i))
+		}
+		if (!ft_strncmp(&nav->str[i], ">>", 2))
+		{
+			if (handle_ap(nav, &i))
+				return (ERROR);
 			break ;
+		}
 		if (!ft_strncmp(&nav->str[i], "<", 1) && handle_ri(nav, &i))
 			break ;
-		if (!ft_strncmp(&nav->str[i], ">", 1) && handle_ro(nav, &i))
+		if (!ft_strncmp(&nav->str[i], ">", 1))
+		{
+			if (handle_ro(nav, &i) == ERROR)
+				return (ERROR);
 			break ;
+		}
 		if (!ft_is_ifs(nav->str[i]) && handle_ifs(nav, &i))
 			break ;
 		if (handle_else(nav, &i))
 			continue ;
 		i++;
 	}
+	return (NO_ERROR);
 }
 
 t_error	split_spaces(t_block **head)
@@ -64,7 +81,8 @@ t_error	split_spaces(t_block **head)
 	while (nav)
 	{
 		if (nav->type == RAW)
-			for_space(nav);
+			if (for_space(nav) == ERROR)
+				return (ERROR);
 		nav = nav->next;
 	}
 	return (NO_ERROR);

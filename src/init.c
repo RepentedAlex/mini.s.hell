@@ -38,6 +38,8 @@ char	**copy_env(char **envp)
 	while (envp[i])
 	{
 		copy[i] = ft_strdup(envp[i]);
+		if (!copy[i])
+			return (NULL);
 		i++;
 	}
 	copy[i] = NULL;

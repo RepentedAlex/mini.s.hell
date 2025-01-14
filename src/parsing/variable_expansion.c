@@ -69,7 +69,7 @@ char	*get_var_content(char *var_name, char **env)
 	i = 0;
 	if (var_name[0] == '\0')
 		return (NULL);
-	while (env[i] && (ft_strncmp(var_name, env[i], ft_strlen(var_name) + 1) != ('\0' - '=')))
+	while (env && env[i] && (ft_strncmp(var_name, env[i], ft_strlen(var_name) + 1) != ('\0' - '=')))
 		i++;
 	if (env[i] == NULL)
 		return (NULL);
@@ -182,6 +182,8 @@ char	*expand_variables(char *src, char *envp[], t_mo_shell *mo_shell)
 		else
 		{
 			ret = append(ret, &src[i], 1);
+			if (!ret)
+				return (NULL);
 			i++;
 		}
 	}

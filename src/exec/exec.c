@@ -13,30 +13,31 @@
 #include <libft.h>
 #include "minishell.h"
 
-char	**for_first_arg(char *str)
+t_error for_first_arg(char *str, char ***env)
 {
 	char	**ret;
 
 	ret = (char **)malloc(sizeof(char *) * 2);
 	if (!ret)
 	{
-		return (NULL);
+		return (ERROR);
 	}
 	ret[0] = ft_strdup(str);
 	ret[1] = NULL;
-	return (ret);
+	*env = ret;
+	return (NO_ERROR);
 }
 
-char	**add_str_to_array(char **array, char *str)
+t_error add_str_to_array(char ***array, char *str)
 {
 	char	**nav;
 	char	**ret;
 	int		i;
 
 	ret = NULL;
-	nav = array;
+	nav = *array;
 	if (!nav || nav[0] == NULL)
-		return (for_first_arg(str));
+		return (for_first_arg(str, array), NO_ERROR);
 	i = 0;
 	while (nav[i] != NULL)
 		i++;
@@ -44,12 +45,13 @@ char	**add_str_to_array(char **array, char *str)
 	if (!ret)
 		return (NULL);
 	i = -1;
-	while (array[++i] != NULL)
-		ret[i] = ft_strdup(array[i]);
+	while ((*array)[++i] != NULL)
+		ret[i] = ft_strdup((*array)[i]);
 	ret[i] = ft_strdup(str);
 	ret[i + 1] = NULL;
-	(free_2d_tab(array), array = NULL);
-	return (ret);
+	(free_2d_tab(*array), *array = NULL);
+	*array = ret;
+	return (NO_ERROR);
 }
 
 void	handler_dup2(t_cmd *to_launch, t_pipes *pipes)
