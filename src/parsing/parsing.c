@@ -197,7 +197,7 @@ token '|'\n"), mo_shell->last_exit_status = 2, ERROR);
 	clean_empty_nodes(&mo_shell->splitted_input);
 	if (lexcat_redir_handler(&mo_shell->splitted_input) == ERROR) //Surely redundant
 		return (ERROR);
-	if (check_not_dirfile(&mo_shell->splitted_input, mo_shell) == -1)
+	if (check_not_dirfile(&mo_shell->splitted_input, mo_shell) != 0)
 		return (ERROR);
 	new_expand_variables(&mo_shell->splitted_input, mo_shell);
 	nodes_unquote_strings(&mo_shell->splitted_input);
