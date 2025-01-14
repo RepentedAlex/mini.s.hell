@@ -13,7 +13,19 @@
 #include "minishell.h"
 #include <libft.h>
 
-t_error	no_var_in_env(t_mo_shell *mo_shell, char *cwd, char *created_wd)
+/// @brief Handles the case where the "PWD" variable is not found in the shell
+/// environment.
+/// Adds the current working directory as a new "PWD" entry in the environment.
+/// @param mo_shell Pointer to the shell structure containing the shell
+/// environment.
+/// @param cwd String containing the current working directory in the format
+/// "PWD=<directory>". Must not be NULL.
+/// @param created_wd Pointer to a dynamically allocated string used to store
+/// the new "PWD" variable.
+/// This will be populated and added to the environment.
+/// @return Returns NO_ERROR on success or ERROR if adding the new "PWD"
+/// variable to the environment fails.
+static t_error	no_var_in_env(t_mo_shell *mo_shell, char *cwd, char *created_wd)
 {
 	printf("%s\n", &cwd[4]);
 	created_wd = NULL;
@@ -24,7 +36,15 @@ t_error	no_var_in_env(t_mo_shell *mo_shell, char *cwd, char *created_wd)
 	return (NO_ERROR);
 }
 
-t_error	retrieve_cwd(char *cwd, char **tmp)
+/// @brief Retrieves the current working directory and stores it in a temporary
+/// buffer.
+/// @param cwd Pointer to a pre-allocated buffer for the current working
+/// directory. Can be NULL.
+/// @param tmp Pointer to a string that will hold the result of `getcwd`. Must
+/// be freed by the caller if non-NULL.
+/// @return Returns NO_ERROR on success or ERROR if retrieving the current
+/// working directory fails. On failure, an error message is printed to STDERR.
+static t_error	retrieve_cwd(char *cwd, char **tmp)
 {
 	*tmp = getcwd(cwd, DEF_BUF_SIZ);
 	if (*tmp == NULL)
@@ -37,11 +57,17 @@ t_error	retrieve_cwd(char *cwd, char **tmp)
 	return (NO_ERROR);
 }
 
-/// @brief Prints the current working dir as per the PWD variable in the shell
-/// environment.
-/// @param args
-/// @param cmd
-/// @return
+/// @brief Handles the `pwd` built-in command, which prints the current working
+/// directory.
+/// @param args Command-line arguments passed to the `pwd` command. If an
+/// invalid option is passed (e.g., an argument starting with '-'), an error
+/// message is displayed, and the function exits with a non-zero status.
+/// @param mo_shell Pointer to the shell structure containing the shell's state,
+/// including environment variables and the last exit status.
+/// @param cmd Pointer to the command structure (not used in this function,
+/// provided for consistency with other built-in functions).
+/// @return Returns 0 on success. Returns 2 if an invalid option is passed.
+/// Returns 1 if there is an error retrieving the current working directory.
 int	ms_pwd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	int		var_index;
