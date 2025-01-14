@@ -180,5 +180,6 @@ bool	ft_string_is_only_ifs(char *str);
 
 // variables expansion
 char	*expand_variables(char *src, char *envp[], t_mo_shell *mo_shell);
+char	*get_var_content(char *var_name, char **env);
 
 #endif

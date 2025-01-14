@@ -43,11 +43,16 @@ static int	cd_to_home(t_mo_shell *mo_shell, t_cmd *cmd)
 	char	*user_path;
 	char	*new_pwd;
 	char	*export_args[3];
+	char	*home_dir;
 
 	if (!mo_shell->shell_env)
+		return (ft_putstr_fd("No environment\n", 1), 0);
+	user_path = NULL;
+	if (find_var("HOME", mo_shell->shell_env) == -1)
 		return (ft_putstr_fd("Couldn't find HOME variable\n", 1), 0);
-	user_path = append(ft_strdup("/home/"), getenv("USER"), \
-		ft_strlen(getenv("USER")));
+	home_dir = get_var_content("HOME", mo_shell->shell_env);
+	user_path = append(user_path, home_dir, ft_strlen(home_dir));
+	free(home_dir);
 	if (!user_path)
 		return (-1);
 	if (chdir(user_path) == 0)
