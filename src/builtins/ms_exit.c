@@ -13,6 +13,11 @@
 #include "minishell.h"
 #include <libft.h>
 
+/// @brief Checks if the given string represents a valid number consisting of
+/// only digits.
+/// @param s The string to check.
+/// @return Returns true if the string contains only digit characters;
+/// otherwise, returns false.
 static bool	ft_isnumber(char *s)
 {
 	int	i;
@@ -27,6 +32,14 @@ static bool	ft_isnumber(char *s)
 	return (true);
 }
 
+/// @brief Skips leading spaces in the given string and determines the sign of
+/// the number.
+/// Updates the index to point to the first non-space, non-sign character.
+/// @param s The string to process for skipping spaces and determining the sign.
+/// @param i A pointer to the index variable to update as spaces and sign
+/// characters are skipped.
+/// @param sign A pointer to the variable to store the sign of the number
+/// (1 for positive, -1 for negative).
 static void	ft_skip_spaces_and_get_sign(char *s, int *i, int *sign)
 {
 	while (s[*i] && s[*i] == ' ')
@@ -40,13 +53,13 @@ static void	ft_skip_spaces_and_get_sign(char *s, int *i, int *sign)
 }
 
 /// @brief Generates the exit status for the minishell based on the provided
-// string argument.
+/// string argument.
 /// Validates that the input string represents a valid numeric value, calculates
-// the exit status,
+/// the exit status,
 /// and handles errors such as non-numeric input or values exceeding the maximum
-// allowed.
+/// allowed.
 /// If an error occurs, the function will clean up resources and terminate the
-// program.
+/// program.
 /// @param s The string representing the exit status value.
 /// @param mo_shell A pointer to the shell structure for managing resources.
 /// @return Returns the calculated exit status modulo 256.
@@ -81,19 +94,18 @@ static int	exit_gen(char *s, t_mo_shell *mo_shell)
 
 /// @brief Handles the `exit` built-in command in the shell.
 /// Exits the shell with the specified exit status or the last exit status if
-// none is provided.
+/// none is provided.
 /// Validates input arguments and manages errors for non-numeric or excessive
-// arguments.
+/// arguments.
 /// Performs resource cleanup before exiting the program.
 /// @param args An array of strings containing the command arguments.
 /// The first argument is the command name, and subsequent arguments are the
-// exit status or other inputs.
+/// exit status or other inputs.
 /// @param mo_shell A pointer to the shell structure for managing resources and
-// state.
+/// state.
 /// @param cmd A pointer to the command structure (unused in this function).
 /// @return Returns 1 if there are too many arguments; otherwise, the function
-// does not return, as it exits the program.
-
+/// does not return, as it exits the program.
 int	ms_exit(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	int	exit_s;
