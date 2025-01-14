@@ -74,27 +74,29 @@ static int	cd_to_home(t_mo_shell *mo_shell, t_cmd *cmd)
 static int	cd_to_path(char *path, t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	char	*new_pwd;
+	char	*tmp;
 	char	*export_args[3];
 	int		res;
 
-	new_pwd = getcwd(NULL, DEF_BUF_SIZ);
-	if (!new_pwd)
-		return (perror("mini.s.hell: cd "), 1);
+	tmp = NULL;
 	res = chdir(path);
+	tmp = getcwd(NULL, 0);
+	if (res == -1 || tmp == NULL)
+		return (ft_putstr_fd("Couldn't change directory\n", 2), 1);
+	new_pwd = NULL;
 	if (res != 0)
 	{
-		printf("mini.s.hell: %s: No such file or directory\n", path);
-		return (free(new_pwd), -res);
+		printf("mini.s.hell: %s: Invalid argument\n", path);
+		return (-res);
 	}
-	if (var_exst("PWD", mo_shell->shell_env) != -1)
-	{
-		export_args[0] = "lol";
-		export_args[1] = append(ft_strdup("PWD="), new_pwd, \
-			ft_strlen(new_pwd));
-		export_args[2] = NULL;
-		ms_export(export_args, mo_shell, cmd);
-		(free(new_pwd), free(export_args[1]));
-	}
+	new_pwd = append(new_pwd, "PWD=", ft_strlen("PWD="));
+	new_pwd = append(new_pwd, tmp, ft_strlen(tmp));
+	free(tmp);
+	export_args[0] = "lol";
+	export_args[1] = new_pwd;
+	export_args[2] = NULL;
+	ms_export(export_args, mo_shell, cmd);
+	free(new_pwd);
 	return (0);
 }
 
