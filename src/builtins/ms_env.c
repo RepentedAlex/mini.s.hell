@@ -26,7 +26,7 @@ int	ms_env(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	(void)args;
 	env = mo_shell->shell_env;
 	i = 0;
-	while (mo_shell->shell_env[i] != NULL)
+	while (mo_shell->shell_env && mo_shell->shell_env[i] != NULL)
 	{
 		write(1, env[i], ft_strlen(env[i]));
 		write(1, "\n", 1);
