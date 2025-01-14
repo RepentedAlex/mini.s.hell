@@ -110,16 +110,29 @@ int	ms_export(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	while (args[args_iterator] != NULL)
 	{
 		i = 0;
-		while (args[args_iterator][i] && args[args_iterator][i] != '=')
+		while (args[args_iterator][i])
 		{
+			if (args[args_iterator][i] == '=')
+			{
+				i++;	//Faire gaffe, peutetre que ca fait nimp pour `C=`
+				break ;
+			}
 			var_name[i] = args[args_iterator][i];
 			i++;
 		}
+
+		if (!args[args_iterator][i])
+		{
+			args_iterator++;
+			continue ;
+		}
+
 		if (is_valid_variable_name(var_name) == false)
-			break ;
-		if (args[args_iterator][i] != '=' && printf(\
-			"No value to assign to variable $%s\n", var_name))
-			break ;
+		{
+			args_iterator++;
+			continue ;
+		}
+
 		update_env_var(args[args_iterator], var_name, mo_shell);
 		args_iterator++;
 	}
