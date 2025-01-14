@@ -49,7 +49,7 @@ static int	cd_to_home(t_mo_shell *mo_shell, t_cmd *cmd)
 		return (ft_putstr_fd("No environment\n", 1), 0);
 	user_path = NULL;
 	if (find_var("HOME", mo_shell->shell_env) == -1)
-		return (ft_putstr_fd("Couldn't find HOME variable\n", 1), 0);
+		return (ft_putstr_fd("mini.s.hell: cd: HOME not set\n", 1), 0);
 	home_dir = get_var_content("HOME", mo_shell->shell_env);
 	user_path = append(user_path, home_dir, ft_strlen(home_dir));
 	free(home_dir);
