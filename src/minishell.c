@@ -93,12 +93,21 @@ t_error	init_shell(void)
 }
 
 //Cree un PWD si minishell est lancé sans environnement
-t_error	create_minimal_env(char **shell_env)
+t_error	create_minimal_env(t_mo_shell *mo_shell)
 {
-	(void)shell_env;
-	shell_env = NULL;
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		return (ERROR);
+	(void)mo_shell;
+	mo_shell->shell_env = NULL;
 	//Exporter variable PWD
 	// ms_export();
+	mo_shell->shell_env = (char **)malloc(sizeof(char *));
+	mo_shell->shell_env[0] = ft_strdup("PWD=");
+	mo_shell->shell_env[0] = append(mo_shell->shell_env[0], cwd, ft_strlen(cwd));
+
 	return (NO_ERROR);
 }
 
@@ -107,8 +116,8 @@ int	main(const int argc, char *argv[], char *envp[])
 	t_mo_shell	mo_shell;
 
 	mo_shell.shell_env = NULL;
-	if (!envp[0])
-		create_minimal_env(mo_shell.shell_env);
+	if (envp[0] == NULL)
+		create_minimal_env(&mo_shell);
 	else
 		mo_shell.shell_env = copy_env(envp);
 	g_signal_pid = 0;
