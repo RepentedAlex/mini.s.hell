@@ -27,7 +27,7 @@ int	check_if_dirfile_exist(char *path, t_mo_shell *mo_shell)
 		closedir(dir);
 		printf("%s: Is a directory\n", path);
 		mo_shell->last_exit_status = 126;
-		return (-1);
+		return (1);
 	}
 	fd = open(path, O_RDONLY);
 	if (fd > -1)
@@ -38,6 +38,7 @@ int	check_if_dirfile_exist(char *path, t_mo_shell *mo_shell)
 		}
 		close(fd);
 		return (1);
+		return (-1);
 	}
 	return (0);
 }
@@ -51,8 +52,11 @@ int	check_not_dirfile(t_block **head, t_mo_shell *mo_shell)
 		return (0);
 	if (ft_strchr(nav->str, '/'))
 	{
-		if (check_if_dirfile_exist(nav->str, mo_shell) == -1)
+		cide_ret = check_if_dirfile_exist(nav->str, mo_shell);
+		if (cide_ret == -1)
 			return (-1);
+		if (cide_ret == 1)
+			return (mo_shell->last_exit_status = 126, 1);
 	}
 	nav = nav->next;
 	while (nav)
