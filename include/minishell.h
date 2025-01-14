@@ -130,6 +130,10 @@ t_cmd	*spltd_in_to_cmd_blocks(t_block **head);
 // exit
 void	close_fds(t_cmd **head);
 
+// file descriptors
+t_error	open_file_out(t_block *nav_block, t_cmd *nav_cmd, int mode);
+t_error	open_file_in(t_block *nav_block, t_cmd *nav_cmd, int mode, t_mo_shell *mo_shell);
+
 // ft_is
 bool	ft_is_alpha(const char c);
 bool	ft_is_ifs(char c);
