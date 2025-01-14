@@ -46,7 +46,9 @@ int	check_if_dirfile_exist(char *path, t_mo_shell *mo_shell)
 int	check_not_dirfile(t_block **head, t_mo_shell *mo_shell)
 {
 	t_block	*nav;
+	int		cide_ret;
 
+	cide_ret = 0;
 	nav = *head;
 	if (!nav)
 		return (0);
