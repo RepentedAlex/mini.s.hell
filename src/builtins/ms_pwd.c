@@ -24,6 +24,7 @@ int	ms_pwd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	char	*var_content;
 	char	*cwd;
 	char	*tmp;
+	char	*created_wd;
 
 	(void)cmd;
 	(void)args;
@@ -42,7 +43,14 @@ int	ms_pwd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	(free(tmp), tmp = NULL);
 	var_index = var_exst("PWD", mo_shell->shell_env);
 	if (var_index == -1)
-		return (write(1, "\n", 1), 1);
+	{
+		printf("%s\n", &cwd[4]);
+		created_wd= NULL;
+		created_wd = append(created_wd, cwd, ft_strlen(cwd));
+		free(cwd);
+		add_str_to_array(mo_shell->shell_env, created_wd);
+		return (1);
+	}
 	var_content = mo_shell->shell_env[var_index];
 	while (*var_content != '=')
 		var_content++;
