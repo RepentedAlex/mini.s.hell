@@ -12,13 +12,6 @@
 
 #include "minishell.h"
 
-bool	ft_is_alpha(const char c)
-{
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (true);
-	return (false);
-}
-
 /// @brief
 /// @param c
 /// @return

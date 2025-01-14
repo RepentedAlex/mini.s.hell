@@ -11,12 +11,13 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <libft.h>
 
 bool	check_after_pipe(char *str, int i)
 {
 	while (str[i])
 	{
-		if (ft_is_alpha(str[i]))
+		if (ft_isalpha(str[i]) == true)
 			return (true);
 		i++;
 	}
@@ -27,7 +28,7 @@ bool	check_before_pipe(char *str, int i)
 {
 	while (i >= 0 && str[i] != '|')
 	{
-		if (ft_is_alpha(str[i]))
+		if (ft_isalpha(str[i]) == true)
 			return (true);
 		i--;
 	}

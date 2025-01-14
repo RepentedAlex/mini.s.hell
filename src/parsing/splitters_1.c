@@ -10,9 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
-
 #include "minishell.h"
+#include <libft.h>
 
 t_error handle_ap(t_block *nav, int *i)
 {
