@@ -77,7 +77,7 @@ static int	cd_to_path(char *path, t_mo_shell *mo_shell, t_cmd *cmd)
 	if (res != 0)
 	{
 		printf("mini.s.hell: %s: No such file or directory\n", path);
-		return (-res);
+		return (free(new_pwd), -res);
 	}
 	if (var_exst("PWD", mo_shell->shell_env) != -1)
 	{
