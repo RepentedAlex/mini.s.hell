@@ -32,10 +32,9 @@ int	ms_pwd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	if (getcwd(cwd, DEF_BUF_SIZ) == NULL)
 		return (free(cwd), ft_putstr_fd(\
 "mini.s.hell: error retrieving current directory\n", STDERR_FILENO), 1);
-	(free(cwd), cwd = NULL);
 	cwd = ft_strdup("PWD=");
-	tmp = getcwd(tmp, DEF_BUF_SIZ);
 	cwd = append(cwd, tmp, DEF_BUF_SIZ);
+	(free(tmp), tmp = NULL);
 	var_index = var_exst("PWD", mo_shell->shell_env);
 	if (var_index == -1)
 		return (write(1, "\n", 1), 1);
@@ -44,5 +43,5 @@ int	ms_pwd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 		var_content++;
 	var_content++;
 	write(1, var_content, ft_strlen(var_content));
-	return (write(1, "\n", 1), 0);
+	return (free(cwd), cwd = NULL, write(1, "\n", 1), 0);
 }
