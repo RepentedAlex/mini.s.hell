@@ -132,9 +132,44 @@ t_cmd	*spltd_in_to_cmd_blocks(t_block **head)
 /// @return ERROR if file couldn't be opened, NO_ERROR otherwise.
 t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head, t_mo_shell *mo_shell)
 {
-	if (open_redir_i(cmd_head, block_head, mo_shell) == ERROR)
-		return (ERROR);
-	if (open_redir_o(cmd_head, block_head) == ERROR)
-		return (ERROR);
+	t_block	*nav_block;
+	t_cmd	*nav_cmd;
+
+	nav_block = *block_head;
+	nav_cmd = *cmd_head;
+	while (nav_block)
+	{
+		if (nav_block->type == PIPE)
+			nav_cmd = nav_cmd->next;
+		else if (nav_block->type == REDIR_O)
+		{
+			nav_block = nav_block->next;
+			if (open_file_out(nav_block, nav_cmd, 1) == ERROR)
+				return (ERROR);
+		}
+		else if (nav_block->type == APPEND)
+		{
+			nav_block = nav_block->next;
+			if (open_file_out(nav_block, nav_cmd, 2) == ERROR)
+				return (ERROR);
+		}
+		else if (nav_block->type == REDIR_I)
+		{
+			nav_block = nav_block->next;
+			if (open_file_in(nav_block, nav_cmd, 1, mo_shell) == ERROR)
+				return (ft_putstr_fd("No such file or directory\n", STDERR_FILENO), ERROR);
+		}
+		else if (nav_block->type == HEREDOC)
+		{
+			nav_block = nav_block->next;
+			if (open_file_in(nav_block, nav_cmd, 2, mo_shell) == ERROR)
+				return (ft_putstr_fd("No such file or directory\n", STDERR_FILENO), ERROR);
+		}
+		nav_block = nav_block->next;
+	}
+	// if (open_redir_o(cmd_head, block_head) == ERROR)
+	// 	return (ERROR);
+	// if (open_redir_i(cmd_head, block_head, mo_shell) == ERROR)
+	// 	return (ERROR);
 	return (NO_ERROR);
 }
