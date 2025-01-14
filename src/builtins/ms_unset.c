@@ -31,6 +31,8 @@ int	ms_unset(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	while (args && args[args_iterator])
 	{
 		var_index = var_exst(args[args_iterator], env);
+		if (var_index == -1)
+			return (ft_putstr_fd("mini.s.hell: unset: not a valid identifier\n", 1), 1);
 		var_after = 0;
 		while (env[var_index + 1 + var_after] != NULL)
 			var_after++;
