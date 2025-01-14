@@ -13,6 +13,12 @@
 #include "minishell.h"
 #include <libft.h>
 
+/// @brief Outputs an error message to `stderr` based on the error type and
+/// cause, and returns the associated exit code.
+/// @param err A structure containing error information: `msg` (the error
+/// message type), `cause` (the specific cause of the error), and `no` (the
+/// exit code).
+/// @return The exit code associated with the error.
 int	ft_err_msg(t_err err)
 {
 	if (err.msg == ERRMSG_CMD_NOT_FOUND)
