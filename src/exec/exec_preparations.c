@@ -85,7 +85,8 @@ t_error	pipeline_setup(t_mo_shell *mo_shell)
 	if (mo_shell->cmds_table == NULL)
 		return (ERROR);
 	fill_cmd_and_args(&mo_shell->cmds_table, &mo_shell->splitted_input);
-	open_redir_files(&mo_shell->cmds_table, &mo_shell->splitted_input, mo_shell);
+	if (open_redir_files(&mo_shell->cmds_table, &mo_shell->splitted_input, mo_shell) == ERROR)
+		return (ERROR);
 	expand_cmd_path(&mo_shell->cmds_table, mo_shell->shell_env);
 	//TODO Setup pipes and redirections from right to left, redirections steal the pipe
 	// setup_pipes(&mo_shell->cmds_table);
