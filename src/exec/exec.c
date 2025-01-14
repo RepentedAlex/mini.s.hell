@@ -245,7 +245,7 @@ t_error	execution(t_mo_shell *mo_shell)
 	if (!mo_shell->splitted_input)
 		return (ERROR);
 	if (pipeline_setup(mo_shell) == ERROR)
-		return (ERROR);
+		return (close_fds(&mo_shell->cmds_table), ERROR);
 	mo_shell->last_exit_status = execution_sequence(mo_shell);
 	close_fds(&mo_shell->cmds_table);
 	return (NO_ERROR);
