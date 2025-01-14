@@ -39,6 +39,17 @@ static void	ft_skip_spaces_and_get_sign(char *s, int *i, int *sign)
 	}
 }
 
+/// @brief Generates the exit status for the minishell based on the provided
+// string argument.
+/// Validates that the input string represents a valid numeric value, calculates
+// the exit status,
+/// and handles errors such as non-numeric input or values exceeding the maximum
+// allowed.
+/// If an error occurs, the function will clean up resources and terminate the
+// program.
+/// @param s The string representing the exit status value.
+/// @param mo_shell A pointer to the shell structure for managing resources.
+/// @return Returns the calculated exit status modulo 256.
 static int	exit_gen(char *s, t_mo_shell *mo_shell)
 {
 	int					i;
@@ -68,11 +79,21 @@ static int	exit_gen(char *s, t_mo_shell *mo_shell)
 	return ((result * sign) % 256);
 }
 
-/// @brief Exit builtin
-/// @param args Arguments for the command
-/// @param mo_shell Pointer to the Mother Shell structure
-/// @param cmd
-/// @return 
+/// @brief Handles the `exit` built-in command in the shell.
+/// Exits the shell with the specified exit status or the last exit status if
+// none is provided.
+/// Validates input arguments and manages errors for non-numeric or excessive
+// arguments.
+/// Performs resource cleanup before exiting the program.
+/// @param args An array of strings containing the command arguments.
+/// The first argument is the command name, and subsequent arguments are the
+// exit status or other inputs.
+/// @param mo_shell A pointer to the shell structure for managing resources and
+// state.
+/// @param cmd A pointer to the command structure (unused in this function).
+/// @return Returns 1 if there are too many arguments; otherwise, the function
+// does not return, as it exits the program.
+
 int	ms_exit(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	int	exit_s;
@@ -89,10 +110,9 @@ int	ms_exit(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	}
 	if (args && args[1] && args[2])
 	{
-		if (args[1] && args[2] /*&& ft_isnumber(args[2])*/)
+		if (args[1] && args[2])
 		{
-			exit_s = ft_err_msg((t_err){1, \
-				ERRMSG_TOO_MANY_ARGS, NULL});
+			exit_s = ft_err_msg((t_err){1, ERRMSG_TOO_MANY_ARGS, NULL});
 			return (1);
 		}
 	}
