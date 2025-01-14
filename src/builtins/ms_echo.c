@@ -13,7 +13,13 @@
 #include "minishell.h"
 #include <libft.h>
 
-bool	echo_check_option(char *str)
+/// @brief Checks if the given string represents the "-n" option for the echo
+/// command.
+/// The option is valid if the string starts with '-' and is followed only by
+/// 'n' characters.
+/// @param str The string to check.
+/// @return Returns true if the string is a valid "-n" option, false otherwise.
+bool echo_check_option(char *str)
 {
 	int	i;
 
@@ -27,11 +33,17 @@ bool	echo_check_option(char *str)
 	return (false);
 }
 
-/// @brief
-/// @param
-/// @param mo_shell
-/// @param cmd
-/// @return
+/// @brief Implements the "echo" command in the shell, printing arguments to the
+/// standard output.
+/// Handles the "-n" option to suppress the trailing newline.
+/// @param args Array of arguments passed to the command, with args[0] being
+/// "echo".
+/// Subsequent elements contain strings to be printed. If "-n" is provided as an
+/// argument,
+/// the trailing newline will be omitted.
+/// @param mo_shell Pointer to the shell structure (unused in this function).
+/// @param cmd Pointer to the command structure (unused in this function).
+/// @return Returns 0 upon successful execution.
 int	ms_echo(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	int		i;
