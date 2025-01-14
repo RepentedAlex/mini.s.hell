@@ -13,6 +13,30 @@
 #include "minishell.h"
 #include <libft.h>
 
+t_error	no_var_in_env(t_mo_shell *mo_shell, char *cwd, char *created_wd)
+{
+	printf("%s\n", &cwd[4]);
+	created_wd = NULL;
+	created_wd = append(created_wd, cwd, ft_strlen(cwd));
+	free(cwd);
+	if (add_str_to_array(&mo_shell->shell_env, created_wd) == ERROR)
+		return (ERROR);
+	return (NO_ERROR);
+}
+
+t_error	retrieve_cwd(char *cwd, char **tmp)
+{
+	*tmp = getcwd(cwd, DEF_BUF_SIZ);
+	if (*tmp == NULL)
+	{
+		free(*tmp);
+		ft_putstr_fd("mini.s.hell: error retrieving current directory\n", \
+			STDERR_FILENO);
+		return (ERROR);
+	}
+	return (NO_ERROR);
+}
+
 /// @brief Prints the current working dir as per the PWD variable in the shell
 /// environment.
 /// @param args
@@ -26,31 +50,19 @@ int	ms_pwd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	char	*tmp;
 	char	*created_wd;
 
-	(void)cmd;
-	(void)args;
+	((void)cmd, created_wd = NULL);
 	cwd = NULL;
 	if (args && args[1] && args[1][0] == '-')
-	{
-		write(1, "Invalid option\n", 15);
-		return (mo_shell->last_exit_status = 2, 2);
-	}
-	tmp = getcwd(cwd, DEF_BUF_SIZ);
-	if (tmp == NULL)
-		return (free(tmp), ft_putstr_fd(\
-"mini.s.hell: error retrieving current directory\n", STDERR_FILENO), 1);
+		return (write(1, "Invalid option\n", 15), \
+			mo_shell->last_exit_status = 2, 2);
+	if (retrieve_cwd(cwd, &tmp) == ERROR)
+		return (1);
 	cwd = ft_strdup("PWD=");
 	cwd = append(cwd, tmp, DEF_BUF_SIZ);
 	(free(tmp), tmp = NULL);
 	var_index = var_exst("PWD", mo_shell->shell_env);
 	if (var_index == -1)
-	{
-		printf("%s\n", &cwd[4]);
-		created_wd= NULL;
-		created_wd = append(created_wd, cwd, ft_strlen(cwd));
-		free(cwd);
-		add_str_to_array(&mo_shell->shell_env, created_wd);
-		return (1);
-	}
+		return (no_var_in_env(mo_shell, cwd, created_wd));
 	var_content = mo_shell->shell_env[var_index];
 	while (*var_content != '=')
 		var_content++;
