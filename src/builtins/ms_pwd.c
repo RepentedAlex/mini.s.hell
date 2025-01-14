@@ -28,9 +28,14 @@ int	ms_pwd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	(void)cmd;
 	(void)args;
 	cwd = NULL;
-	tmp = NULL;
-	if (getcwd(cwd, DEF_BUF_SIZ) == NULL)
-		return (free(cwd), ft_putstr_fd(\
+	if (args && args[1] && args[1][0] == '-')
+	{
+		write(1, "Invalid option\n", 15);
+		return (mo_shell->last_exit_status = 2, 2);
+	}
+	tmp = getcwd(cwd, DEF_BUF_SIZ);
+	if (tmp == NULL)
+		return (free(tmp), ft_putstr_fd(\
 "mini.s.hell: error retrieving current directory\n", STDERR_FILENO), 1);
 	cwd = ft_strdup("PWD=");
 	cwd = append(cwd, tmp, DEF_BUF_SIZ);
