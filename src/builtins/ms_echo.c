@@ -19,7 +19,7 @@
 /// 'n' characters.
 /// @param str The string to check.
 /// @return Returns true if the string is a valid "-n" option, false otherwise.
-bool echo_check_option(char *str)
+bool	echo_check_option(char *str)
 {
 	int	i;
 
