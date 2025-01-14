@@ -38,10 +38,42 @@
 // 	free(for_export[1]);
 // }
 
+/// @brief Updates the `PWD` environment variable with the new user path and
+/// exports it to the environment.
+/// @param mo_shell The shell context, used to manage environment variables
+/// and state.
+/// @param cmd The current command being executed (unused in this function, but
+/// included for consistency).
+/// @param user_path The new directory path to set as the current working
+/// directory.
+/// @param export_args An array of arguments for the `export` command, used to
+/// update the environment with the new `PWD` value.
+static void	update_var(t_mo_shell *mo_shell, t_cmd *cmd, char *user_path, \
+						char *export_args[3])
+{
+	char	*new_pwd;
+
+	new_pwd = append(ft_strdup("PWD="), user_path, ft_strlen(user_path));
+	export_args[0] = "lol";
+	export_args[1] = new_pwd;
+	export_args[2] = NULL;
+	ms_export(export_args, mo_shell, cmd);
+	free(new_pwd);
+}
+
+/// @brief Changes the current directory to the user's home directory as
+/// specified by the `HOME` environment variable.
+/// @param mo_shell The shell context, used to manage environment variables and
+/// state.
+/// @param cmd The current command being executed (unused in this function, but
+/// included for consistency).
+/// @return Returns 0 on success. Returns -1 if the `HOME` environment variable
+/// is not set, or if changing the directory fails.
+/// If the `HOME` variable is not found or an error occurs, an appropriate error
+/// message is printed.
 static int	cd_to_home(t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	char	*user_path;
-	char	*new_pwd;
 	char	*export_args[3];
 	char	*home_dir;
 
@@ -56,21 +88,25 @@ static int	cd_to_home(t_mo_shell *mo_shell, t_cmd *cmd)
 	if (!user_path)
 		return (-1);
 	if (chdir(user_path) == 0)
-	{
-		new_pwd = append(ft_strdup("PWD="), user_path, \
-			ft_strlen(user_path));
-		export_args[0] = "lol";
-		export_args[1] = new_pwd;
-		export_args[2] = NULL;
-		ms_export(export_args, mo_shell, cmd);
-		free(new_pwd);
-	}
+		update_var(mo_shell, cmd, user_path, export_args);
 	else
 		return (free(user_path), -1);
 	free(user_path);
 	return (0);
 }
 
+/// @brief Changes the current directory to the specified path and updates the
+/// `PWD` environment variable.
+/// @param path The path to change to. This can be an absolute or relative
+/// directory path.
+/// @param mo_shell The shell context, used to manage environment variables and
+/// state.
+/// @param cmd The current command being executed (unused in this function, but
+/// included for consistency).
+/// @return Returns 0 on success. Returns 1 if the directory change fails, and
+/// prints an error message.
+/// If an invalid argument is passed to `chdir`, a specific error message is
+/// printed.
 static int	cd_to_path(char *path, t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	char	*new_pwd;
@@ -100,10 +136,15 @@ static int	cd_to_path(char *path, t_mo_shell *mo_shell, t_cmd *cmd)
 	return (0);
 }
 
-/// @brief
-/// @param args
-/// @param cmd
-/// @return
+/// @brief Changes the current working directory.
+/// @param args The arguments passed to the `cd` command. `args[1]` is the
+/// target directory or path.
+/// @param mo_shell The shell context, used to manage environment variables and
+/// state.
+/// @param cmd The current command being executed (unused in this function, but
+/// included for consistency).
+/// @return Returns 0 on success. If the arguments are invalid or the directory
+/// change fails, an error message is printed.
 int	ms_cd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	if (args[1] && args[2])
