@@ -35,7 +35,7 @@ char	**add_str_to_array(char **array, char *str)
 
 	ret = NULL;
 	nav = array;
-	if (!nav)
+	if (!nav || nav[0] == NULL)
 		return (for_first_arg(str));
 	i = 0;
 	while (nav[i] != NULL)
