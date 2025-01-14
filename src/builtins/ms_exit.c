@@ -79,15 +79,6 @@ int	ms_exit(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 
 	(void)cmd;
 	exit_s = mo_shell->last_exit_status;
-	if (args && args[1] && args[2])
-	{
-		if (args[1] && args[2] && ft_isnumber(args[2]))
-		{
-			exit_s = ft_err_msg((t_err){ENO_GENERAL, \
-				ERRMSG_TOO_MANY_ARGS, NULL});
-			return (1);
-		}
-	}
 	if (args && args[1])
 	{
 		if (!ft_isnumber(args[1]))
@@ -95,6 +86,15 @@ int	ms_exit(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 			exit_s = exit_gen(args[1], mo_shell);
 		}
 		exit_s = ft_atoi(args[1]);
+	}
+	if (args && args[1] && args[2])
+	{
+		if (args[1] && args[2] /*&& ft_isnumber(args[2])*/)
+		{
+			exit_s = ft_err_msg((t_err){1, \
+				ERRMSG_TOO_MANY_ARGS, NULL});
+			return (1);
+		}
 	}
 	garbage_collect(mo_shell, 1);
 	exit(exit_s);
