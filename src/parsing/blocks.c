@@ -59,17 +59,17 @@ t_error	for_space(t_block *nav)
 	i = 0;
 	while (nav->str[i] && !nav->next)
 	{
-		if (nav->type == RAW && !ft_is_symbol(&nav->str[i]))
+		if (!nav->next && !ft_is_symbol(&nav->str[i]))
 		{
 			if (handle_no_symbols_no_ifs(nav, &i) == ERROR)
 				return (ERROR);
 			return (NO_ERROR);
 		}
-		if (nav->type == RAW && handle_symbol_checks(nav, &i) == ERROR)
+		if (!nav->next && handle_symbol_checks(nav, &i) == ERROR)
 			return (ERROR);
-		if (nav->type == RAW && !ft_is_ifs(nav->str[i]) && handle_ifs(nav, &i))
+		if (!nav->next && !ft_is_ifs(nav->str[i]) && handle_ifs(nav, &i))
 			break ;
-		if (nav->type == RAW && handle_else(nav, &i))
+		if (!nav->next && handle_else(nav, &i))
 			continue ;
 		i++;
 	}
@@ -135,7 +135,7 @@ t_error	split_spaces(t_block **head)
 		return (ERROR);
 	while (nav)
 	{
-		if (nav->type == RAW)
+		if (!nav->next || nav->type == RAW)
 			if (for_space(nav) == ERROR)
 				return (ERROR);
 		nav = nav->next;
