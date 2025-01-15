@@ -136,7 +136,7 @@ for_redir_o()			->
 for_space()			->
 fork_for_cmd()			->
 ft_err_msg()			->
-g_launch_builtins()		->
+launch_builtin()		->
 get_splash_screen_part1()	->	
 get_splash_screen_part2()	->	
 get_splash_screen_part3()	->	
