@@ -38,14 +38,15 @@ SRC_FIL	= 	minishell \
 			builtins/ms_export \
 			builtins/ms_pwd \
 			builtins/ms_unset \
+			exec/closers/closers \
+			exec/initialisers/initialisers \
+			exec/modifyers/modifyers \
 			exec/cmd_blocks \
 			exec/exec \
 			exec/exec_handlers \
 			exec/exec_preparations \
 			exec/file_openings \
 			exec/path_finder \
-			exec/closers/closers \
-			exec/initialisers/initialisers \
 			parsing/check_quotes \
 			parsing/check_not_dirfile \
 			parsing/lexing \
