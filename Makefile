@@ -39,6 +39,7 @@ SRC_FIL	= 	minishell \
 			builtins/ms_pwd \
 			builtins/ms_unset \
 			exec/closers/closers \
+			exec/fillers/fillers \
 			exec/initialisers/initialisers \
 			exec/modifyers/modifyers \
 			exec/cmd_blocks \
