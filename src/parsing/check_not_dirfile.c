@@ -43,14 +43,21 @@ int	check_if_dirfile_exist(char *path, t_mo_shell *mo_shell)
 	return (0);
 }
 
+t_error	init_check_nd(t_block **nav, int *cide_ret, t_block **head)
+{
+	*cide_ret = 0;
+	*nav = *head;
+	if (!*nav)
+		return (ERROR);
+	return (NO_ERROR);
+}
+
 int	check_not_dirfile(t_block **head, t_mo_shell *mo_shell)
 {
 	t_block	*nav;
 	int		cide_ret;
 
-	cide_ret = 0;
-	nav = *head;
-	if (!nav)
+	if (init_check_nd(&nav, &cide_ret, head) == ERROR)
 		return (0);
 	if (nav->prev && nav->prev->type != RAW)
 	{
@@ -65,14 +72,9 @@ int	check_not_dirfile(t_block **head, t_mo_shell *mo_shell)
 		nav = nav->next;
 		while (nav)
 		{
-			if (nav->prev->type != RAW)
-			{
-				if (ft_strchr(nav->str, '/'))
-				{
-					if (check_if_dirfile_exist(nav->str, mo_shell) == true)
-						return (1);
-				}
-			}
+			if (nav->prev->type != RAW && ft_strchr(nav->str, '/') && \
+				check_if_dirfile_exist(nav->str, mo_shell) == true)
+				return (1);
 			nav = nav->next;
 		}
 	}
