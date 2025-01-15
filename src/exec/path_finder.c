@@ -73,10 +73,7 @@ char	*get_path(char *cmd, char *envp[])
 		(free(part_path), part_path = NULL);
 		if (access(exec, F_OK | X_OK) == 0)
 			return (ft_free_tab(cmds_array), ft_free_tab(all_paths), exec);
-		free(exec);
-		i++;
+		(free(exec), i++);
 	}
-	ft_free_tab(cmds_array);
-	ft_free_tab(all_paths);
-	return (NULL);
+	return (ft_free_tab(cmds_array), ft_free_tab(all_paths), NULL);
 }
