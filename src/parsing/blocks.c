@@ -57,19 +57,19 @@ t_error	for_space(t_block *nav)
 	int	i;
 
 	i = 0;
-	while (nav->str[i] && !nav->next)
+	while (nav->str[i] && (!nav->next || nav->next->type == PIPE))
 	{
-		if (!nav->next && !ft_is_symbol(&nav->str[i]))
+		if ((!nav->next || nav->next->type == PIPE) && !ft_is_symbol(&nav->str[i]))
 		{
 			if (handle_no_symbols_no_ifs(nav, &i) == ERROR)
 				return (ERROR);
 			return (NO_ERROR);
 		}
-		if (!nav->next && handle_symbol_checks(nav, &i) == ERROR)
+		if ((!nav->next || nav->next->type == PIPE) && handle_symbol_checks(nav, &i) == ERROR)
 			return (ERROR);
-		if (!nav->next && !ft_is_ifs(nav->str[i]) && handle_ifs(nav, &i))
+		if ((!nav->next || nav->next->type == PIPE) && !ft_is_ifs(nav->str[i]) && handle_ifs(nav, &i))
 			break ;
-		if (!nav->next && handle_else(nav, &i))
+		if ((!nav->next || nav->next->type == PIPE) && handle_else(nav, &i))
 			continue ;
 		i++;
 	}
