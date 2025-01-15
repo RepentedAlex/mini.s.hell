@@ -26,8 +26,8 @@ t_error	init_min_env(t_mo_shell *mo_shell)
 	mo_shell->shell_env[0] = ft_strdup("PWD=");
 	mo_shell->shell_env[0] = append(mo_shell->shell_env[0], cwd, \
 		ft_strlen(cwd));
-	add_str_to_array(&mo_shell->shell_env, "SHLVL=1");
-	add_str_to_array(&mo_shell->shell_env, "_=/usr/bin/env");
+	add_str_to_ra(&mo_shell->shell_env, "SHLVL=1");
+	add_str_to_ra(&mo_shell->shell_env, "_=/usr/bin/env");
 	return (NO_ERROR);
 }
 
