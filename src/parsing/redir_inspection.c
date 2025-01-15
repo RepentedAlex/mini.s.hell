@@ -19,7 +19,7 @@ int	check_after_redir(char *str, int i)
 	{
 		if (str[i] == '\0')
 			return (2);
-		if (ft_isalpha(str[i]) == true)
+		if (ft_isalpha(str[i]))
 			return (0);
 		i++;
 	}
