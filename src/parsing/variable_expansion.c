@@ -93,21 +93,15 @@ char	*var_expander(char *ret, char *src, int *i, char *envp[])
 	char	var_name[1024];
 	int		j;
 
-	j = 0;
+	j = -1;
 	if (src && src[j] && ft_isdigit(src[j]))
 		return (*i += 1, ret);
-	while (src && src[j] && src[j] != '$' && (ft_isalnum(src[j]) || \
+	while (src && src[++j] && src[j] != '$' && (ft_isalnum(src[j]) || \
 		src[j] == '_'))
-	{
 		var_name[j] = src[j];
-		j++;
-	}
 	var_name[j] = '\0';
 	if (ft_strlen(var_name) == 0)
-	{
-		ret = append(ret, "$", 1);
-		return (ret);
-	}
+		return (ret = append(ret, "$", 1), ret);
 	var_content = get_var_content(var_name, envp);
 	if (!var_content)
 	{
