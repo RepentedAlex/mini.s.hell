@@ -79,10 +79,7 @@ int	handle_no_symbols_no_ifs(t_block *nav, int *i)
 	while ((nav->str[*i] && nav->str[*i] != '>' && nav->str[*i] != '<' && \
 		nav->str[*i] != '|' && !ft_is_ifs(nav->str[*i])) || \
 		(quotes && ft_is_ifs(nav->str[*i])))
-	{
-		check_in_quotes(nav->str[*i], &quotes);
-		(*i)++;
-	}
+		(check_in_quotes(nav->str[*i], &quotes), (*i)++);
 	if (!quotes && ft_is_ifs(nav->str[*i]))
 	{
 		nav->str[*i] = '\0';
@@ -97,8 +94,7 @@ int	handle_no_symbols_no_ifs(t_block *nav, int *i)
 	else if (nav->str[*i] == '>' || nav->str[*i] == '<')
 	{
 		tmp = block_new(&nav->str[*i]);
-		block_add_after(nav, tmp);
-		nav->str[*i] = '\0';
+		(block_add_after(nav, tmp), nav->str[*i] = '\0');
 	}
 	return (NO_ERROR);
 }
