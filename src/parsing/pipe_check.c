@@ -17,7 +17,7 @@ bool	check_after_pipe(char *str, int i)
 {
 	while (str[i])
 	{
-		if (ft_isalpha(str[i]) == true)
+		if (ft_isalpha(str[i]))
 			return (true);
 		i++;
 	}
@@ -28,7 +28,7 @@ bool	check_before_pipe(char *str, int i)
 {
 	while (i >= 0 && str[i] != '|')
 	{
-		if (ft_isalpha(str[i]) == true)
+		if (ft_isalpha(str[i]))
 			return (true);
 		i--;
 	}
