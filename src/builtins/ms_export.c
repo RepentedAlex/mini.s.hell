@@ -98,7 +98,7 @@ static	t_error	update_env_var(char *arg, char *var_name, t_mo_shell *shell)
 	strip_quotes(arg);
 	if (var_exst(var_name, shell->shell_env) == -1)
 	{
-		add_str_to_array(&shell->shell_env, arg);
+		add_str_to_ra(&shell->shell_env, arg);
 		if (!shell->shell_env)
 			return (ERROR);
 	}
