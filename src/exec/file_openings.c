@@ -33,7 +33,7 @@ int	numerator(char **filename)
 	{
 		num[1] = '0';
 		while (num[1] <= '9')
-{
+		{
 			num[2] = '0';
 			while (num[2] <= '9')
 			{
@@ -56,10 +56,6 @@ int	numerator(char **filename)
 	return (-1);
 }
 
-
-//TODO Rajouter mecanisme pour enlever les '$' situés avant des quotes
-//(s'il y a `$$"hola", on ne les enleve pas car on se base sur le premier '$'
-//de la séquence. Ca marche en paires, donc `$$$'hola' donnera $$hola`)
 char	*hd_unquote_string(char *str)
 {
 	int		i;
@@ -95,7 +91,6 @@ char	*hd_unquote_string(char *str)
 	if (!ret)
 		return (NULL);
 	return (ret);
-
 }
 
 char	*unquote_delimiter(char *str)
@@ -104,7 +99,6 @@ char	*unquote_delimiter(char *str)
 
 	tmp = NULL;
 	tmp = hd_unquote_string(str);
-	// free(str);
 	return (tmp);
 }
 
@@ -131,12 +125,11 @@ void	heredoc_filler(char *delimiter, int fd, t_mo_shell *mo_shell)
 		}
 		if (!delimiter[i])
 		{
-			delimiter = ft_strdup(delimiter); //Pour pouvoir free simplement, sinon ca fait un double free
+			delimiter = ft_strdup(delimiter);
 			break ;
 		}
 		i++;
 	}
-
 	while (1)
 	{
 		line = readline("> ");
@@ -144,29 +137,24 @@ void	heredoc_filler(char *delimiter, int fd, t_mo_shell *mo_shell)
 			break ;
 		if (line && expand_mode == true)
 		{
-			expanded_line = expand_variables(line, mo_shell->shell_env, mo_shell);
+			expanded_line = expand_variables(line, mo_shell->shell_env, \
+				mo_shell);
 			ft_putstr_fd(expanded_line, fd);
 			if (expanded_line)
-			{
-				free(expanded_line);
-				expanded_line = NULL;
-			}
+				(free(expanded_line), expanded_line = NULL);
 		}
 		else
-		{
 			ft_putstr_fd(line, fd);
-		}
 		ft_putstr_fd("\n", fd);
 	}
 	if (line)
 		(free(line), line = NULL);
-	if (expanded_line)
-		(free(expanded_line), expanded_line = NULL);
 	free(delimiter);
 	delimiter = NULL;
 }
 
-void	heredoc_handler(t_block *nav_block, t_cmd *nav_cmd, t_mo_shell *mo_shell)
+void	heredoc_handler(t_block *nav_block, t_cmd *nav_cmd, t_mo_shell \
+	*mo_shell)
 {
 	char	*heredoc_name;
 
@@ -187,7 +175,8 @@ void	heredoc_handler(t_block *nav_block, t_cmd *nav_cmd, t_mo_shell *mo_shell)
  * @param mode 
  * @return 
  */
-t_error	open_file_in(t_block *nav_block, t_cmd *nav_cmd, int mode, t_mo_shell *mo_shell)
+t_error	open_file_in(t_block *nav_block, t_cmd *nav_cmd, int mode, t_mo_shell \
+	*mo_shell)
 {
 	if (mode == 1)
 	{
@@ -201,7 +190,6 @@ t_error	open_file_in(t_block *nav_block, t_cmd *nav_cmd, int mode, t_mo_shell *m
 	{
 		if (nav_cmd->fd_i != STDIN_FILENO)
 			(close(nav_cmd->fd_i), nav_cmd->fd_i = STDIN_FILENO);
-		//TODO Fill heredoc
 		heredoc_handler(nav_block, nav_cmd, mo_shell);
 	}
 	return (NO_ERROR);
@@ -218,7 +206,8 @@ t_error	open_file_out(t_block *nav_block, t_cmd *nav_cmd, int mode)
 	{
 		if (nav_cmd->fd_o != STDOUT_FILENO)
 			(close(nav_cmd->fd_o), nav_cmd->fd_o = STDOUT_FILENO);
-		nav_cmd->fd_o = open(nav_block->str, O_RDWR | O_CREAT | O_TRUNC, 0666);
+		nav_cmd->fd_o = open(nav_block->str, O_RDWR | O_CREAT | O_TRUNC, \
+			0666);
 		if (nav_cmd->fd_o < 0)
 			return (ERROR);
 		write(nav_cmd->fd_o, "", 1);
@@ -227,14 +216,16 @@ t_error	open_file_out(t_block *nav_block, t_cmd *nav_cmd, int mode)
 	{
 		if (nav_cmd->fd_o != STDOUT_FILENO)
 			(close(nav_cmd->fd_o), nav_cmd->fd_o = STDOUT_FILENO);
-		nav_cmd->fd_o = open(nav_block->str, O_RDWR | O_APPEND | O_CREAT, 0666);
+		nav_cmd->fd_o = open(nav_block->str, O_RDWR | O_APPEND | O_CREAT, \
+			0666);
 		if (nav_cmd->fd_o < 0)
 			return (ERROR);
 	}
 	return (NO_ERROR);
 }
 
-t_error	open_redir_i(t_cmd **cmd_head, t_block **block_head, t_mo_shell *mo_shell)
+t_error	open_redir_i(t_cmd **cmd_head, t_block **block_head, t_mo_shell \
+	*mo_shell)
 {
 	t_block	*nav_block;
 	t_cmd	*nav_cmd;
@@ -249,13 +240,15 @@ t_error	open_redir_i(t_cmd **cmd_head, t_block **block_head, t_mo_shell *mo_shel
 		{
 			nav_block = nav_block->next;
 			if (open_file_in(nav_block, nav_cmd, 1, mo_shell) == ERROR)
-				return (ft_putstr_fd("No such file or directory\n", STDERR_FILENO), ERROR);
+				return (ft_putstr_fd("No such file or directory\n", \
+					STDERR_FILENO), ERROR);
 		}
 		else if (nav_block->type == HEREDOC)
 		{
 			nav_block = nav_block->next;
 			if (open_file_in(nav_block, nav_cmd, 2, mo_shell) == ERROR)
-				return (ft_putstr_fd("No such file or directory\n", STDERR_FILENO), ERROR);
+				return (ft_putstr_fd("No such file or directory\n", \
+					STDERR_FILENO), ERROR);
 		}
 		nav_block = nav_block->next;
 	}

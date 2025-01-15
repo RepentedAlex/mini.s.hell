@@ -13,7 +13,7 @@
 #include "minishell.h"
 #include <libft.h>
 
-t_error handle_ap(t_block *nav, int *i)
+t_error	handle_ap(t_block *nav, int *i)
 {
 	t_block	*tmp;
 
@@ -66,7 +66,7 @@ int	handle_else(t_block *nav, int *i)
 	return (1);
 }
 
-t_error handle_hd(t_block *nav, int *i)
+t_error	handle_hd(t_block *nav, int *i)
 {
 	t_block	*tmp;
 

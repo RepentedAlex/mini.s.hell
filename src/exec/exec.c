@@ -90,7 +90,7 @@ void	handler_dup2(t_cmd *to_launch, t_pipes *pipes)
 /// @param to_launch The current command we want to execute.
 /// @param pipes The current pipe.
 /// @param envp The environment variables
-int child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
+int	child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 {
 	handler_dup2(to_launch, pipes);
 	execve(to_launch->cmd, to_launch->args, envp);
@@ -100,15 +100,17 @@ int child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
 	exit(127);
 }
 
-int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell, int mode)
+int	child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell, \
+	int mode)
 {
 	int	(*f_builtin)(char **, t_mo_shell *mo_shell, t_cmd *cmd);
+
 	if (mode == 1 && ft_strcmp(to_launch->cmd, "exit") == 0)
 		mode = 0;
 	if (mode == 0)
 	{
 		handler_dup2(to_launch, pipes);
-		f_builtin = (g_launch_builtins(to_launch));
+		f_builtin = (launch_builtin(to_launch));
 		if (f_builtin(to_launch->args, mo_shell, to_launch) == 0)
 			exit(EXIT_SUCCESS);
 		exit(EXIT_FAILURE);
@@ -116,13 +118,14 @@ int child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell, int
 	if (mode == 1)
 	{
 		handler_dup2(to_launch, pipes);
-		f_builtin = (g_launch_builtins(to_launch));
-		mo_shell->last_exit_status = f_builtin(to_launch->args, mo_shell, to_launch);
+		f_builtin = (launch_builtin(to_launch));
+		mo_shell->last_exit_status = f_builtin(to_launch->args, mo_shell, \
+			to_launch);
 		if (mo_shell->last_exit_status == 0)
 			return (EXIT_SUCCESS);
 		return (mo_shell->last_exit_status);
 	}
-	 return (EXIT_FAILURE);
+	return (EXIT_FAILURE);
 }
 
 /// @brief Runs a command that is not builtin into the shell.
@@ -136,7 +139,8 @@ int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 	int		ret;
 
 	ret = mo_shell->last_exit_status;
-	if (is_builtin(to_launch->cmd) == true && !to_launch->prev && !to_launch->next)
+	if (is_builtin(to_launch->cmd) == true && !to_launch->prev && \
+		!to_launch->next)
 	{
 		ret = child_process_bi(to_launch, pipes_array, mo_shell, 1);
 	}
@@ -157,6 +161,28 @@ int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 	return (ret);
 }
 
+t_error	wait_for_processes(t_pids *pids_array)
+{
+	int	i;
+	int	status;
+	int	exit_status;
+
+	exit_status = 0;
+	i = 0;
+	while (i <= pids_array->pid_i)
+	{
+		if (pids_array->pid[i])
+		{
+			if (waitpid(pids_array->pid[i], &status, 0) == -1)
+				(perror("waitpid"), exit(EXIT_FAILURE));
+			if (WIFEXITED(status))
+				exit_status = WEXITSTATUS(status);
+		}
+		i++;
+	}
+	return (exit_status);
+}
+
 /// @brief Handles the execution of the commands, from left to right.
 /// @param mo_shell The Mother_Shell structure.
 int	execution_sequence(t_mo_shell *mo_shell)
@@ -164,14 +190,10 @@ int	execution_sequence(t_mo_shell *mo_shell)
 	t_cmd	*to_launch;
 	t_pipes	pipes_array;
 	t_pids	pids_array;
-	int		i;
-	int		status;
-	int		exit_status;
 
 	to_launch = mo_shell->cmds_table;
 	ft_memset(pids_array.pid, 0, sizeof(pids_array.pid));
 	ft_memset(pipes_array.pipe, -1, sizeof(pipes_array.pipe));
-	exit_status = mo_shell->last_exit_status;
 	pipes_array.pipe_i = -1;
 	pids_array.pid_i = -1;
 	to_launch->cp_i = dup(STDIN_FILENO);
@@ -186,9 +208,10 @@ int	execution_sequence(t_mo_shell *mo_shell)
 			continue ;
 		}
 		if (to_launch->next)
-			if (pipe(pipes_array.pipe[pipes_array.pipe_i]) == -1) //If pipe() fails
+			if (pipe(pipes_array.pipe[pipes_array.pipe_i]) == -1)
 				(perror("pipe error"), exit(EXIT_FAILURE));
-		exit_status = fork_for_cmd(mo_shell, to_launch, &pipes_array, &pids_array);
+		mo_shell->last_exit_status = fork_for_cmd(mo_shell, to_launch, \
+			&pipes_array, &pids_array);
 		if (to_launch->prev)
 		{
 			if (pipes_array.pipe[pipes_array.pipe_i - 1][0] != -1)
@@ -205,19 +228,7 @@ int	execution_sequence(t_mo_shell *mo_shell)
 		if (pipes_array.pipe[pipes_array.pipe_i][1] != -1)
 			close(pipes_array.pipe[pipes_array.pipe_i][1]);
 	}
-	i = 0;
-	while (i <= pids_array.pid_i)
-	{
-		if (pids_array.pid[i])
-		{
-			if (waitpid(pids_array.pid[i], &status, 0) == -1)
-				(perror("waitpid"), exit(EXIT_FAILURE));
-			if (WIFEXITED(status))
-				exit_status = WEXITSTATUS(status);
-		}
-		i++;
-	}
-	mo_shell->last_exit_status = exit_status;
+	mo_shell->last_exit_status = wait_for_processes(&pids_array);
 	return (mo_shell->last_exit_status);
 }
 

@@ -69,7 +69,8 @@ char	*get_var_content(char *var_name, char **env)
 	i = 0;
 	if (var_name[0] == '\0')
 		return (NULL);
-	while (env && env[i] && (ft_strncmp(var_name, env[i], ft_strlen(var_name) + 1) != ('\0' - '=')))
+	while (env && env[i] && (ft_strncmp(var_name, env[i], \
+		ft_strlen(var_name) + 1) != ('\0' - '=')))
 		i++;
 	if (env[i] == NULL)
 		return (NULL);
@@ -95,7 +96,8 @@ char	*var_expander(char *ret, char *src, int *i, char *envp[])
 	j = 0;
 	if (src && src[j] && ft_isdigit(src[j]))
 		return (*i += 1, ret);
-	while (src && src[j] && src[j] != '$' && (ft_isalnum(src[j]) || src[j] == '_'))
+	while (src && src[j] && src[j] != '$' && (ft_isalnum(src[j]) || \
+		src[j] == '_'))
 	{
 		var_name[j] = src[j];
 		j++;

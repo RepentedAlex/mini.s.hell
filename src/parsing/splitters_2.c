@@ -42,7 +42,7 @@ int	handle_quotes(t_block *nav, int *i)
 	return (1);
 }
 
-t_error handle_ro(t_block *nav, int *i)
+t_error	handle_ro(t_block *nav, int *i)
 {
 	t_block	*tmp;
 

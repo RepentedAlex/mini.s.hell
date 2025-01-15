@@ -72,9 +72,9 @@ t_error	splitter(t_mo_shell *mo_shell);
 int		var_exst(char *var, char *envp[]);
 char	*var_expander(char *ret, char *src, int *i, char *envp[]);
 
-int check_not_dirfile(t_block **head, t_mo_shell *mo_shell);
+int		check_not_dirfile(t_block **head, t_mo_shell *mo_shell);
 
-int check_if_dirfile_exist(char *path, t_mo_shell *mo_shell);
+int		check_if_dirfile_exist(char *path, t_mo_shell *mo_shell);
 t_error	check_open_quotes(const char *str);
 char	**copy_env(char **envp);
 int		count_leading_whitespace(const char *str);
@@ -119,9 +119,11 @@ void	execute_cl(t_mo_shell *mo_shell);
 char	*get_path(char *cmd, char *envp[]);
 void	setup_redirs(t_cmd *to_launch, t_pipes *pipes, int mode);
 
-t_error fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head);
-t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head, t_mo_shell *mo_shell);
-t_error	open_redir_i(t_cmd **cmd_head, t_block **block_head, t_mo_shell *mo_shell);
+t_error	fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head);
+t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head, t_mo_shell \
+	*mo_shell);
+t_error	open_redir_i(t_cmd **cmd_head, t_block **block_head, t_mo_shell \
+	*mo_shell);
 t_error	open_redir_o(t_cmd **cmd_head, t_block **block_head);
 t_error	pipeline_setup(t_mo_shell *mo_shell);
 void	setup_pipes(t_cmd **cmd_head);
@@ -132,7 +134,8 @@ void	close_fds(t_cmd **head);
 
 // file descriptors
 t_error	open_file_out(t_block *nav_block, t_cmd *nav_cmd, int mode);
-t_error	open_file_in(t_block *nav_block, t_cmd *nav_cmd, int mode, t_mo_shell *mo_shell);
+t_error	open_file_in(t_block *nav_block, t_cmd *nav_cmd, int mode, t_mo_shell \
+	*mo_shell);
 
 // ft_is
 bool	ft_is_alpha(const char c);
@@ -169,19 +172,19 @@ t_error	lexcat_redir_o(t_block **head);
 void	signals(void);
 
 // splitters
-t_error handle_ap(t_block *nav, int *i);
+t_error	handle_ap(t_block *nav, int *i);
 int		handle_else(t_block *nav, int *i);
 
-t_error handle_hd(t_block *nav, int *i);
+t_error	handle_hd(t_block *nav, int *i);
 int		handle_ifs(t_block *nav, int *i);
 int		handle_quotes(t_block *nav, int *i);
 int		handle_ri(t_block *nav, int *i);
 
-t_error handle_ro(t_block *nav, int *i);
+t_error	handle_ro(t_block *nav, int *i);
 int		handle_no_symbols_no_ifs(t_block *nav, int *i);
 
 // utilitaries
-t_error add_str_to_array(char ***array, char *str);
+t_error	add_str_to_array(char ***array, char *str);
 bool	ft_string_is_only_ifs(char *str);
 bool	is_valid_variable_name(char *vr_name);
 

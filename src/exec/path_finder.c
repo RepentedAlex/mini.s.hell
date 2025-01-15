@@ -66,7 +66,6 @@ char	*get_path(char *cmd, char *envp[])
 		return (NULL);
 	*cmds_array = ft_strdup(cmd);
 	cmds_array[1] = NULL;
-	// cmds_array = ft_split(cmd, ' ');
 	while (all_paths && all_paths[i])
 	{
 		part_path = ft_strjoin(all_paths[i], "/");

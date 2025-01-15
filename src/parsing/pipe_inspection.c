@@ -32,7 +32,7 @@ bool	look_for_pipes(t_block **head)
 	return (false);
 }
 
-t_error for_pipe(t_block **head, t_block **nav)
+t_error	for_pipe(t_block **head, t_block **nav)
 {
 	int		i;
 	t_block	*tmp;

@@ -84,7 +84,8 @@ char	*unquote_string(char *str)
 			continue ;
 		}
 		check_in_quotes(str[i], &quotes);
-		if (!quotes || (quotes == 1 && str[i] != '\'') || (quotes == 2 && str[i] != '\"') || (str[i] != '\'' && str[i] != '"'))
+		if (!quotes || (quotes == 1 && str[i] != '\'') || (quotes == 2 && \
+			str[i] != '\"') || (str[i] != '\'' && str[i] != '"'))
 		{
 			tmp[j] = str[i];
 			j++;
@@ -158,7 +159,7 @@ char	*exp_for_hd(char *src)
 	return (ret);
 }
 
-t_error new_expand_variables(t_block **head, t_mo_shell *mo_shell)
+t_error	new_expand_variables(t_block **head, t_mo_shell *mo_shell)
 {
 	t_block	*nav;
 	char	*tmp;
@@ -200,7 +201,7 @@ token '|'\n"), mo_shell->last_exit_status = 2, ERROR);
 	if (split_spaces(&mo_shell->splitted_input) == ERROR)
 		return (mo_shell->last_exit_status = 2, ERROR);
 	clean_empty_nodes(&mo_shell->splitted_input);
-	if (lexcat_redir_handler(&mo_shell->splitted_input) == ERROR) //Surely redundant
+	if (lexcat_redir_handler(&mo_shell->splitted_input) == ERROR)
 		return (ERROR);
 	if (check_not_dirfile(&mo_shell->splitted_input, mo_shell) != 0)
 		return (ERROR);
