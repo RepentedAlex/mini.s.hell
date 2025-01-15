@@ -199,7 +199,7 @@ int		handle_no_symbols_no_ifs(t_block *nav, int *i);
 // utilitaries
 t_error	add_str_to_ra(char ***array, char *str);
 // variables expansion
-char	*expand_variables(char *src, char *envp[], t_mo_shell *mo_shell);
+char	*expand_variables(char *src, t_mo_shell *mo_shell);
 void	hdus_handle_dollar(char *str, char *tmp, int *i, int *j);
 ////////////////////////////////////////////////////////////////////////////////
 

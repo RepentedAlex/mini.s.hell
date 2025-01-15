@@ -52,7 +52,7 @@ char	*unquote_delimiter(char *str)
 
 void	expand_hd_i(int fd, t_mo_shell *mo_shell, char *line, char **expdd_line)
 {
-	*expdd_line = expand_variables(line, mo_shell->shell_env, mo_shell);
+	*expdd_line = expand_variables(line, mo_shell);
 	ft_putstr_fd(*expdd_line, fd);
 	if (*expdd_line)
 		(free(*expdd_line), *expdd_line = NULL);

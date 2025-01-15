@@ -23,7 +23,7 @@ t_error	new_expand_variables(t_block **head, t_mo_shell *mo_shell)
 	{
 		if (nav->type != EOFHD)
 		{
-			tmp = expand_variables(nav->str, mo_shell->shell_env, mo_shell);
+			tmp = expand_variables(nav->str, mo_shell);
 			if (!tmp)
 				return (ERROR);
 			free(nav->str);

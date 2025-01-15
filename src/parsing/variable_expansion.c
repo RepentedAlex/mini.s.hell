@@ -90,11 +90,11 @@ char	*get_var_content(char *var_name, char **env)
 char	*var_expander(char *ret, char *src, int *i, char *envp[])
 {
 	char	*var_content;
-	char	var_name[1024];
+	char	var_name[DEF_BUF_SIZ];
 	int		j;
 
 	j = -1;
-	if (src && src[j] && ft_isdigit(src[j]))
+	if (src && src[0] && ft_isdigit(src[0]))
 		return (*i += 1, ret);
 	while (src && src[++j] && src[j] != '$' && (ft_isalnum(src[j]) || \
 		src[j] == '_'))
@@ -125,64 +125,95 @@ char	*str_init(void)
 	return (ret);
 }
 
+void	init_les(char **les, size_t *les_len, t_mo_shell *mo_shell)
+{
+	*les = ft_itoa(mo_shell->last_exit_status);
+		if (!*les)
+			*les = 0;
+		*les_len = ft_strlen(*les);
+}
+
+int	get_var_len(char *src, t_mo_shell *mo_shell)
+{
+	int	i;
+	int	ret;
+	char	var_name[DEF_BUF_SIZ];
+	char	*var_content;
+
+	ft_bzero(var_name, DEF_BUF_SIZ);
+	var_content = NULL;
+	i = 0;
+	while (src && src[i] && (ft_isalnum(src[i]) || src[i] == '_'))
+	{
+		var_name[i] = src[i];
+		i++;
+	}
+	var_content = get_var_content(var_name, mo_shell->shell_env);
+	if (!var_content)
+		return (0);
+	ret = ft_strlen(var_content);
+	free(var_content);
+	return (ret);
+}
+
+/// @brief 
+/// @param src
+/// @param ret 
+/// @param mo_shell 
+/// @param les 
+/// @return 
+int make_expansion(char *src, char **ret, t_mo_shell *mo_shell, char **les)
+{
+	size_t	les_len;
+	int		res;
+	int		i;
+
+	i = 1;
+	res = 0;
+	init_les(les, &les_len, mo_shell);
+	if (!src[i] || src[i] == '\'' || src[i] == '"')
+		return (*ret = append(*ret, "$", 1), 0);
+	if (ft_is_ifs(src[i]) == true)
+		return (*ret = append(*ret, "$ ", 2), 1);
+	if (src[i] == '\'' || src[i] == '\"')
+		return (0);
+	if (src[i] == '$')
+		return (*ret = append(*ret, "$$", 2), 1);
+	if (src[i] == '?')
+		return (*ret = append(*ret, *les, les_len), ((int)les_len - 1));
+	// res = get_var_len(&src[i], mo_shell);
+	*ret = var_expander(*ret, &src[i], &res, mo_shell->shell_env);
+	return(res);
+}
+
 /// @brief Takes a string and check if there are variables that
 /// should be expanded
 /// @param src The source string.
-/// @param envp The environment variables.
 /// @param mo_shell
-char	*expand_variables(char *src, char *envp[], t_mo_shell *mo_shell)
+char	*expand_variables(char *src, t_mo_shell *mo_shell)
 {
-	int		i;
 	char	*ret;
-	int		quotes;
-	size_t	les_len;
 	char	*les;
+	int		i;
+	int		quotes;
 
-	les = ft_itoa(mo_shell->last_exit_status);
-	if (!les)
-		les = 0;
-	les_len = ft_strlen(les);
+	les = NULL;
 	ret = str_init();
 	quotes = 0;
-	i = 0;
-	while (src[i])
+	i = -1;
+	while (src && src[++i])
 	{
 		check_in_quotes(src[i], &quotes);
-		if (quotes != 1 && '$' == src[i])
-		{
-			i++;
-			if (ft_is_ifs(src[i]) == true)
-			{
-				ret = append(ret, "$ ", 2);
-				i++;
-				continue ;
-			}
-			if (src[i] == '\'' || src[i] == '\"')
-			{
-				i++;
-				continue ;
-			}
-			if (src[i] == '$')
-			{
-				ret = append(ret, "$$", 2);
-				i++;
-			}
-			else if (src[i] == '?')
-			{
-				ret = append(ret, les, les_len);
-				i++;
-			}
-			else
-				ret = var_expander(ret, &src[i], &i, envp);
-		}
+		if (quotes != 1 && src[i] == '$')
+			i += make_expansion(&src[i], &ret, mo_shell, &les);
 		else
 		{
 			ret = append(ret, &src[i], 1);
 			if (!ret)
-				return (NULL);
-			i++;
+				return (free(les), NULL);
 		}
 	}
-	free(les);
+	if (les)
+		free(les);
 	return (ret);
 }
