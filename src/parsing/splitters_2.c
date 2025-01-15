@@ -47,25 +47,14 @@ t_error	handle_ro(t_block *nav, int *i)
 	t_block	*tmp;
 
 	nav->type = REDIR_O;
-	tmp = block_new(&nav->str[1]);
+	(*i) += 1;
+	while (ft_is_ifs(nav->str[*i]))
+		(*i)++;
+	tmp = block_new(&nav->str[*i]);
 	if (!tmp)
 		return (ERROR);
 	tmp->type = OUTFILE;
 	block_add_after(nav, tmp);
-	*i = 1;
-	while (nav->str[*i] && nav->str[*i] != ' ' && nav->str[*i] != '\t' && \
-		nav->str[*i] != '\n' && nav->str[*i] != '<' && nav->str[*i] != '>')
-		(*i)++;
-	if (nav->str[*i])
-	{
-		tmp = block_new(&nav->str[*i]);
-		if (!tmp)
-			return (ERROR);
-		tmp->type = RAW;
-		block_add_after(nav->next, tmp);
-		nav->str[1] = '\0';
-		nav->next->str[*i - 1] = '\0';
-	}
 	nav->str[1] = '\0';
 	return (NO_ERROR);
 }
