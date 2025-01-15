@@ -10,86 +10,104 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/minishell.h"
-#include "../../../Libft/include/libft.h"
-
-size_t	ft_hash_djb2(const void *key, size_t size)
-{
-	unsigned char	*str;
-	size_t			hash;
-
-	hash = 5381;
-	str = (unsigned char *)key;
-	while (size--)
-		hash = (hash << 5) + hash + str[size];
-	return (hash);
-}
-
-char	*create_hd_fnm(const t_cmd *cmd)
-{
-	size_t	hash;
-	char	*path;
-	char	*hdoc_id;
-
-	hdoc_id = NULL;
-	path = ft_strdup("/tmp/heredoc");
-	hash = ft_hash_djb2((const void *)cmd, ft_strlen((char *)cmd));
-	hdoc_id = (char *)malloc(sizeof(char) * 3);
-	if (!hdoc_id)
-		return (NULL);
-	hdoc_id[0] = (char)((char)hash % 256);
-	hdoc_id[1] = (char)((char)hash % 100);
-	hdoc_id[2] = '\0';
-	return (append(path, hdoc_id, 1));
-}
+#include "minishell.h"
+#include <libft.h>
 
 /**
- * @brief Checks if the word is quoted and unquotes it necessary, otherwise
- * it expands the word if pertinent.
+ * @brief
  *
- * @param str The heredoc's word.
- * @param envp The environment variables.
- * @param mo_shell The mo_shell structure.
+ * @return
  */
-void	heredoc_expand_word(char *str, char *envp[], t_mo_shell *mo_shell)
+int	numerator(char **filename)
 {
+	char	*num;
+	int		fd;
+
+	fd = -1;
+	num = (char *)malloc(sizeof(char) * 4);
+	if (!num)
+		return (-1);
+	ft_memset(num, '\0', 4);
+	fd = gen_number(num, filename);
+	if (fd == -1)
+		return (free(num), -1);
+	return (fd);
+}
+
+void	hdus_handle_dollar(char *str, char *tmp, int *i, int *j)
+{
+	if (str[(*i) + 1] == '$')
+	{
+		tmp[(*j)++] = '$';
+		tmp[(*j)++] = '$';
+		(*i) += 2;
+	}
+	else if (str[(*i) + 1] == '\'' || str[(*i) + 1] == '\"')
+		(*i)++;
+}
+
+void	handle_unquote_delim(char **delimiter, bool *expand_mode)
+{
+	int		i;
 	char	*tmp;
 
-	tmp = expand_variables(str, envp, mo_shell);
-	free(str);
-	str = tmp;
 	tmp = NULL;
+	i = 0;
+	while (true)
+	{
+		if ((*delimiter)[i] == '\'' || (*delimiter)[i] == '\"')
+		{
+			*expand_mode = false;
+			tmp = unquote_delimiter(*delimiter);
+			*delimiter = tmp;
+			break ;
+		}
+		if (!(*delimiter)[i])
+		{
+			*delimiter = ft_strdup(*delimiter);
+			break ;
+		}
+		i++;
+	}
 }
 
-/**
- * @brief Handles the heredoc.
- *
- * @param block The current t_block node we're on.
- * @param cmd The current t_cmd node we're on.
- * @param envp The environment variables.
- */
-int	heredoc(t_block *block, t_cmd *cmd, t_mo_shell *mo_shell)
+void	heredoc_filler(char *delimiter, int fd, t_mo_shell *mo_shell)
 {
-	int		hd_fd;
 	char	*line;
-	bool	quoted_word;
+	char	*expanded_line;
+	bool	expand_mode;
 
-	if (!block->str)
-		ft_putstr_fd("Invalid word\n", 2);
-	quoted_word = check_if_word_is_quoted(block->str);
-	if (quoted_word)
-		block->str = remove_quotes(block->str);
-	else
-		heredoc_expand_word(block->str, mo_shell->shell_env, NULL);
-	hd_fd = open(create_hd_fnm(cmd), O_CREAT | O_RDWR | O_TRUNC, 0666);
+	line = NULL;
+	expanded_line = NULL;
+	expand_mode = true;
+	handle_unquote_delim(&delimiter, &expand_mode);
 	while (1)
 	{
 		line = readline("> ");
-		if (ft_strcmp(line, block->str) == 0)
+		if (ft_strcmp(delimiter, line) == 0)
 			break ;
-		write(hd_fd, line, ft_strlen(line));
-		write(hd_fd, "\n", 1);
+		if (line && expand_mode == true)
+			expand_hd_i(fd, mo_shell, line, &expanded_line);
+		else
+			ft_putstr_fd(line, fd);
+		ft_putstr_fd("\n", fd);
 	}
-	cmd->fd_i = hd_fd;
-	return (hd_fd);
+	if (line)
+		(free(line), line = NULL);
+	free(delimiter);
+	delimiter = NULL;
+}
+
+void	heredoc_handler(t_block *nav_block, t_cmd *nav_cmd, t_mo_shell \
+	*mo_shell)
+{
+	char	*heredoc_name;
+
+	(void)nav_block;
+	heredoc_name = NULL;
+	nav_cmd->fd_i = numerator(&heredoc_name);
+	heredoc_filler(nav_block->str, nav_cmd->fd_i, mo_shell);
+	close(nav_cmd->fd_i);
+	open(heredoc_name, O_RDONLY);
+	free(heredoc_name);
 }
