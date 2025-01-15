@@ -12,6 +12,25 @@
 
 #include "minishell.h"
 
+int	check_input(t_mo_shell *mo_shell)
+{
+	if (!mo_shell->og_input)
+		return (0);
+	if (mo_shell->og_input[0] == '!' && !mo_shell->og_input[1])
+	{
+		mo_shell->last_exit_status = 1;
+		return (1);
+	}
+	if (mo_shell->og_input[0] == '\0' || !words_in_str(mo_shell->og_input))
+	{
+		mo_shell->last_exit_status = 0;
+		return (1);
+	}
+	if (*mo_shell->og_input)
+		add_history(mo_shell->og_input);
+	return (2);
+}
+
 bool	words_in_str(char *str)
 {
 	int		i;

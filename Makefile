@@ -65,6 +65,7 @@ SRC_FIL	= 	minishell \
 			utilitaries/ft_split \
 			utilitaries/ft_str \
 			utilitaries/ft_strnjoin \
+			utilitaries/initialisers \
 			utilitaries/splash_screen \
 			utilitaries/utils1
 

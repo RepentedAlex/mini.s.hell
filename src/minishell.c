@@ -15,25 +15,6 @@
 
 pid_t	g_signal_pid;
 
-static int	handle_input(t_mo_shell *mo_shell)
-{
-	if (!mo_shell->og_input)
-		return (0);
-	if (mo_shell->og_input[0] == '!' && !mo_shell->og_input[1])
-	{
-		mo_shell->last_exit_status = 1;
-		return (1);
-	}
-	if (mo_shell->og_input[0] == '\0' || !words_in_str(mo_shell->og_input))
-	{
-		mo_shell->last_exit_status = 0;
-		return (1);
-	}
-	if (*mo_shell->og_input)
-		add_history(mo_shell->og_input);
-	return (2);
-}
-
 /// @brief The main mini.s.hell function ! :D
 /// @param argc The number of arguments passed via the CLI.
 /// @param argv The arguments passed via the CLI.
@@ -49,7 +30,7 @@ int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 		garbage_collect(mo_shell, 0);
 		g_signal_pid = 0;
 		mo_shell->og_input = readline(PROMPT);
-		if (!handle_input(mo_shell))
+		if (!check_input(mo_shell))
 			break ;
 		g_signal_pid = 1;
 		if (parsing(mo_shell) == ERROR || execution(mo_shell) == ERROR)
@@ -59,45 +40,13 @@ int	mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell)
 	return (ft_putstr_fd("exit\n", STDOUT_FILENO), EXIT_SUCCESS);
 }
 
-t_error	init_shell(void)
-{
-	int	shell_terminal;
-	int	shell_is_interactive;
-
-	shell_terminal = STDIN_FILENO;
-	shell_is_interactive = 0;
-	shell_is_interactive = isatty(shell_terminal);
-	if (shell_is_interactive == 1)
-		return (NO_ERROR);
-	return (ERROR);
-}
-
-//Cree un PWD si minishell est lancé sans environnement
-t_error	create_minimal_env(t_mo_shell *mo_shell)
-{
-	char	*cwd;
-
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		return (ERROR);
-	(void)mo_shell;
-	mo_shell->shell_env = NULL;
-	mo_shell->shell_env = (char **)malloc(sizeof(char *));
-	mo_shell->shell_env[0] = ft_strdup("PWD=");
-	mo_shell->shell_env[0] = append(mo_shell->shell_env[0], cwd, \
-		ft_strlen(cwd));
-	add_str_to_array(&mo_shell->shell_env, "SHLVL=1");
-	add_str_to_array(&mo_shell->shell_env, "_=/usr/bin/env");
-	return (NO_ERROR);
-}
-
 int	main(const int argc, char *argv[], char *envp[])
 {
 	t_mo_shell	mo_shell;
 
 	mo_shell.shell_env = NULL;
 	if (envp[0] == NULL)
-		create_minimal_env(&mo_shell);
+		init_min_env(&mo_shell);
 	else
 	{
 		mo_shell.shell_env = copy_env(envp);

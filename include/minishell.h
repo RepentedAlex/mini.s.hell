@@ -66,7 +66,12 @@ int		mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell);
 t_error	parsing(t_mo_shell *mo_shell);
 
 ///CHECKERS/////////////////////////////////////////////////////////////////////
+int		check_input(t_mo_shell *mo_shell);
 bool	words_in_str(char *str);
+
+///INITIALISERS/////////////////////////////////////////////////////////////////
+t_error	init_min_env(t_mo_shell *mo_shell);
+t_error	init_shell(void);
 
 // parsing
 t_error	splitter(t_mo_shell *mo_shell);
