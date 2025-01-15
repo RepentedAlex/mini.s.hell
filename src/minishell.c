@@ -15,26 +15,6 @@
 
 pid_t	g_signal_pid;
 
-bool	words_in_str(char *str)
-{
-	int		i;
-	int		flag;
-
-	i = 0;
-	flag = 0;
-	while (str[i])
-	{
-		if (str[i] == ':' && flag == 0)
-			flag = 1;
-		else if (str[i] == ':' && flag == 1)
-			return (true);
-		if (str[i] != ':')
-			return (true);
-		i++;
-	}
-	return (false);
-}
-
 static int	handle_input(t_mo_shell *mo_shell)
 {
 	if (!mo_shell->og_input)
@@ -102,8 +82,6 @@ t_error	create_minimal_env(t_mo_shell *mo_shell)
 		return (ERROR);
 	(void)mo_shell;
 	mo_shell->shell_env = NULL;
-	//Exporter variable PWD
-	// ms_export();
 	mo_shell->shell_env = (char **)malloc(sizeof(char *));
 	mo_shell->shell_env[0] = ft_strdup("PWD=");
 	mo_shell->shell_env[0] = append(mo_shell->shell_env[0], cwd, \
@@ -134,7 +112,7 @@ int	main(const int argc, char *argv[], char *envp[])
 	mo_shell.expanded_input = NULL;
 	mo_shell.splitted_input = NULL;
 	mo_shell.cmds_table = NULL;
-	// if (init_shell() == ERROR)
-		// return (ERROR);
+	if (init_shell() == ERROR)
+		return (ERROR);
 	return (mini_s_hell(argc, argv, envp, &mo_shell));
 }

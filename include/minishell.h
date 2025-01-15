@@ -61,10 +61,12 @@ typedef bool	t_error;
 
 // == == == FONCTIONS == == ==
 
-// mini.s.hell
+///MAIN BLOCKS//////////////////////////////////////////////////////////////////
 int		mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell);
-
 t_error	parsing(t_mo_shell *mo_shell);
+
+///CHECKERS/////////////////////////////////////////////////////////////////////
+bool	words_in_str(char *str);
 
 // parsing
 t_error	splitter(t_mo_shell *mo_shell);

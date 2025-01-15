@@ -60,6 +60,7 @@ SRC_FIL	= 	minishell \
 			redirections/heredocs/heredoc_utils \
 			signals/signals \
 			utilitaries/block_nodes \
+			utilitaries/checkers \
 			utilitaries/ft_is \
 			utilitaries/ft_split \
 			utilitaries/ft_str \
