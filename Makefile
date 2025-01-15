@@ -40,9 +40,12 @@ SRC_FIL	= 	minishell \
 			builtins/ms_unset \
 			exec/cmd_blocks \
 			exec/exec \
+			exec/exec_handlers \
 			exec/exec_preparations \
 			exec/file_openings \
 			exec/path_finder \
+			exec/closers/closers \
+			exec/initialisers/initialisers \
 			parsing/check_quotes \
 			parsing/check_not_dirfile \
 			parsing/lexing \
@@ -56,8 +59,9 @@ SRC_FIL	= 	minishell \
 			parsing/splitters_1 \
 			parsing/splitters_2 \
 			parsing/variable_expansion \
+			redirections/heredocs/generators/generators \
+			redirections/heredocs/modifyers/modifyers \
 			redirections/heredocs/heredocs \
-			redirections/heredocs/heredoc_utils \
 			signals/signals \
 			utilitaries/block_nodes \
 			utilitaries/checkers \
