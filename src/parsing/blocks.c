@@ -76,49 +76,6 @@ t_error	for_space(t_block *nav)
 	return (NO_ERROR);
 }
 
-//TODO Norm
-// t_error	for_space(t_block *nav)
-// {
-// 	int		i;
-//
-// 	i = 0;
-// 	while (nav->str[i])
-// 	{
-// 		if (!ft_is_symbol(&nav->str[i]))
-// 		{
-// 			if (handle_no_symbols_no_ifs(nav, &i) == ERROR)
-// 				return (ERROR);
-// 			break ;
-// 		}
-// 		if (!ft_strncmp(&nav->str[i], "<<", 2))
-// 		{
-// 			if (handle_hd(nav, &i) == ERROR)
-// 				return (ERROR);
-// 			break ;
-// 		}
-// 		if (!ft_strncmp(&nav->str[i], ">>", 2))
-// 		{
-// 			if (handle_ap(nav, &i))
-// 				return (ERROR);
-// 			break ;
-// 		}
-// 		if (!ft_strncmp(&nav->str[i], "<", 1) && handle_ri(nav, &i))
-// 			break ;
-// 		if (!ft_strncmp(&nav->str[i], ">", 1))
-// 		{
-// 			if (handle_ro(nav, &i) == ERROR)
-// 				return (ERROR);
-// 			break ;
-// 		}
-// 		if (!ft_is_ifs(nav->str[i]) && handle_ifs(nav, &i))
-// 			break ;
-// 		if (handle_else(nav, &i))
-// 			continue ;
-// 		i++;
-// 	}
-// 	return (NO_ERROR);
-// }
-
 /// @brief Splits the content of the linked list nodes by spaces.
 /// This function iterates through the linked list of `t_block` structures,
 /// checking if the type is `RAW` and, if so, calling `for_space` to handle
