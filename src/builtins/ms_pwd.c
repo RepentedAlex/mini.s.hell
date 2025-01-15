@@ -31,7 +31,7 @@ static t_error	no_var_in_env(t_mo_shell *mo_shell, char *cwd, char *created_wd)
 	created_wd = NULL;
 	created_wd = append(created_wd, cwd, ft_strlen(cwd));
 	free(cwd);
-	if (add_str_to_array(&mo_shell->shell_env, created_wd) == ERROR)
+	if (add_str_to_ra(&mo_shell->shell_env, created_wd) == ERROR)
 		return (ERROR);
 	return (NO_ERROR);
 }
