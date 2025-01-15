@@ -49,6 +49,9 @@ SRC_FIL	= 	minishell \
 			exec/file_openings \
 			exec/path_finder \
 			parsing/checkers/checkers \
+			parsing/finders/finders \
+			parsing/getters/getters \
+			parsing/initialisers/initialisers \
 			parsing/modifyers/modifyers \
 			parsing/check_quotes \
 			parsing/check_not_dirfile \
