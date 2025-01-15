@@ -107,13 +107,18 @@ char	*get_var_content(char *var_name, char **env);
 ////////////////////////////////////////////////////////////////////////////////
 
 ///INITIALISERS/////////////////////////////////////////////////////////////////
+void	init_cmd_args_fill(t_mo_shell *mo_shell, t_block **nav_block, \
+	t_cmd **nav_cmd, bool *block_has_cmd);
 t_cmd	*init_exec_seq(t_mo_shell *mo_shell, t_pipes *pipes, t_pids *pids);
 t_error	init_min_env(t_mo_shell *mo_shell);
 t_error	init_shell(void);
+t_block	*init_spl_to_cmdb(t_cmd **ret, t_cmd **tmp, int *number_of_cmds, \
+	t_block **head);
 char	*str_init(void);
 ////////////////////////////////////////////////////////////////////////////////
 
 ///MODIFYERS////////////////////////////////////////////////////////////////////
+t_error	expand_cmd_path(t_cmd **head, char *envp[]);
 void	expand_hd_i(int fd, t_mo_shell *mo_shell, char *line, \
 	char **expdd_line);
 char	*unquote_delimiter(char *str);
@@ -143,7 +148,7 @@ t_cmd	*cmd_goto_last(t_cmd *head);
 t_error	cmd_add_after(t_cmd *ref, t_cmd *to_insert);
 t_error	cmd_add_back(t_cmd *head, t_cmd *node);
 // execution
-t_error	fill_cmd_and_args(t_cmd **cmd_head, t_block **block_head);
+t_error	fill_cmd_and_args(t_mo_shell *mo_shell);
 int		fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 	t_pipes *pipes_array, t_pids *pids_array);
 t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head, t_mo_shell \
@@ -189,7 +194,7 @@ int		handle_ri(t_block *nav, int *i);
 t_error	handle_ro(t_block *nav, int *i);
 int		handle_no_symbols_no_ifs(t_block *nav, int *i);
 // utilitaries
-t_error	add_str_to_array(char ***array, char *str);
+t_error	add_str_to_ra(char ***array, char *str);
 // variables expansion
 char	*expand_variables(char *src, char *envp[], t_mo_shell *mo_shell);
 void	hdus_handle_dollar(char *str, char *tmp, int *i, int *j);
