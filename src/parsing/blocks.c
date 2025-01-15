@@ -37,48 +37,87 @@ t_block	*block_setup_first(t_mo_shell *mo_shell)
 	return (block);
 }
 
-//TODO Norm
+static t_error	handle_symbol_checks(t_block *nav, int *i)
+{
+	if (!ft_strncmp(&nav->str[*i], "<<", 2) && handle_hd(nav, i) == \
+		ERROR)
+		return (ERROR);
+	if (!ft_strncmp(&nav->str[*i], ">>", 2) && handle_ap(nav, i))
+		return (ERROR);
+	if (!ft_strncmp(&nav->str[*i], "<", 1) && handle_ri(nav, i))
+		return (NO_ERROR);
+	if (!ft_strncmp(&nav->str[*i], ">", 1) && handle_ro(nav, i) == \
+		ERROR)
+		return (ERROR);
+	return (NO_ERROR);
+}
+
 t_error	for_space(t_block *nav)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	while (nav->str[i])
+	while (nav->str[i] && !nav->next)
 	{
-		if (!ft_is_symbol(&nav->str[i]))
+		if (nav->type == RAW && !ft_is_symbol(&nav->str[i]))
 		{
 			if (handle_no_symbols_no_ifs(nav, &i) == ERROR)
 				return (ERROR);
-			break ;
+			return (NO_ERROR);
 		}
-		if (!ft_strncmp(&nav->str[i], "<<", 2))
-		{
-			if (handle_hd(nav, &i) == ERROR)
-				return (ERROR);
+		if (nav->type == RAW && handle_symbol_checks(nav, &i) == ERROR)
+			return (ERROR);
+		if (nav->type == RAW && !ft_is_ifs(nav->str[i]) && handle_ifs(nav, &i))
 			break ;
-		}
-		if (!ft_strncmp(&nav->str[i], ">>", 2))
-		{
-			if (handle_ap(nav, &i))
-				return (ERROR);
-			break ;
-		}
-		if (!ft_strncmp(&nav->str[i], "<", 1) && handle_ri(nav, &i))
-			break ;
-		if (!ft_strncmp(&nav->str[i], ">", 1))
-		{
-			if (handle_ro(nav, &i) == ERROR)
-				return (ERROR);
-			break ;
-		}
-		if (!ft_is_ifs(nav->str[i]) && handle_ifs(nav, &i))
-			break ;
-		if (handle_else(nav, &i))
+		if (nav->type == RAW && handle_else(nav, &i))
 			continue ;
 		i++;
 	}
 	return (NO_ERROR);
 }
+
+//TODO Norm
+// t_error	for_space(t_block *nav)
+// {
+// 	int		i;
+//
+// 	i = 0;
+// 	while (nav->str[i])
+// 	{
+// 		if (!ft_is_symbol(&nav->str[i]))
+// 		{
+// 			if (handle_no_symbols_no_ifs(nav, &i) == ERROR)
+// 				return (ERROR);
+// 			break ;
+// 		}
+// 		if (!ft_strncmp(&nav->str[i], "<<", 2))
+// 		{
+// 			if (handle_hd(nav, &i) == ERROR)
+// 				return (ERROR);
+// 			break ;
+// 		}
+// 		if (!ft_strncmp(&nav->str[i], ">>", 2))
+// 		{
+// 			if (handle_ap(nav, &i))
+// 				return (ERROR);
+// 			break ;
+// 		}
+// 		if (!ft_strncmp(&nav->str[i], "<", 1) && handle_ri(nav, &i))
+// 			break ;
+// 		if (!ft_strncmp(&nav->str[i], ">", 1))
+// 		{
+// 			if (handle_ro(nav, &i) == ERROR)
+// 				return (ERROR);
+// 			break ;
+// 		}
+// 		if (!ft_is_ifs(nav->str[i]) && handle_ifs(nav, &i))
+// 			break ;
+// 		if (handle_else(nav, &i))
+// 			continue ;
+// 		i++;
+// 	}
+// 	return (NO_ERROR);
+// }
 
 /// @brief Splits the content of the linked list nodes by spaces.
 /// This function iterates through the linked list of `t_block` structures,
