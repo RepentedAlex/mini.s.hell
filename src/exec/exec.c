@@ -28,7 +28,11 @@ t_error	for_first_arg(char *str, char ***env)
 	return (NO_ERROR);
 }
 
-t_error	add_str_to_array(char ***array, char *str)
+/// @brief Add a string to an array
+/// @param array
+/// @param str
+/// @return
+t_error	add_str_to_ra(char ***array, char *str)
 {
 	char	**nav;
 	char	**ret;
