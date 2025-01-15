@@ -41,47 +41,6 @@ int	var_exst(char *var, char *envp[])
 }
 
 /// @brief
-/// @param src The name of the variable we want to find
-/// @param envp The environment in which we will look for the variable
-/// @return The environment index of the variable if it exists, -1 otherwise
-int	find_var(char *src, char *envp[])
-{
-	int		i;
-	char	var_name[1024];
-	int		var_index;
-
-	i = 0;
-	while (ft_isalpha(src[i]))
-	{
-		var_name[i] = src[i];
-		i++;
-	}
-	var_name[i] = '\0';
-	var_index = var_exst(var_name, envp);
-	return (var_index);
-}
-
-char	*get_var_content(char *var_name, char **env)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	if (var_name[0] == '\0')
-		return (NULL);
-	while (env && env[i] && (ft_strncmp(var_name, env[i], \
-		ft_strlen(var_name) + 1) != ('\0' - '=')))
-		i++;
-	if (env[i] == NULL)
-		return (NULL);
-	j = 0;
-	while (env[i][j] != '=')
-		j++;
-	j++;
-	return (ft_strdup(&env[i][j]));
-}
-
-/// @brief
 /// @param ret
 /// @param src
 /// @param i
@@ -114,55 +73,13 @@ char	*var_expander(char *ret, char *src, int *i, char *envp[])
 	return (ret);
 }
 
-char	*str_init(void)
-{
-	char	*ret;
-
-	ret = malloc(sizeof(char));
-	if (!ret)
-		return (NULL);
-	*ret = '\0';
-	return (ret);
-}
-
-void	init_les(char **les, size_t *les_len, t_mo_shell *mo_shell)
-{
-	*les = ft_itoa(mo_shell->last_exit_status);
-		if (!*les)
-			*les = 0;
-		*les_len = ft_strlen(*les);
-}
-
-int	get_var_len(char *src, t_mo_shell *mo_shell)
-{
-	int	i;
-	int	ret;
-	char	var_name[DEF_BUF_SIZ];
-	char	*var_content;
-
-	ft_bzero(var_name, DEF_BUF_SIZ);
-	var_content = NULL;
-	i = 0;
-	while (src && src[i] && (ft_isalnum(src[i]) || src[i] == '_'))
-	{
-		var_name[i] = src[i];
-		i++;
-	}
-	var_content = get_var_content(var_name, mo_shell->shell_env);
-	if (!var_content)
-		return (0);
-	ret = ft_strlen(var_content);
-	free(var_content);
-	return (ret);
-}
-
 /// @brief 
 /// @param src
 /// @param ret 
 /// @param mo_shell 
 /// @param les 
 /// @return 
-int make_expansion(char *src, char **ret, t_mo_shell *mo_shell, char **les)
+int	make_expansion(char *src, char **ret, t_mo_shell *mo_shell, char **les)
 {
 	size_t	les_len;
 	int		res;
@@ -181,9 +98,8 @@ int make_expansion(char *src, char **ret, t_mo_shell *mo_shell, char **les)
 		return (*ret = append(*ret, "$$", 2), 1);
 	if (src[i] == '?')
 		return (*ret = append(*ret, *les, les_len), ((int)les_len - 1));
-	// res = get_var_len(&src[i], mo_shell);
 	*ret = var_expander(*ret, &src[i], &res, mo_shell->shell_env);
-	return(res);
+	return (res);
 }
 
 /// @brief Takes a string and check if there are variables that
