@@ -69,6 +69,7 @@ char	*append(char *dest, char *src, size_t n)
 		i++;
 	}
 	new_str[i] = '\0';
-	free(dest);
+	if (dest)
+		free(dest);
 	return (new_str);
 }
