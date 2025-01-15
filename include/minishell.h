@@ -89,6 +89,8 @@ bool	ft_is_ifs(char c);
 int		ft_is_symbol(const char *str);
 bool	ft_string_is_only_ifs(char *str);
 bool	is_valid_variable_name(char *vr_name);
+bool	syntax_check_handler(t_mo_shell *mo_shell, int *error_ret, \
+	t_error *value1);
 bool	words_in_str(char *str);
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -121,6 +123,7 @@ char	*str_init(void);
 t_error	expand_cmd_path(t_cmd **head, char *envp[]);
 void	expand_hd_i(int fd, t_mo_shell *mo_shell, char *line, \
 	char **expdd_line);
+t_error	new_expand_variables(t_block **head, t_mo_shell *mo_shell);
 char	*unquote_delimiter(char *str);
 ////////////////////////////////////////////////////////////////////////////////
 
