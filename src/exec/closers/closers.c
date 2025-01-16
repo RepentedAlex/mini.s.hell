@@ -23,13 +23,13 @@ void	close_pipes(t_pipes *pipes)
 	}
 }
 
-int	wait_for_processes(t_pids *pids_array)
+int	wait_for_processes(t_pids *pids_array, t_mo_shell *mo_shell)
 {
 	int	i;
 	int	status;
 	int	exit_status;
 
-	exit_status = 0;
+	exit_status = mo_shell->last_exit_status;
 	i = 0;
 	while (i <= pids_array->pid_i)
 	{
