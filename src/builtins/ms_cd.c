@@ -14,29 +14,29 @@
 #include "minishell_builtins.h"
 #include <libft.h>
 
-// static void update_pwd(t_mo_shell *mo_shell, char *new_path,
-// t_cmd *cmd, char **args)
-// {
-// 	char	cwd[DEF_BUF_SIZ];
-// 	char	**for_export;
+static void update_pwd(t_mo_shell *mo_shell, t_cmd *cmd)
+{
+	char	*tmp;
+	char	*path_tmp;
+	char	*new_pwd;
+	char	*export_args[3];
 
-// 	(void)args;
-// 	for_export = malloc(sizeof(char *) * 3);
-// 	//update_old_pwd(truc);
-// 	if (getcwd(cwd, DEF_BUF_SIZ) == NULL)
-// 	{
-// 		perror(new_path);
-// 		return ;
-// 	}
-// 	for_export[0] = NULL;
-// 	for_export[1] = ft_strjoin("PWD=", cwd);
-// 	for_export[2] = NULL;
-// 	/*	ms_unset(for_export, mo_shell, cmd);
-// 	mo_shell->shell_env = add_str_to_array(mo_shell->shell_env, pwd);*/
-// 	ms_export(for_export, mo_shell, cmd);
-// 	(free(for_export[1]),free(for_export));
-// 	free(for_export[1]);
-// }
+	export_args[0] = "lol";
+	export_args[2] = NULL;
+	new_pwd = ft_strdup("PWD=");
+	path_tmp = get_var_content("PWD", mo_shell->shell_env);
+	tmp = append(ft_strdup("OLDPWD="), path_tmp, ft_strlen(path_tmp));
+	export_args[1] = tmp;
+	ms_export(export_args, mo_shell, cmd);
+	free(tmp);
+	export_args[1] = NULL;
+	tmp = getcwd(NULL, 0);
+	new_pwd = append(new_pwd, tmp, ft_strlen(tmp));
+	free(tmp);
+	export_args[1] = new_pwd;
+	ms_export(export_args, mo_shell, cmd);
+	free(new_pwd);
+}
 
 /// @brief Updates the `PWD` environment variable with the new user path and
 /// exports it to the environment.
@@ -48,18 +48,18 @@
 /// directory.
 /// @param export_args An array of arguments for the `export` command, used to
 /// update the environment with the new `PWD` value.
-static void	update_var(t_mo_shell *mo_shell, t_cmd *cmd, char *user_path, \
-						char *export_args[3])
-{
-	char	*new_pwd;
-
-	new_pwd = append(ft_strdup("PWD="), user_path, ft_strlen(user_path));
-	export_args[0] = "lol";
-	export_args[1] = new_pwd;
-	export_args[2] = NULL;
-	ms_export(export_args, mo_shell, cmd);
-	free(new_pwd);
-}
+// static void	update_var(t_mo_shell *mo_shell, t_cmd *cmd, char *user_path,
+// 						char *export_args[3])
+// {
+// 	char	*new_pwd;
+//
+// 	new_pwd = append(ft_strdup("PWD="), user_path, ft_strlen(user_path));
+// 	export_args[0] = "lol";
+// 	export_args[1] = new_pwd;
+// 	export_args[2] = NULL;
+// 	ms_export(export_args, mo_shell, cmd);
+// 	free(new_pwd);
+// }
 
 /// @brief Changes the current directory to the user's home directory as
 /// specified by the `HOME` environment variable.
@@ -74,9 +74,10 @@ static void	update_var(t_mo_shell *mo_shell, t_cmd *cmd, char *user_path, \
 static int	cd_to_home(t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	char	*user_path;
-	char	*export_args[3];
+	// char	*export_args[3];
 	char	*home_dir;
 
+	(void)cmd;
 	if (!mo_shell->shell_env)
 		return (ft_putstr_fd("No environment\n", 1), 0);
 	user_path = NULL;
@@ -87,10 +88,9 @@ static int	cd_to_home(t_mo_shell *mo_shell, t_cmd *cmd)
 	free(home_dir);
 	if (!user_path)
 		return (-1);
-	if (chdir(user_path) == 0)
-		update_var(mo_shell, cmd, user_path, export_args);
-	else
+	if (chdir(user_path) != 0)
 		return (free(user_path), -1);
+		// update_var(mo_shell, cmd, user_path, export_args);
 	free(user_path);
 	return (0);
 }
@@ -109,30 +109,32 @@ static int	cd_to_home(t_mo_shell *mo_shell, t_cmd *cmd)
 /// printed.
 static int	cd_to_path(char *path, t_mo_shell *mo_shell, t_cmd *cmd)
 {
-	char	*new_pwd;
-	char	*tmp;
-	char	*export_args[3];
+	// char	*new_pwd;
+	// char	*tmp;
+	// char	*export_args[3];
 	int		res;
 
-	tmp = NULL;
+	(void)cmd;
+	(void)mo_shell;
+	// tmp = NULL;
 	res = chdir(path);
-	tmp = getcwd(NULL, 0);
-	if (res == -1 || tmp == NULL)
+	// tmp = getcwd(NULL, 0);
+	if (res == -1)
 		return (ft_putstr_fd("Couldn't change directory\n", 2), 1);
-	new_pwd = NULL;
+	// new_pwd = NULL;
 	if (res != 0)
 	{
 		printf("mini.s.hell: %s: Invalid argument\n", path);
 		return (-res);
 	}
-	new_pwd = append(new_pwd, "PWD=", ft_strlen("PWD="));
-	new_pwd = append(new_pwd, tmp, ft_strlen(tmp));
-	free(tmp);
-	export_args[0] = "lol";
-	export_args[1] = new_pwd;
-	export_args[2] = NULL;
-	ms_export(export_args, mo_shell, cmd);
-	free(new_pwd);
+	// new_pwd = append(new_pwd, "PWD=", ft_strlen("PWD="));
+	// new_pwd = append(new_pwd, tmp, ft_strlen(tmp));
+	// free(tmp);
+	// export_args[0] = "lol";
+	// export_args[1] = new_pwd;
+	// export_args[2] = NULL;
+	// ms_export(export_args, mo_shell, cmd);
+	// free(new_pwd);
 	return (0);
 }
 
@@ -147,10 +149,16 @@ static int	cd_to_path(char *path, t_mo_shell *mo_shell, t_cmd *cmd)
 /// change fails, an error message is printed.
 int	ms_cd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
+	int	exit_status;
+
+	exit_status = 0;
 	if (args[1] && args[2])
 		return (ft_putstr_fd("mini.s.hell: cd: invalid arguments\n", 2), \
 			0);
 	if (!args[1])
-		return (cd_to_home(mo_shell, cmd));
-	return (cd_to_path(args[1], mo_shell, cmd));
+		exit_status = cd_to_home(mo_shell, cmd);
+	else
+		cd_to_path(args[1], mo_shell, cmd);
+	update_pwd(mo_shell, cmd);
+	return (exit_status);
 }

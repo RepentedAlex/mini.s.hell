@@ -112,6 +112,7 @@ char	*get_var_content(char *var_name, char **env);
 void	init_cmd_args_fill(t_mo_shell *mo_shell, t_block **nav_block, \
 	t_cmd **nav_cmd, bool *block_has_cmd);
 t_cmd	*init_exec_seq(t_mo_shell *mo_shell, t_pipes *pipes, t_pids *pids);
+void	init_les(char **les, size_t *les_len, t_mo_shell *mo_shell);
 t_error	init_min_env(t_mo_shell *mo_shell);
 t_error	init_shell(void);
 t_block	*init_spl_to_cmdb(t_cmd **ret, t_cmd **tmp, int *number_of_cmds, \
