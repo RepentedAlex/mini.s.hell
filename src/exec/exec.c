@@ -98,7 +98,7 @@ int	execution_sequence(t_mo_shell *mo_shell)
 
 	to_launch = init_exec_seq(mo_shell, &pipes_array, &pids_array);
 	run_cmd(mo_shell, to_launch, &pipes_array, &pids_array);
-	ret = wait_for_processes(&pids_array);
+	ret = wait_for_processes(&pids_array, mo_shell);
 	return (ret);
 }
 
