@@ -30,6 +30,28 @@ void	move_var_in_env(int var_index, char **env, int var_after)
 		* (var_after + 1));
 }
 
+bool	check_valid_identifier(char *identifier, t_cmd *cmd, char **env)
+{
+	int	i;
+
+	(void)cmd;
+	(void)env;
+	i = 0;
+	while (identifier[i])
+	{
+		if (!ft_isalnum(identifier[i]) || identifier[i] == '=')
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+void	init_ms_unset(t_mo_shell *mo_shell, int *args_iterator, char ***env)
+{
+	*env = mo_shell->shell_env;
+	*args_iterator = 1;
+}
+
 /// @brief Removes environment variables specified in the arguments from the
 /// shell's environment.
 /// @param args Array of arguments where each entry (after the first) is a
@@ -46,23 +68,23 @@ int	ms_unset(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	char	**env;
 	int		var_after;
 
-	(void)cmd;
-	(void)args;
-	env = mo_shell->shell_env;
-	args_iterator = 1;
+	init_ms_unset(mo_shell, &args_iterator, &env);
 	while (args && args[args_iterator])
 	{
-		var_index = var_exst(args[args_iterator], env);
-		if (var_index == -1)
-			return (printf("mini.s.hell: %s: not a valid identifier\n", \
-				args[args_iterator]), 1);
-		var_after = 0;
-		while (env[var_index + 1 + var_after] != NULL)
-			var_after++;
-		if (!var_after)
-			(free(env[var_index]), env[var_index] = NULL);
-		else
-			move_var_in_env(var_index, env, var_after);
+		if (check_valid_identifier(args[args_iterator], cmd, env) == true)
+		{
+			var_index = var_exst(args[args_iterator], env);
+			if (var_index == -1)
+				return (printf(\
+	"mini.s.hell: %s: not a valid identifier\n", args[args_iterator]), 1);
+			var_after = 0;
+			while (env[var_index + 1 + var_after] != NULL)
+				var_after++;
+			if (!var_after)
+				(free(env[var_index]), env[var_index] = NULL);
+			else
+				move_var_in_env(var_index, env, var_after);
+		}
 		args_iterator++;
 	}
 	return (0);
