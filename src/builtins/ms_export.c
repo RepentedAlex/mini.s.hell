@@ -13,40 +13,6 @@
 #include "minishell.h"
 #include <libft.h>
 
-/// @brief Removes quotes around the value of a string, specifically handling
-/// single (`'`) and double (`"`) quotes.
-/// This function modifies the input string by stripping any leading and
-/// trailing quotes and adjusting the content accordingly.
-/// @param str The string to process. The string is modified in-place.
-static void	strip_quotes(char *str)
-{
-	int	i;
-	int	quotes;
-
-	quotes = 0;
-	i = -1;
-	while (str[++i] != '=')
-		i += 0;
-	i++;
-	if (str[i] == '\'')
-	{
-		quotes = 1;
-		ft_memmove(&str[i], &str[i + 1], ft_strlen(&str[i]));
-	}
-	else if (str[i] == '\"')
-	{
-		quotes = 2;
-		ft_memmove(&str[i], &str[i + 1], ft_strlen(&str[i]));
-	}
-	while (str[i])
-	{
-		check_in_quotes(str[i], &quotes);
-		i++;
-	}
-	if ((str[i - 1] == '\'' || str[i - 1] == '\"') && quotes == 0)
-		str[i - 1] = '\0';
-}
-
 /// @brief Updates the content of an existing environment variable in the
 /// `envp` array.
 /// The environment variable is located by its name, and its value is updated
@@ -95,7 +61,6 @@ static	t_error	update_env_var(char *arg, char *var_name, t_mo_shell *shell)
 	while (arg[i] && arg[i] != '=')
 		i++;
 	i++;
-	strip_quotes(arg);
 	if (var_exst(var_name, shell->shell_env) == -1)
 	{
 		add_str_to_ra(&shell->shell_env, arg);
@@ -131,6 +96,31 @@ bool	iterate_through_str(char **args, int *i, int args_iterator, \
 	return (false);
 }
 
+static int	check_valid_identifier(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '\0')
+		return (printf("export: `': not a valid identifier\n"), 1);
+	if (str[i] == '=' || ft_isdigit(str[i]))
+		return (printf("export: %s: not a valid identifier\n", str), 1);
+	while (str[i] && str[i] != '=')
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (printf("export: %s: not valid identifier\n", str), 1);
+		i++;
+	}
+	return (0);
+}
+
+int	check_options(char **args, int *iterator)
+{
+	if (args[*iterator][0] == '-')
+		return (printf("%s: invalid option\n", args[*iterator]), 2);
+	return (0);
+}
+
 /// @brief Exports environment variables based on the provided arguments.
 /// @param args An array of strings representing the arguments passed to
 /// the `export` command, where each argument is a variable
@@ -146,21 +136,29 @@ int	ms_export(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	int		i;
 	int		args_iterator;
 	char	var_name[DEF_BUF_SIZ];
+	int		ret;
 
 	(void)cmd;
 	(void)args;
+	ret = 0;
 	args_iterator = 1;
 	ft_bzero(var_name, DEF_BUF_SIZ);
+	ret = check_options(args, &args_iterator);
+	if (ret)
+		return (ret);
 	while (args[args_iterator] != NULL)
 	{
 		i = -1;
+		ret = check_valid_identifier(args[args_iterator]);
+		if (ret)
+			return (ret);
 		while (args[args_iterator][++i])
 			if (iterate_through_str(args, &i, args_iterator, var_name))
 				break ;
-		if (!args[args_iterator][i] && args_iterator++)
-			continue ;
-		if (is_valid_variable_name(var_name) == false && args_iterator++)
-			continue ;
+		// if (!args[args_iterator][i] && args_iterator++)
+			// continue ;
+		// if (is_valid_variable_name(var_name) == false && args_iterator++)
+			// continue ;
 		if (update_env_var(args[args_iterator], var_name, mo_shell) == ERROR)
 			return (-1);
 		args_iterator++;
