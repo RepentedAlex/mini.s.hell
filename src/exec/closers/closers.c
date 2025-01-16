@@ -23,7 +23,7 @@ void	close_pipes(t_pipes *pipes)
 	}
 }
 
-t_error	wait_for_processes(t_pids *pids_array)
+int	wait_for_processes(t_pids *pids_array)
 {
 	int	i;
 	int	status;
