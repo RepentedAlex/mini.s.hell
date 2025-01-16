@@ -97,7 +97,7 @@ int	make_expansion(char *src, char **ret, t_mo_shell *mo_shell, char **les)
 	if (src[i] == '$')
 		return (*ret = append(*ret, "$$", 2), 1);
 	if (src[i] == '?')
-		return (*ret = append(*ret, *les, les_len), ((int)les_len - 1));
+		return (*ret = append(*ret, *les, les_len), 1);
 	*ret = var_expander(*ret, &src[i], &res, mo_shell->shell_env);
 	return (res);
 }
