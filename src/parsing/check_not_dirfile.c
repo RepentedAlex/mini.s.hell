@@ -59,7 +59,7 @@ int	check_not_dirfile(t_block **head, t_mo_shell *mo_shell)
 
 	if (init_check_nd(&nav, &cide_ret, head) == ERROR)
 		return (0);
-	if (nav->prev && nav->prev->type != RAW)
+	if (!nav->prev || nav->prev->type == PIPE)
 	{
 		if (ft_strchr(nav->str, '/'))
 		{

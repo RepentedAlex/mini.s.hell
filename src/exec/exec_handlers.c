@@ -39,8 +39,12 @@ void	handler_dup2(t_cmd *to_launch, t_pipes *pipes)
 /// @param to_launch The current command we want to execute.
 /// @param pipes The current pipe.
 /// @param envp The environment variables
-int	child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[])
+/// @param mo_shell
+int	child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[], \
+	t_mo_shell *mo_shell)
 {
+	if (check_if_dirfile_exist(to_launch->cmd, mo_shell))
+		exit(126);
 	handler_dup2(to_launch, pipes);
 	execve(to_launch->cmd, to_launch->args, envp);
 	ft_putstr_fd("mini.s.hell: ", 2);
@@ -102,7 +106,8 @@ int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 		{
 			signal(SIGQUIT, SIG_DFL);
 			if (is_builtin(to_launch->cmd) == false)
-				child_process_ext(to_launch, pipes_array, mo_shell->shell_env);
+				child_process_ext(to_launch, pipes_array, mo_shell->shell_env, \
+					mo_shell);
 			if (is_builtin(to_launch->cmd) == true)
 				child_process_bi(to_launch, pipes_array, mo_shell, 0);
 		}

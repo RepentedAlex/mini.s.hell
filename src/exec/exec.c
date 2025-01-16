@@ -94,11 +94,12 @@ int	execution_sequence(t_mo_shell *mo_shell)
 	t_cmd	*to_launch;
 	t_pipes	pipes_array;
 	t_pids	pids_array;
+	int		ret;
 
 	to_launch = init_exec_seq(mo_shell, &pipes_array, &pids_array);
 	run_cmd(mo_shell, to_launch, &pipes_array, &pids_array);
-	mo_shell->last_exit_status = wait_for_processes(&pids_array);
-	return (mo_shell->last_exit_status);
+	ret = wait_for_processes(&pids_array);
+	return (ret);
 }
 
 /// @brief This function handles all things related to the execution.

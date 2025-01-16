@@ -28,7 +28,7 @@ t_error	pipeline_setup(t_mo_shell *mo_shell)
 		mo_shell) == ERROR)
 		return (ERROR);
 	if (expand_cmd_path(&mo_shell->cmds_table, mo_shell->shell_env) == ERROR)
-		return (ERROR);
+		return (mo_shell->last_exit_status = 127, ERROR);
 	return (NO_ERROR);
 }
 
