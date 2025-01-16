@@ -55,21 +55,27 @@ t_error	update_var(char *var_name, char *var_content, char *envp[])
 /// added, otherwise `ERROR`.
 static	t_error	update_env_var(char *arg, char *var_name, t_mo_shell *shell)
 {
-	int	i;
+	int		i;
+	char	*tmp;
+	char	*tmp2;
 
 	i = 0;
 	while (arg[i] && arg[i] != '=')
 		i++;
 	i++;
+	tmp = string_tidyer(&arg[i]);
+	tmp2 = ft_strdup(var_name);
+	tmp2 = append(tmp2, "=", 1);
 	if (var_exst(var_name, shell->shell_env) == -1)
 	{
-		add_str_to_ra(&shell->shell_env, arg);
+		tmp2 = append(tmp2, tmp, ft_strlen(tmp));
+		add_str_to_ra(&shell->shell_env, tmp2);
 		if (!shell->shell_env)
-			return (ERROR);
+			return (free(tmp2), free(tmp), ERROR);
 	}
 	else
-		update_var(var_name, &arg[i], shell->shell_env);
-	return (NO_ERROR);
+		update_var(var_name, tmp, shell->shell_env);
+	return (free(tmp2), free(tmp), NO_ERROR);
 }
 
 /// @brief Iterates through a string to extract a variable name from an argument
@@ -114,13 +120,6 @@ static int	check_valid_identifier(char *str)
 	return (0);
 }
 
-int	check_options(char **args, int *iterator)
-{
-	if (args[*iterator][0] == '-')
-		return (printf("%s: invalid option\n", args[*iterator]), 2);
-	return (0);
-}
-
 /// @brief Exports environment variables based on the provided arguments.
 /// @param args An array of strings representing the arguments passed to
 /// the `export` command, where each argument is a variable
@@ -139,26 +138,20 @@ int	ms_export(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	int		ret;
 
 	(void)cmd;
-	(void)args;
 	ret = 0;
 	args_iterator = 1;
-	ft_bzero(var_name, DEF_BUF_SIZ);
-	ret = check_options(args, &args_iterator);
+	ret = ms_export_check_options(args, &args_iterator);
 	if (ret)
 		return (ret);
 	while (args[args_iterator] != NULL)
 	{
-		i = -1;
+		(ft_bzero(var_name, DEF_BUF_SIZ), i = -1);
 		ret = check_valid_identifier(args[args_iterator]);
 		if (ret)
 			return (ret);
 		while (args[args_iterator][++i])
 			if (iterate_through_str(args, &i, args_iterator, var_name))
 				break ;
-		// if (!args[args_iterator][i] && args_iterator++)
-			// continue ;
-		// if (is_valid_variable_name(var_name) == false && args_iterator++)
-			// continue ;
 		if (update_env_var(args[args_iterator], var_name, mo_shell) == ERROR)
 			return (-1);
 		args_iterator++;
