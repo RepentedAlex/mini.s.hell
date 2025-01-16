@@ -21,13 +21,13 @@ int	check_if_dirfile_exist(char *path, t_mo_shell *mo_shell)
 
 	fd = 0;
 	dir = 0;
+	if (path[0] == '\0')
+		return (0);
 	dir = opendir(path);
 	if (dir != NULL)
 	{
-		closedir(dir);
-		printf("%s: Is a directory\n", path);
-		mo_shell->last_exit_status = 126;
-		return (1);
+		(closedir(dir), printf("%s: Is a directory\n", path));
+		return (mo_shell->last_exit_status = 126, 1);
 	}
 	if (access(path, R_OK | X_OK) == -1)
 	{
