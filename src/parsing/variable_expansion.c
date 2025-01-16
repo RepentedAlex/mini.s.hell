@@ -79,16 +79,16 @@ char	*var_expander(char *ret, char *src, int *i, char *envp[])
 /// @param mo_shell 
 /// @param les 
 /// @return 
-int	make_expansion(char *src, char **ret, t_mo_shell *mo_shell, char **les)
+int	make_expansion(char *src, char **ret, t_mo_shell *mo_shell, int quotes)
 {
+	char	*les;
 	size_t	les_len;
 	int		res;
 	int		i;
 
 	i = 1;
 	res = 0;
-	init_les(les, &les_len, mo_shell);
-	if (!src[i] || src[i] == '\'' || src[i] == '"')
+	if (!src[i] || (quotes == 2 && src[i] == '"'))
 		return (*ret = append(*ret, "$", 1), 0);
 	if (ft_is_ifs(src[i]) == true)
 		return (*ret = append(*ret, "$ ", 2), 1);
@@ -97,7 +97,10 @@ int	make_expansion(char *src, char **ret, t_mo_shell *mo_shell, char **les)
 	if (src[i] == '$')
 		return (*ret = append(*ret, "$$", 2), 1);
 	if (src[i] == '?')
-		return (*ret = append(*ret, *les, les_len), 1);
+	{
+		init_les(&les, &les_len, mo_shell);
+		return (*ret = append(*ret, les, les_len), free(les), 1);
+	}
 	*ret = var_expander(*ret, &src[i], &res, mo_shell->shell_env);
 	return (res);
 }
@@ -109,27 +112,23 @@ int	make_expansion(char *src, char **ret, t_mo_shell *mo_shell, char **les)
 char	*expand_variables(char *src, t_mo_shell *mo_shell)
 {
 	char	*ret;
-	char	*les;
 	int		i;
 	int		quotes;
 
-	les = NULL;
 	ret = str_init();
 	quotes = 0;
 	i = -1;
 	while (src && src[++i])
 	{
 		check_in_quotes(src[i], &quotes);
-		if (quotes != 1 && src[i] == '$')
-			i += make_expansion(&src[i], &ret, mo_shell, &les);
+		if ((quotes != 1 && src[i] == '$'))
+			i += make_expansion(&src[i], &ret, mo_shell, quotes);
 		else
 		{
 			ret = append(ret, &src[i], 1);
 			if (!ret)
-				return (free(les), NULL);
+				return (NULL);
 		}
 	}
-	if (les)
-		free(les);
 	return (ret);
 }
