@@ -81,10 +81,10 @@ token '|'\n"), mo_shell->last_exit_status = 2, ERROR);
 	if (split_spaces(&mo_shell->splitted_input) == ERROR)
 		return (mo_shell->last_exit_status = 2, ERROR);
 	clean_empty_nodes(&mo_shell->splitted_input);
+	nodes_unquote_strings(&mo_shell->splitted_input);
 	if (lexcat_redir_handler(&mo_shell->splitted_input) == ERROR || \
 		new_expand_variables(&mo_shell->splitted_input, mo_shell) == ERROR)
 		return (ERROR);
-	nodes_unquote_strings(&mo_shell->splitted_input);
 	return (NO_ERROR);
 }
 
