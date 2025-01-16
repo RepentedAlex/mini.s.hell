@@ -34,7 +34,7 @@ t_error	expand_cmd_path(t_cmd **head, char *envp[])
 		{
 			tmp = get_path(nav->cmd, envp);
 			if (!tmp)
-				return (ERROR);
+				return (printf("%s: cmd not found\n", nav->cmd), ERROR);
 			(free(nav->cmd), nav->cmd = tmp, tmp = NULL);
 			nav = nav->next;
 		}
