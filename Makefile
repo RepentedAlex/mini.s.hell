@@ -30,6 +30,7 @@ SRC_FIL	= 	minishell \
 			exit \
 			init \
 			builtins/builtins \
+			builtins/checkers \
 			builtins/error_msg \
 			builtins/ms_cd \
 			builtins/ms_echo \
