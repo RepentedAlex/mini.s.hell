@@ -55,18 +55,12 @@ int	ms_echo(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	int		i;
 	bool	option;
 
-	(void)mo_shell;
-	(void)cmd;
-	i = 1;
+	((void)mo_shell, (void)cmd, i = 1);
+	if (!args)
+		return (0);
 	option = false;
-	while (args && args[i] && args[i][0] == '-')
-	{
-		if (echo_check_option(args[i]) == true)
-			option = true;
-		else
-			break ;
-		i++;
-	}
+	if (echo_check_option(args[i]) == true)
+		option = true;
 	while (args && args[i] && args[i][0] != '>')
 	{
 		ft_putstr_fd(args[i], 1);
