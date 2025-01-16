@@ -23,12 +23,18 @@ bool	echo_check_option(char *str)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
+	while (str && ft_is_ifs(str[i]))
+		i++;
+	if (str[i] == '-')
+		i++;
+	else
+		return (false);
 	while (str && str[i] && str[i] == 'n')
 	{
 		i++;
 	}
-	if (!str[i])
+	if (ft_is_ifs(str[i]) || !str[i])
 		return (true);
 	return (false);
 }
