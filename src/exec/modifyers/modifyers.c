@@ -29,15 +29,15 @@ t_error	expand_cmd_path(t_cmd **head, char *envp[])
 		if (ft_strncmp(nav->cmd, "./", 2) == 0 || ft_strchr(nav->cmd, \
 			'/') != NULL || \
 			is_builtin(nav->cmd))
-			nav = nav->next;
-		else
+			(void)nav;
+		else if (nav->cmd[0] != '\0')
 		{
 			tmp = get_path(nav->cmd, envp);
 			if (!tmp)
 				return (printf("%s: cmd not found\n", nav->cmd), ERROR);
 			(free(nav->cmd), nav->cmd = tmp, tmp = NULL);
-			nav = nav->next;
 		}
+		nav = nav->next;
 	}
 	return (NO_ERROR);
 }
