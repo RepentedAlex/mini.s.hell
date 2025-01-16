@@ -109,7 +109,7 @@ char	*string_tidyer(char *s)
 	if (ft_strlen(s) - unnecessary_spaces == 0)
 		return (NULL);
 	ret = (char *)malloc(sizeof(char) * ((ft_strlen(s) - \
-		unnecessary_spaces) + 1));
+		unnecessary_spaces) + 10));
 	if (!ret)
 		return (NULL);
 	quotes = 0;
