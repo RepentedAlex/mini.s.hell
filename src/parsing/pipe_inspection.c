@@ -56,6 +56,23 @@ t_error	for_pipe(t_block **head, t_block **nav)
 	return (NO_ERROR);
 }
 
+bool	check_if_pipe_is_quoted(char *str, char *pipe)
+{
+	int	quotes;
+	int	i;
+
+	quotes = 0;
+	i = 0;
+	while (str[i])
+	{
+		check_in_quotes(str[i], &quotes);
+		if (quotes && str[i] == *pipe)
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 /// @brief Takes a list of t_block and create new nodes when it finds a '|'.
 /// @param head Head of the t_block list.
 /// @return ERROR if an error is encountered, NO_ERROR otherwise.
@@ -68,7 +85,7 @@ t_error	split_pipes(t_block **head)
 		return (ERROR);
 	while (nav != NULL)
 	{
-		if (ft_strchr(nav->str, '|') == NULL)
+		if (ft_strchr(nav->str, '|') == NULL || check_if_pipe_is_quoted(nav->str, ft_strchr(nav->str, '|')))
 		{
 			nav = nav->next;
 			continue ;

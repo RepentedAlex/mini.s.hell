@@ -77,14 +77,17 @@ token '|'\n"), mo_shell->last_exit_status = 2, ERROR);
 	if (look_for_redir(&mo_shell->splitted_input) == true)
 		if (syntax_check_handler(mo_shell, &error_ret, &sch_ret))
 			return (sch_ret);
-	block_string_tidyer(&mo_shell->splitted_input);
+	// block_string_tidyer(&mo_shell->splitted_input);
 	if (split_spaces(&mo_shell->splitted_input) == ERROR)
 		return (mo_shell->last_exit_status = 2, ERROR);
 	clean_empty_nodes(&mo_shell->splitted_input);
-	nodes_unquote_strings(&mo_shell->splitted_input);
 	if (lexcat_redir_handler(&mo_shell->splitted_input) == ERROR || \
 		new_expand_variables(&mo_shell->splitted_input, mo_shell) == ERROR)
 		return (ERROR);
+	if (split_spaces(&mo_shell->splitted_input) == ERROR)
+		return (mo_shell->last_exit_status = 2, ERROR);
+	nodes_unquote_strings(&mo_shell->splitted_input);
+	block_string_tidyer(&mo_shell->splitted_input);
 	return (NO_ERROR);
 }
 

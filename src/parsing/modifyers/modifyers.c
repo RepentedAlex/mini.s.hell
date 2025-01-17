@@ -26,8 +26,8 @@ t_error	new_expand_variables(t_block **head, t_mo_shell *mo_shell)
 			tmp = expand_variables(nav->str, mo_shell);
 			if (!tmp)
 				return (ERROR);
-			if (tmp[0] == '\0')
-				return (free(tmp), ERROR);
+			// if (tmp[0] == '\0')
+				// return (free(tmp), ERROR);
 			free(nav->str);
 			nav->str = tmp;
 		}
