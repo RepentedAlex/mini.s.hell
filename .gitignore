@@ -1,6 +1,5 @@
 .cache_exists
 .idea
 build
-Libft/
 minishell
 supress_readline.valgrind
