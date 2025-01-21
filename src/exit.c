@@ -106,6 +106,7 @@ void	garbage_collect(t_mo_shell *data, int mode)
 			(close(data->cmds_table->cp_o), data->cmds_table->cp_o = 0);
 		(free_cmd_table(&data->cmds_table), data->cmds_table = NULL);
 	}
+	unlink_heredocs();
 	if (mode == 1)
 	{
 		rl_clear_history();

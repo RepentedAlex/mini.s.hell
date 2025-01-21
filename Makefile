@@ -41,6 +41,7 @@ SRC_FIL	= 	minishell \
 			builtins/ms_unset \
 			debug/debug \
 			exec/closers/closers \
+			exec/deleters/deleters \
 			exec/fillers/fillers \
 			exec/initialisers/initialisers \
 			exec/modifyers/modifyers \
