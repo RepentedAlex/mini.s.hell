@@ -13,11 +13,11 @@
 #include <stdbool.h>
 #include "minishell_types.h"
 
-void block_add_front(t_block *insert, t_block *list)
+void	block_add_front(t_block *insert, t_block *list)
 {
-		insert->prev = list->prev;
-		insert->next = list;
-		if (list->prev)
-			list->prev->next = insert;
-		list->prev = insert;
+	insert->prev = list->prev;
+	insert->next = list;
+	if (list->prev)
+		list->prev->next = insert;
+	list->prev = insert;
 }

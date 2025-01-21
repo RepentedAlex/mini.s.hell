@@ -35,10 +35,7 @@ t_error	handle_ap(t_block *nav, int *i)
 	tmp->type = OUTFILE;
 	block_add_after(nav, tmp);
 	if (str_tmp)
-	{
-		block_add_after(tmp, block_new(str_tmp));
-		free(str_tmp);
-	}
+		(block_add_after(tmp, block_new(str_tmp)), free(str_tmp));
 	nav->str[2] = '\0';
 	return (NO_ERROR);
 }
@@ -90,10 +87,7 @@ t_error	handle_hd(t_block *nav, int *i)
 	tmp->type = EOFHD;
 	block_add_after(nav, tmp);
 	if (str_tmp)
-	{
-		block_add_after(tmp, block_new(str_tmp));
-		free(str_tmp);
-	}
+		(block_add_after(tmp, block_new(str_tmp)), free(str_tmp));
 	nav->str[2] = '\0';
 	return (NO_ERROR);
 }
@@ -135,10 +129,7 @@ int	handle_ri(t_block *nav, int *i)
 	tmp->type = INFILE;
 	block_add_after(nav, tmp);
 	if (str_tmp)
-	{
-		block_add_after(tmp, block_new(str_tmp));
-		free(str_tmp);
-	}
+		(block_add_after(tmp, block_new(str_tmp)), free(str_tmp));
 	nav->str[1] = '\0';
 	return (NO_ERROR);
 }

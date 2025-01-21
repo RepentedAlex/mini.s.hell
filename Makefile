@@ -39,6 +39,7 @@ SRC_FIL	= 	minishell \
 			builtins/ms_export \
 			builtins/ms_pwd \
 			builtins/ms_unset \
+			debug/debug \
 			exec/closers/closers \
 			exec/fillers/fillers \
 			exec/initialisers/initialisers \
@@ -66,6 +67,7 @@ SRC_FIL	= 	minishell \
 			parsing/redir_splitter \
 			parsing/splitters_1 \
 			parsing/splitters_2 \
+			parsing/var_splitter \
 			parsing/variable_expansion \
 			redirections/heredocs/generators/generators \
 			redirections/heredocs/modifyers/modifyers \

@@ -133,30 +133,28 @@ static int	check_valid_identifier(char *str)
 int	ms_export(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 {
 	int		i;
-	int		args_iterator;
+	int		args_i;
 	char	var_name[DEF_BUF_SIZ];
 	int		ret;
 
-	(void)cmd;
-	ret = 0;
-	args_iterator = 1;
+	((void)cmd, ret = 0);
+	args_i = 0;
 	if (args[1])
-		ret = ms_export_check_options(args, &args_iterator);
+		ret = ms_export_check_options(args, &args_i);
 	if (ret)
 		return (ret);
-	while (args[args_iterator] != NULL)
+	while (args[++args_i] != NULL)
 	{
 		(ft_bzero(var_name, DEF_BUF_SIZ), i = -1);
-		ret = check_valid_identifier(args[args_iterator]);
+		ret = check_valid_identifier(args[args_i]);
 		if (!ret)
 		{
-			while (args[args_iterator][++i])
-				if (iterate_through_str(args, &i, args_iterator, var_name))
+			while (args[args_i][++i])
+				if (iterate_through_str(args, &i, args_i, var_name))
 					break ;
-			if (update_env_var(args[args_iterator], var_name, mo_shell) == ERROR)
+			if (update_env_var(args[args_i], var_name, mo_shell) == ERROR)
 				return (-1);
 		}
-		args_iterator++;
 	}
 	return (NO_ERROR);
 }

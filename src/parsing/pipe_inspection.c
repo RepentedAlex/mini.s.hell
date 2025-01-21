@@ -85,7 +85,8 @@ t_error	split_pipes(t_block **head)
 		return (ERROR);
 	while (nav != NULL)
 	{
-		if (ft_strchr(nav->str, '|') == NULL || check_if_pipe_is_quoted(nav->str, ft_strchr(nav->str, '|')))
+		if (ft_strchr(nav->str, '|') == NULL || \
+			check_if_pipe_is_quoted(nav->str, ft_strchr(nav->str, '|')))
 		{
 			nav = nav->next;
 			continue ;
