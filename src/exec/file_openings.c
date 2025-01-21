@@ -56,7 +56,7 @@ t_error	open_file_out(t_block *nav_block, t_cmd *nav_cmd, int mode)
 			0666);
 		if (nav_cmd->fd_o < 0)
 			return (ERROR);
-		write(nav_cmd->fd_o, "", 1);
+		write(nav_cmd->fd_o, "", 0);
 	}
 	if (mode == 2)
 	{
