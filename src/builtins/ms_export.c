@@ -140,7 +140,8 @@ int	ms_export(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	(void)cmd;
 	ret = 0;
 	args_iterator = 1;
-	ret = ms_export_check_options(args, &args_iterator);
+	if (args[1])
+		ret = ms_export_check_options(args, &args_iterator);
 	if (ret)
 		return (ret);
 	while (args[args_iterator] != NULL)
