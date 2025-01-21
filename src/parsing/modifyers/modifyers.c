@@ -17,6 +17,7 @@ t_error	new_expand_variables(t_block **head, t_mo_shell *mo_shell)
 {
 	t_block	*nav;
 	char	*tmp;
+	char	*tmp2;
 
 	nav = *head;
 	while (nav)
@@ -26,10 +27,14 @@ t_error	new_expand_variables(t_block **head, t_mo_shell *mo_shell)
 			tmp = expand_variables(nav->str, mo_shell);
 			if (!tmp)
 				return (ERROR);
+			tmp2 = string_tidyer(tmp);
+			if (!tmp2)
+				return (ERROR);
 			// if (tmp[0] == '\0')
 				// return (free(tmp), ERROR);
+			free(tmp);
 			free(nav->str);
-			nav->str = tmp;
+			nav->str = tmp2;
 		}
 		nav = nav->next;
 	}
