@@ -87,6 +87,8 @@ t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head, t_mo_shell \
 	nav_cmd = *cmd_head;
 	while (nav_block)
 	{
+		if (nav_block->type == PIPE)
+			nav_cmd = nav_cmd->next;
 		if (nav_block->type == INFILE && open_file_in(nav_block, nav_cmd, \
 			1, mo_shell) == ERROR)
 			return (ft_putstr_fd("No such file or directory\n", \
