@@ -28,12 +28,10 @@ void	unlink_heredocs(void)
 		{
 			num[2] = '0';
 			while (num[2] <= '9')
-			while (num[2] <= '9')
 			{
 				filename = ft_strjoin("/tmp/heredoc", num);
-				//PUT CODE HERE
-				unlink(filename);
-				(free(filename), filename = NULL);
+				if (filename)
+					(unlink(filename), free(filename), filename = NULL);
 				num[2]++;
 			}
 			num[1]++;
