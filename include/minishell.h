@@ -35,6 +35,7 @@
 # include <sys/wait.h>
 
 // Libraires persos
+# include "minishell_defines.h"
 # include "minishell_builtins.h"
 # include "minishell_types.h"
 
