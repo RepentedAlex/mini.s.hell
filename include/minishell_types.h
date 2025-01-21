@@ -85,8 +85,13 @@ typedef struct s_cmd
 // Structure mère
 /// @brief
 /// @param og_input Stocks readline's input.
+/// @param clean_input The leading/trailing space-trimmed version of the
+/// original input.
 /// @param expanded_input Stocks to og output with its variable expanded
 /// @param splitted_input The splitted og_input
+/// @param cmds_table The head of the list of command blocks
+/// @param shell_env The shell environment variables.
+/// @param last_exit_status The exit status of the most recent command.
 typedef struct s_mo_shell
 {
 	char	*og_input;
