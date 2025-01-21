@@ -151,6 +151,7 @@ void	free_2d_tab(char **array);
 void	garbage_collect(t_mo_shell *data, int mode);
 void	splash_screen(void);
 // blocks
+t_error	add_after_file_node(t_block *tmp, char *str_tmp);
 t_error	block_add_after(t_block *ref, t_block *to_insert);
 void	block_add_front(t_block *insert, t_block *list);
 t_error	block_add_back(t_block **head, t_block *node);
