@@ -6,7 +6,7 @@
 /*   By: llabonde <llabonde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:58:50 by apetitco          #+#    #+#             */
-/*   Updated: 2024/11/29 18:06:46 by llabonde         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:24:26 by apetitco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ t_error	splitter(t_mo_shell *mo_shell)
 	if (look_for_redir(&mo_shell->splitted_input) == true)
 		if (syntax_check_handler(mo_shell, &error_ret, &sch_ret))
 			return (sch_ret);
-	// block_string_tidyer(&mo_shell->splitted_input);
+	block_string_tidyer(&mo_shell->splitted_input);
 	if (split_spaces(&mo_shell->splitted_input) == ERROR)
 		return (mo_shell->last_exit_status = 2, ERROR);
 	clean_empty_nodes(&mo_shell->splitted_input);
@@ -141,6 +141,7 @@ t_error	splitter(t_mo_shell *mo_shell)
 		return (ERROR);
 	if (split_blockvar_space(&mo_shell->splitted_input) == ERROR)
 		return (mo_shell->last_exit_status = 2, ERROR);
+	block_string_tidyer(&mo_shell->splitted_input);
 	nodes_unquote_strings(&mo_shell->splitted_input);
 	return (NO_ERROR);
 }
