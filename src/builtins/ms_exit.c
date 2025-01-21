@@ -118,7 +118,7 @@ int	ms_exit(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 		{
 			exit_s = exit_gen(args[1], mo_shell);
 		}
-		exit_s = ft_atoi(args[1]);
+		exit_s = (ft_atoi(args[1]) % 256);
 	}
 	if (args && args[1] && args[2])
 	{
