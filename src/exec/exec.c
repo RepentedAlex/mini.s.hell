@@ -65,7 +65,7 @@ void	run_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, t_pipes *pipes, \
 	{
 		pipes->pipe_i++;
 		pids->pid_i++;
-		if (!to_launch->cmd)
+		if (!to_launch->cmd || to_launch->cmd[0] == '\0')
 		{
 			to_launch = to_launch->next;
 			continue ;
