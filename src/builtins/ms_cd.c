@@ -26,6 +26,7 @@ static void	update_pwd(t_mo_shell *mo_shell, t_cmd *cmd)
 	new_pwd = ft_strdup("PWD=");
 	path_tmp = get_var_content("PWD", mo_shell->shell_env);
 	tmp = append(ft_strdup("OLDPWD="), path_tmp, ft_strlen(path_tmp));
+	free(path_tmp);
 	export_args[1] = tmp;
 	ms_export(export_args, mo_shell, cmd);
 	free(tmp);
