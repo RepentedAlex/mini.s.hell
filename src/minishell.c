@@ -48,7 +48,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	(void)argv;
 	(void)argc;
-	mo_shell.shell_env = NULL;
+	ft_bzero(&mo_shell, sizeof(t_mo_shell));
 	if (envp[0] == NULL)
 		init_min_env(&mo_shell);
 	else
@@ -59,12 +59,6 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 	g_signal_pid = 0;
 	signals();
-	mo_shell.last_exit_status = 0;
-	mo_shell.og_input = NULL;
-	mo_shell.clean_input = NULL;
-	mo_shell.expanded_input = NULL;
-	mo_shell.splitted_input = NULL;
-	mo_shell.cmds_table = NULL;
 	if (init_shell() == ERROR)
 		return (ERROR);
 	return (mini_s_hell(&mo_shell));
