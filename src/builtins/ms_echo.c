@@ -24,7 +24,7 @@ bool	echo_check_option(char *str)
 	int	i;
 
 	i = 0;
-	while (str && str[i]  && ft_is_ifs(str[i]))
+	while (str && str[i] && ft_is_ifs(str[i]))
 		i++;
 	if (str[i] == '-')
 		i++;
