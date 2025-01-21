@@ -15,7 +15,7 @@
 
 int	ms_export_check_options(char **args, int *iterator)
 {
-	if (args[*iterator][0] == '-')
+	if (args && args[*iterator] && args[*iterator][0] == '-')
 		return (printf("%s: invalid option\n", args[*iterator]), 2);
 	return (0);
 }
