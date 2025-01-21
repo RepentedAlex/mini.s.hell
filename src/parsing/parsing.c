@@ -125,8 +125,7 @@ t_error	splitter(t_mo_shell *mo_shell)
 	if (look_for_pipes(&mo_shell->splitted_input) == true)
 	{
 		if (check_pipes_syntax(&mo_shell->splitted_input) == ERROR)
-			return (printf("mini.s.hell: syntax error near unexpected \
-token '|'\n"), mo_shell->last_exit_status = 2, ERROR);
+			return (printf(E_MSG), mo_shell->last_exit_status = 2, ERROR);
 		if (split_pipes(&mo_shell->splitted_input) == ERROR)
 			return (mo_shell->last_exit_status = 2, ERROR);
 	}
