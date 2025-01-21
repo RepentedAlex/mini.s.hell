@@ -139,6 +139,7 @@ void	garbage_collect(t_mo_shell *data, int mode);
 void	splash_screen(void);
 // blocks
 t_error	block_add_after(t_block *ref, t_block *to_insert);
+void block_add_front(t_block *insert, t_block *list);
 t_error	block_add_back(t_block **head, t_block *node);
 t_block	*block_goto_last(t_block *head);
 t_block	*block_new(char *str);
