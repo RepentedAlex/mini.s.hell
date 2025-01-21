@@ -23,6 +23,8 @@ bool	echo_check_option(char *str)
 {
 	int	i;
 
+	if (!str)
+		return (false);
 	i = 0;
 	while (str && str[i] && ft_is_ifs(str[i]))
 		i++;
