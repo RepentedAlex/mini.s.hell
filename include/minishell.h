@@ -90,6 +90,7 @@ bool	ft_is_ifs(char c);
 int		ft_is_symbol(const char *str);
 bool	ft_string_is_only_ifs(char *str);
 bool	is_valid_variable_name(char *vr_name);
+bool	string_is_only_ifs(const char *str);
 bool	syntax_check_handler(t_mo_shell *mo_shell, int *error_ret, \
 	t_error *value1);
 bool	words_in_str(char *str);
