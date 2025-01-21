@@ -117,6 +117,7 @@ clean:
 fclean: clean
 	@echo "Removing $(NAME)..."
 	@$(MAKE) fclean -C ./Libft
+	@rm $(SUP_FILE)
 	@rm -f $(NAME)
 
 re: fclean
