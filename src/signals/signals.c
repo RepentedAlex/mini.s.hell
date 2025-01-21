@@ -12,6 +12,18 @@
 
 #include "minishell.h"
 
+void	disable_quit_signal(void)
+{
+	struct termios	tty;
+
+	if (tcgetattr(STDIN_FILENO, &tty) < 0)
+		return ;
+	tty.c_cc[VQUIT] = _POSIX_VDISABLE;
+	tty.c_lflag &= ~ECHOCTL;
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &tty) < 0)
+		return ;
+}
+
 /// @brief Clears the current readline input line.
 /// This function erases the content of the current line in the readline buffer
 /// and prepares for a new input line.
@@ -59,4 +71,5 @@ void	signals(void)
 	signal(SIGINT, &handle_sigint);
 	signal(SIGABRT, &handle_sigabrt);
 	signal(SIGQUIT, SIG_IGN);
+	disable_quit_signal();
 }
