@@ -121,13 +121,7 @@ int	ms_exit(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 		exit_s = (ft_atoi(args[1]) % 256);
 	}
 	if (args && args[1] && args[2])
-	{
-		if (args[1] && args[2])
-		{
-			exit_s = ft_err_msg((t_err){1, ERRMSG_TOO_MANY_ARGS, NULL});
-			return (1);
-		}
-	}
+		exit_s = ft_err_msg((t_err){1, ERRMSG_TOO_MANY_ARGS, NULL});
 	garbage_collect(mo_shell, 1);
 	exit(exit_s);
 }
