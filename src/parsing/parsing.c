@@ -11,7 +11,10 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_types.h"
 #include <libft.h>
+#include <stdio.h>
+void print_t_blocks(const t_block *blk);
 
 void	clean_empty_nodes(t_block **head)
 {
@@ -90,6 +93,20 @@ token '|'\n"), mo_shell->last_exit_status = 2, ERROR);
 	block_string_tidyer(&mo_shell->splitted_input);
 	return (NO_ERROR);
 }
+
+void print_t_blocks(const t_block *blk)
+{
+	t_block *runner = (t_block *)blk;
+
+
+	printf("printing t_blocks\n");
+	while (runner)
+	{
+		printf("'%s' of type %s\n", runner->str, type_to_str(runner->type));
+		runner = runner->next;
+	}
+}
+
 
 t_error	parsing(t_mo_shell *mo_shell)
 {
