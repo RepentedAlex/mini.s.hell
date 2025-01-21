@@ -30,17 +30,20 @@ void	move_var_in_env(int var_index, char **env, int var_after)
 		* (var_after + 1));
 }
 
-bool	check_valid_identifier(char *identifier, t_cmd *cmd, char **env)
+bool	check_valid_identifier(char *str, t_cmd *cmd, char **env)
 {
 	int	i;
 
-	(void)cmd;
-	(void)env;
+	((void)cmd, (void)env);
 	i = 0;
-	while (identifier[i])
+	if (str[i] == '\0')
+		return (printf("export: `': not a valid identifier\n"), false);
+	if (str[i] == '=' || ft_isdigit(str[i]))
+		return (printf("export: %s: not a valid identifier\n", str), false);
+	while (str[i] && str[i] != '=')
 	{
-		if (!ft_isalnum(identifier[i]) || identifier[i] == '=')
-			return (false);
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (printf("export: %s: not valid identifier\n", str), false);
 		i++;
 	}
 	return (true);
