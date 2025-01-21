@@ -69,7 +69,7 @@ typedef bool	t_error;
 
 ///MAIN BLOCKS//////////////////////////////////////////////////////////////////
 t_error	execution(t_mo_shell *mo_shell);
-int		mini_s_hell(int argc, char *argv[], char *envp[], t_mo_shell *mo_shell);
+int		mini_s_hell(t_mo_shell *mo_shell);
 t_error	parsing(t_mo_shell *mo_shell);
 void	signals(void);
 t_error	splitter(t_mo_shell *mo_shell);
