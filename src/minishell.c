@@ -32,6 +32,8 @@ int	mini_s_hell(t_mo_shell *mo_shell)
 		garbage_collect(mo_shell, COLLECT_CMD);
 		g_signal_pid = 0;
 		mo_shell->og_input = readline(PROMPT);
+		if (string_is_only_ifs(mo_shell->og_input))
+			continue ;
 		if (!check_input(mo_shell))
 			break ;
 		g_signal_pid = 1;
