@@ -48,6 +48,8 @@ int	get_num_unnec_spaces(char *s)
 		check_in_quotes(s[i], &quotes);
 		i++;
 	}
+	if (i > 0 && ft_strchr(IFS, s[i - 1]))
+		spaces_to_remove++;
 	return (spaces_to_remove);
 }
 
