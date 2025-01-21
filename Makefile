@@ -72,6 +72,7 @@ SRC_FIL	= 	minishell \
 			redirections/heredocs/heredocs \
 			signals/signals \
 			utilitaries/block_nodes \
+			utilitaries/block_add_front \
 			utilitaries/checkers \
 			utilitaries/ft_is \
 			utilitaries/ft_split \
