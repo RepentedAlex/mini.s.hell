@@ -98,7 +98,7 @@ $(NAME): $(OBJ) $(LIBFT_A)
 	@echo "$(NAME) is born! :D"
 
 $(LIBFT_A):
-	@$(MAKE) -C ./Libft
+	@$(MAKE) --no-print-directory -C ./Libft
 
 $(BUI_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
 	@mkdir -p $(dir $@)
@@ -110,19 +110,20 @@ $(OBJF):
 	@touch $(OBJF)
 
 clean:
-	@rm -rf $(BUI_DIR) $(OBJF)
-	@$(MAKE) clean -C ./Libft
 	@echo "Removing build files..."
+	@rm -rf $(BUI_DIR) $(OBJF)
+	@$(MAKE) --no-print-directory clean -C ./Libft
+	@echo "Build files removed successfully!"
 
 fclean: clean
 	@echo "Removing $(NAME)..."
-	@$(MAKE) fclean -C ./Libft
-	@rm $(SUP_FILE)
+	@$(MAKE) --no-print-directory fclean -C ./Libft
+	@rm -f $(SUP_FILE)
 	@rm -f $(NAME)
 
 re: fclean
 	@$(MAKE) --no-print-directory fclean
-	@$(MAKE) re -C ./Libft
+	@$(MAKE) --no-print-directory re -C ./Libft
 	@echo "Making $(NAME) again"
 	@$(MAKE) --no-print-directory all
 
