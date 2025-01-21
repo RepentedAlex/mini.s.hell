@@ -41,7 +41,7 @@ void	print_t_blocks(const t_block *blk)
 {
 	t_block	*runner;
 
-	runner = blk;
+	runner = (t_block *)blk;
 	printf("printing t_blocks\n");
 	while (runner)
 	{

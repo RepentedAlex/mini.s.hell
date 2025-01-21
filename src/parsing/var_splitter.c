@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <libft.h>
 
 #define OFFSET 0
 #define QUOTE 1
