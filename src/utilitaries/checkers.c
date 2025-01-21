@@ -31,6 +31,22 @@ int	check_input(t_mo_shell *mo_shell)
 	return (2);
 }
 
+bool	string_is_only_ifs(const char *str)
+{
+	int	i;
+
+	if (!str)
+		return (false);
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_is_ifs(str[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 bool	words_in_str(char *str)
 {
 	int		i;
