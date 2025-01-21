@@ -92,11 +92,7 @@ OBJF	= .cache_exists
 
 all: $(NAME)
 
-update:
-	cd ./Libft/ ; git pull ; cd ../
-
-
-$(NAME): $(OBJ) $(LIBFT_A) | update
+$(NAME): $(OBJ) $(LIBFT_A)
 	@echo "Linking $(NAME)..."
 	@$(CC) $(FLAGS) $(OBJ) $(LIBFT_A) $(LFLAGS) -o $(NAME)
 	@echo "$(NAME) is born! :D"
