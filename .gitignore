@@ -3,3 +3,4 @@
 build
 minishell
 supress_readline.valgrind
+Libft/libft.a
