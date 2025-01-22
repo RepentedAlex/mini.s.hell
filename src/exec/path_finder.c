@@ -57,7 +57,7 @@ char	*get_path(char *cmd, char *envp[])
 	char	*part_path;
 	char	**cmds_array;
 
-	if (ft_strchr(cmd, '/'))
+	if (ft_strchr(cmd, '/') || cmd[0] == '\0')
 		return (cmd);
 	i = 0;
 	all_paths = ft_split(get_env(envp), ':');
