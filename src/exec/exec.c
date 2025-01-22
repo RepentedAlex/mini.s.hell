@@ -65,11 +65,6 @@ void	run_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, t_pipes *pipes, \
 	{
 		pipes->pipe_i++;
 		pids->pid_i++;
-		if (!to_launch->cmd || to_launch->cmd[0] == '\0')
-		{
-			to_launch = to_launch->next;
-			continue ;
-		}
 		if (to_launch->next)
 			if (pipe(pipes->pipe[pipes->pipe_i]) == -1)
 				(perror("pipe error"), exit(EXIT_FAILURE));
