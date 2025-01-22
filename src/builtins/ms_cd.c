@@ -62,9 +62,9 @@ static int	cd_to_home(t_mo_shell *mo_shell, t_cmd *cmd)
 	user_path = append(user_path, home_dir, ft_strlen(home_dir));
 	free(home_dir);
 	if (!user_path)
-		return (-1);
+		return (1);
 	if (chdir(user_path) != 0)
-		return (free(user_path), -1);
+		return (free(user_path), 1);
 	free(user_path);
 	return (0);
 }
@@ -89,12 +89,7 @@ static int	cd_to_path(char *path, t_mo_shell *mo_shell, t_cmd *cmd)
 	(void)mo_shell;
 	res = chdir(path);
 	if (res == -1)
-		return (ft_putstr_fd("Couldn't change directory\n", 2), 1);
-	if (res != 0)
-	{
-		printf("mini.s.hell: %s: Invalid argument\n", path);
-		return (-res);
-	}
+		return (err_msg(CD_NO_SCH_FOD_MSG, path), CD_NO_SCH_FOD_CODE);
 	return (0);
 }
 
@@ -118,7 +113,8 @@ int	ms_cd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	if (!args[1])
 		exit_status = cd_to_home(mo_shell, cmd);
 	else
-		cd_to_path(args[1], mo_shell, cmd);
-	update_pwd(mo_shell, cmd);
+		exit_status = cd_to_path(args[1], mo_shell, cmd);
+	if (exit_status == 0)
+		update_pwd(mo_shell, cmd);
 	return (exit_status);
 }

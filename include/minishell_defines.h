@@ -47,14 +47,18 @@
 
 ///ERROR CODES//////////////////////////////////////////////////////////////////
 # define CD_NO_HOME_CODE 1
+# define CD_NO_SCH_FOD_CODE 1
 # define EXP_INV_ID_CODE 1
 # define EXP_INV_OPT_CODE 2
 ////////////////////////////////////////////////////////////////////////////////
 
 ///ERROR MESSAGES///////////////////////////////////////////////////////////////
 # define CD_NO_HOME_MSG "mini.s.hell: cd: HOME not set"
+# define CD_NO_SCH_FOD_MSG "mini.s.hell: cd: %s: No such file or directory\n"
 # define EXP_INV_ID_MSG "mini.s.hell: export: `%s': not a valid identifier\n"
 # define EXP_INV_OPT_MSG "mini.s.hell: export: %s: invalid option\n"
+# define PWD_RET_CWD_MSG "mini.s.hell: pwd: couldn't retrieving current \
+	directory\n"
 # define UNS_INV_ID_MSG "mini.s.hell: unset: `%s': not a invalid identifier\n"
 ////////////////////////////////////////////////////////////////////////////////
 ///
