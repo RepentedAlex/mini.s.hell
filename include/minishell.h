@@ -49,6 +49,10 @@ extern pid_t	g_signal_pid;
 # define ERROR 1
 # define NO_ERROR 0
 
+// Used by garbage_collect()
+# define COLLECT_ALL 1
+# define COLLECT_CMD 0
+
 # define PROMPT "mini.s.hell-> "
 
 // IFS = Internal Fields Separator
@@ -136,6 +140,10 @@ void	expand_hd_i(int fd, t_mo_shell *mo_shell, char *line, \
 	char **expdd_line);
 t_error	new_expand_variables(t_block **head, t_mo_shell *mo_shell);
 char	*unquote_delimiter(char *str);
+////////////////////////////////////////////////////////////////////////////////
+
+///PRINTERS/////////////////////////////////////////////////////////////////////
+void	err_msg(char *err_msg, char *element);
 ////////////////////////////////////////////////////////////////////////////////
 
 ///SPLITTERS////////////////////////////////////////////////////////////////////
