@@ -91,15 +91,15 @@ t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head, t_mo_shell \
 			nav_cmd = nav_cmd->next;
 		if (nav_block->type == INFILE && open_file_in(nav_block, nav_cmd, \
 			1, mo_shell) == ERROR)
-			return (ft_putstr_fd("No such file or directory\n", \
-				STDERR_FILENO), ERROR);
+			return (err_msg(NO_SCH_FOD_MSG, nav_block->str), \
+			mo_shell->les = 1, ERROR);
 		if (nav_block->type == OUTFILE && discriminate_out_type(nav_block, \
 			nav_cmd) == ERROR)
 			return (ERROR);
 		if (nav_block->type == EOFHD && open_file_in(nav_block, nav_cmd, \
 			2, mo_shell) == ERROR)
-			return (ft_putstr_fd("No such file or directory\n", \
-				STDERR_FILENO), ERROR);
+			return (err_msg(CANT_CRT_HD_FILE_MSG, NULL), \
+			mo_shell->les = GENERAL_ERROR, ERROR);
 		nav_block = nav_block->next;
 	}
 	return (NO_ERROR);

@@ -108,8 +108,7 @@ int	ms_cd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 
 	exit_status = 0;
 	if (args[1] && args[2])
-		return (ft_putstr_fd("mini.s.hell: cd: invalid arguments\n", 2), \
-			0);
+		return (err_msg(CD_TOO_MANY_ARG_MSG, NULL), CD_TOO_MANY_ARG_CODE);
 	if (!args[1])
 		exit_status = cd_to_home(mo_shell, cmd);
 	else

@@ -20,6 +20,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 ///ERROR CODES//////////////////////////////////////////////////////////////////
+# define GENERAL_ERROR 1
 # define STX_ERR_CODE 2
 # define IS_DIR_CODE 126
 # define PERM_DENIED_CODE 126
@@ -28,6 +29,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 ///ERROR MESSAGES///////////////////////////////////////////////////////////////
+# define CANT_CRT_HD_FILE_MSG "mini.s.hell: cannot create temp file for \
+	here-document: No space left on device\n"
 # define PIP_STX_MSG "mini.s.hell: syntax error near unexpected token `|'\n"
 # define APP_STX_MSG "mini.s.hell: syntax error near unexpected token '>>'\n"
 # define HD_STX_MSG "mini.s.hell: syntax error near unexpected token '<<'\n"
@@ -48,6 +51,7 @@
 ///ERROR CODES//////////////////////////////////////////////////////////////////
 # define CD_NO_HOME_CODE 1
 # define CD_NO_SCH_FOD_CODE 1
+# define CD_TOO_MANY_ARG_CODE 1
 # define EXP_INV_ID_CODE 1
 # define EXP_INV_OPT_CODE 2
 ////////////////////////////////////////////////////////////////////////////////
@@ -55,6 +59,7 @@
 ///ERROR MESSAGES///////////////////////////////////////////////////////////////
 # define CD_NO_HOME_MSG "mini.s.hell: cd: HOME not set"
 # define CD_NO_SCH_FOD_MSG "mini.s.hell: cd: %s: No such file or directory\n"
+# define CD_TOO_MANY_ARG_MSG "mini.s.hell: cd: too many arguments\n"
 # define EXP_INV_ID_MSG "mini.s.hell: export: `%s': not a valid identifier\n"
 # define EXP_INV_OPT_MSG "mini.s.hell: export: %s: invalid option\n"
 # define PWD_RET_CWD_MSG "mini.s.hell: pwd: couldn't retrieving current \
