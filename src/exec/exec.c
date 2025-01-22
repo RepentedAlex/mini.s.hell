@@ -68,7 +68,7 @@ void	run_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, t_pipes *pipes, \
 		if (to_launch->next)
 			if (pipe(pipes->pipe[pipes->pipe_i]) == -1)
 				(perror("pipe error"), exit(EXIT_FAILURE));
-		mo_shell->last_exit_status = fork_for_cmd(mo_shell, to_launch, \
+		mo_shell->les = fork_for_cmd(mo_shell, to_launch, \
 			pipes, pids);
 		if (to_launch->prev)
 		{
@@ -106,7 +106,7 @@ t_error	execution(t_mo_shell *mo_shell)
 		return (ERROR);
 	if (pipeline_setup(mo_shell) == ERROR)
 		return (close_fds(&mo_shell->cmds_table), ERROR);
-	mo_shell->last_exit_status = execution_sequence(mo_shell);
+	mo_shell->les = execution_sequence(mo_shell);
 	close_fds(&mo_shell->cmds_table);
 	return (NO_ERROR);
 }

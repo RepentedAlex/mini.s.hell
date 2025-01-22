@@ -29,7 +29,7 @@ int	wait_for_processes(t_pids *pids_array, t_mo_shell *mo_shell)
 	int	status;
 	int	exit_status;
 
-	exit_status = mo_shell->last_exit_status;
+	exit_status = mo_shell->les;
 	i = 0;
 	while (i <= pids_array->pid_i)
 	{

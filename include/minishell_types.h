@@ -100,7 +100,7 @@ typedef struct s_mo_shell
 	t_block	*splitted_input;
 	t_cmd	*cmds_table;
 	char	**shell_env;
-	int		last_exit_status;
+	int		les;
 }				t_mo_shell;
 
 typedef struct s_builtin

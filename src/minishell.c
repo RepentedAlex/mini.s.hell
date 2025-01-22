@@ -15,15 +15,17 @@
 
 pid_t	g_signal_pid;
 
-void	err_msg(char *err_msg, char *element)
+int	err_msg(char *err_msg, char *element)
 {
 	int		stdout_copy;
+	int		printf_ret;
 
 	stdout_copy = dup(STDOUT_FILENO);
 	dup2(STDERR_FILENO, STDOUT_FILENO);
-	printf(err_msg, element);
+	printf_ret = printf(err_msg, element);
 	dup2(stdout_copy, STDOUT_FILENO);
 	close(stdout_copy);
+	return (printf_ret);
 }
 
 char	*new_prompt(char *prompt)
@@ -62,7 +64,7 @@ int	mini_s_hell(t_mo_shell *mo_shell)
 			continue ;
 	}
 	garbage_collect(mo_shell, COLLECT_ALL);
-	return (ft_putstr_fd("exit\n", STDOUT_FILENO), EXIT_SUCCESS);
+	return (printf("exit\n"), EXIT_SUCCESS);
 }
 
 int	main(int argc, char *argv[], char *envp[])

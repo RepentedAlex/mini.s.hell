@@ -18,12 +18,12 @@ int	check_input(t_mo_shell *mo_shell)
 		return (0);
 	if (mo_shell->og_input[0] == '!' && !mo_shell->og_input[1])
 	{
-		mo_shell->last_exit_status = 1;
+		mo_shell->les = 1;
 		return (1);
 	}
 	if (mo_shell->og_input[0] == '\0' || !words_in_str(mo_shell->og_input))
 	{
-		mo_shell->last_exit_status = 0;
+		mo_shell->les = 0;
 		return (1);
 	}
 	if (*mo_shell->og_input)

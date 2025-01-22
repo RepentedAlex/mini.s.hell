@@ -28,7 +28,7 @@ t_error	expand_cmd_path(t_cmd **head, char *envp[])
 		{
 			tmp = get_path(nav->cmd, envp);
 			if (!tmp)
-				return (printf(CMD_NOT_FOUND_MSG, nav->cmd), ERROR);
+				return (err_msg(CMD_NOT_FOUND_MSG, nav->cmd), ERROR);
 			(free(nav->cmd), nav->cmd = tmp, tmp = NULL);
 		}
 		nav = nav->next;

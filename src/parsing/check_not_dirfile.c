@@ -63,7 +63,7 @@ int	check_not_dirfile(t_block **head, t_mo_shell *mo_shell)
 			if (cide_ret == -1)
 				return (-1);
 			if (cide_ret == 1)
-				return (mo_shell->last_exit_status = 126, 1);
+				return (mo_shell->les = 126, 1);
 		}
 		nav = nav->next;
 		while (nav)

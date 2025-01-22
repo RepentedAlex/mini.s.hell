@@ -75,11 +75,11 @@ int	child_process_bi(t_cmd *to_launch, t_pipes *pipes, t_mo_shell *mo_shell, \
 	{
 		handler_dup2(to_launch, pipes);
 		f_builtin = (launch_builtin(to_launch));
-		mo_shell->last_exit_status = f_builtin(to_launch->args, mo_shell, \
+		mo_shell->les = f_builtin(to_launch->args, mo_shell, \
 			to_launch);
-		if (mo_shell->last_exit_status == 0)
+		if (mo_shell->les == 0)
 			return (EXIT_SUCCESS);
-		return (mo_shell->last_exit_status);
+		return (mo_shell->les);
 	}
 	return (EXIT_FAILURE);
 }
@@ -94,7 +94,7 @@ int	fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 {
 	int		ret;
 
-	ret = mo_shell->last_exit_status;
+	ret = mo_shell->les;
 	if (is_builtin(to_launch->cmd) == true && !to_launch->prev && \
 		!to_launch->next)
 	{

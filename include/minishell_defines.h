@@ -20,7 +20,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 ///ERROR CODES//////////////////////////////////////////////////////////////////
-# define SYNTAX_ERR_CODE 2
+# define STX_ERR_CODE 2
 # define IS_DIR_CODE 126
 # define PERM_DENIED_CODE 126
 # define CMD_NOT_FOUND_CODE 127
@@ -28,7 +28,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 ///ERROR MESSAGES///////////////////////////////////////////////////////////////
-# define SYNTAX_ERR_MSG "mini.s.hell: syntax error near unexpected token '%s'\n"
+# define PIP_STX_MSG "mini.s.hell: syntax error near unexpected token `|'\n"
+# define APP_STX_MSG "mini.s.hell: syntax error near unexpected token '>>'\n"
+# define HD_STX_MSG "mini.s.hell: syntax error near unexpected token '<<'\n"
+# define NEW_STX_MSG "mini.s.hell: syntax error near unexpected token 'newline'\
+	\n"
+# define REI_STX_MSG "mini.s.hell: syntax error near unexpected token '<'\n"
+# define REO_STX_MSG "mini.s.hell: syntax error near unexpected token '>'\n"
 # define IS_DIR_MSG "mini.s.hell: %s is a directory\n"
 # define PERM_DENIED_MSG "mini.s.hell: %s: permission denied\n"
 # define CMD_NOT_FOUND_MSG "mini.s.hell: %s: command not found\n"
@@ -39,8 +45,17 @@
 ////////////////////////////////////BUILTINS////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+///ERROR CODES//////////////////////////////////////////////////////////////////
+# define CD_NO_HOME_CODE 1
+# define EXP_INV_ID_CODE 1
+# define EXP_INV_OPT_CODE 2
+////////////////////////////////////////////////////////////////////////////////
+
 ///ERROR MESSAGES///////////////////////////////////////////////////////////////
-# define UNS_INVALID_ID "mini.s.hell: unset: '%s': not a invalid identifier\n"
+# define CD_NO_HOME_MSG "mini.s.hell: cd: HOME not set"
+# define EXP_INV_ID_MSG "mini.s.hell: export: `%s': not a valid identifier\n"
+# define EXP_INV_OPT_MSG "mini.s.hell: export: %s: invalid option\n"
+# define UNS_INV_ID_MSG "mini.s.hell: unset: `%s': not a invalid identifier\n"
 ////////////////////////////////////////////////////////////////////////////////
 ///
 #endif //MINISHELL_DEFINES_H

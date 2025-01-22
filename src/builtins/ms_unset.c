@@ -35,15 +35,13 @@ bool	check_valid_identifier(char *str, t_cmd *cmd, char **env)
 	int	i;
 
 	((void)cmd, (void)env);
+	if (str[0] == '\0' || str[0] == '=' || ft_isdigit(str[0]))
+		return (false);
 	i = 0;
-	if (str[i] == '\0')
-		return (printf("export: `': not a valid identifier\n"), false);
-	if (str[i] == '=' || ft_isdigit(str[i]))
-		return (printf("export: %s: not a valid identifier\n", str), false);
 	while (str[i] && str[i] != '=')
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (printf("export: %s: not valid identifier\n", str), false);
+			return (false);
 		i++;
 	}
 	return (true);

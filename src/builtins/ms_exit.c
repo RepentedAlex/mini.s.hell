@@ -111,7 +111,7 @@ int	ms_exit(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	int	exit_s;
 
 	(void)cmd;
-	exit_s = mo_shell->last_exit_status;
+	exit_s = mo_shell->les;
 	if (args && args[1])
 	{
 		if (!ft_isnumber(args[1]))

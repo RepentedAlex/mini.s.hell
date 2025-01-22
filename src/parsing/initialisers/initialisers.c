@@ -26,7 +26,7 @@ char	*str_init(void)
 
 void	init_les(char **les, size_t *les_len, t_mo_shell *mo_shell)
 {
-	*les = ft_itoa(mo_shell->last_exit_status);
+	*les = ft_itoa(mo_shell->les);
 	if (!*les)
 		*les = 0;
 	*les_len = ft_strlen(*les);

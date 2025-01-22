@@ -80,7 +80,7 @@ int	ms_pwd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	cwd = NULL;
 	if (args && args[1] && args[1][0] == '-')
 		return (write(1, "Invalid option\n", 15), \
-			mo_shell->last_exit_status = 2, 2);
+			mo_shell->les = 2, 2);
 	if (retrieve_cwd(cwd, &tmp) == ERROR)
 		return (1);
 	cwd = ft_strdup("PWD=");
