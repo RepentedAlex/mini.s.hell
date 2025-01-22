@@ -15,8 +15,29 @@
 
 pid_t	g_signal_pid;
 
-#define COLLECT_ALL 1
-#define COLLECT_CMD 0
+void	err_msg(char *err_msg, char *element)
+{
+	int		stdout_copy;
+
+	stdout_copy = dup(STDOUT_FILENO);
+	dup2(STDERR_FILENO, STDOUT_FILENO);
+	printf(err_msg, element);
+	dup2(stdout_copy, STDOUT_FILENO);
+	close(stdout_copy);
+}
+
+char	*new_prompt(char *prompt)
+{
+	int		stdout_copy;
+	char	*line;
+
+	stdout_copy = dup(STDOUT_FILENO);
+	dup2(STDERR_FILENO, STDOUT_FILENO);
+	line = readline(prompt);
+	dup2(stdout_copy, STDOUT_FILENO);
+	close(stdout_copy);
+	return (line);
+}
 
 /// @brief The main mini.s.hell function ! :D
 /// @param argc The number of arguments passed via the CLI.
@@ -31,7 +52,7 @@ int	mini_s_hell(t_mo_shell *mo_shell)
 	{
 		garbage_collect(mo_shell, COLLECT_CMD);
 		g_signal_pid = 0;
-		mo_shell->og_input = readline(PROMPT);
+		mo_shell->og_input = new_prompt(PROMPT);
 		if (string_is_only_ifs(mo_shell->og_input))
 			continue ;
 		if (!check_input(mo_shell))
