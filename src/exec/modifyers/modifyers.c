@@ -21,14 +21,8 @@ t_error	expand_cmd_path(t_cmd **head, char *envp[])
 	nav = *head;
 	while (nav)
 	{
-		if (is_builtin(nav->cmd) == true)
-		{
-			nav = nav->next;
-			continue ;
-		}
-		if (ft_strncmp(nav->cmd, "./", 2) == 0 || ft_strchr(nav->cmd, \
-			'/') != NULL || \
-			is_builtin(nav->cmd))
+		if (ft_strncmp(nav->cmd, "./", 2) == 0 || \
+			ft_strchr(nav->cmd, '/') != NULL || is_builtin(nav->cmd))
 			(void)nav;
 		else if (nav->cmd[0] != '\0')
 		{
