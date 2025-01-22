@@ -14,7 +14,7 @@
 
 #include "minishell.h"
 
-int	check_if_dirfile_exist(char *path, t_mo_shell *mo_shell)
+int	check_if_dirfile_exist(char *path)
 {
 	DIR	*dir;
 	int	fd;
@@ -25,21 +25,17 @@ int	check_if_dirfile_exist(char *path, t_mo_shell *mo_shell)
 		return (0);
 	dir = opendir(path);
 	if (dir != NULL)
-	{
-		(closedir(dir), printf("%s: Is a directory\n", path));
-		return (mo_shell->last_exit_status = 126, 1);
-	}
-	if (access(path, R_OK | X_OK) == -1)
-	{
-		printf("%s: Permission denied\n", path);
-		return (1);
-	}
+		return (closedir(dir), err_msg(IS_DIR_MSG, path), IS_DIR_CODE);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
-		return (-1);
+		if (access(path, F_OK) == -1)
+			return (err_msg(NO_SCH_FOD_MSG, path), NO_SCH_FOD_CODE);
+		return (err_msg(PERM_DENIED_MSG, path), PERM_DENIED_CODE);
 	}
 	close(fd);
+	if (access(path, R_OK | X_OK) == -1)
+		return (err_msg(PERM_DENIED_MSG, path), PERM_DENIED_CODE);
 	return (0);
 }
 
@@ -63,7 +59,7 @@ int	check_not_dirfile(t_block **head, t_mo_shell *mo_shell)
 	{
 		if (ft_strchr(nav->str, '/'))
 		{
-			cide_ret = check_if_dirfile_exist(nav->str, mo_shell);
+			cide_ret = check_if_dirfile_exist(nav->str);
 			if (cide_ret == -1)
 				return (-1);
 			if (cide_ret == 1)
@@ -73,7 +69,7 @@ int	check_not_dirfile(t_block **head, t_mo_shell *mo_shell)
 		while (nav)
 		{
 			if (nav->prev->type != RAW && ft_strchr(nav->str, '/') && \
-				check_if_dirfile_exist(nav->str, mo_shell) == true)
+				check_if_dirfile_exist(nav->str) == true)
 				return (1);
 			nav = nav->next;
 		}
