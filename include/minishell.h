@@ -82,7 +82,7 @@ t_error	splitter(t_mo_shell *mo_shell);
 
 ///CHECKERS/////////////////////////////////////////////////////////////////////
 int		check_after_redir(char *str, int i);
-int		check_if_dirfile_exist(char *path, t_mo_shell *mo_shell);
+int		check_if_dirfile_exist(char *path);
 bool	check_if_word_is_quoted(const char *word);
 void	check_in_quotes(char c, int *quotes);
 int		check_input(t_mo_shell *mo_shell);
