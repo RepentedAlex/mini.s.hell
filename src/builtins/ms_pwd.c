@@ -31,8 +31,8 @@ int	ms_pwd(char **args, t_mo_shell *mo_shell, t_cmd *cmd)
 	(void)cmd;
 	cwd = NULL;
 	if (args && args[1] && args[1][0] == '-')
-		return (write(1, "Invalid option\n", 15), \
-			mo_shell->les = 2, 2);
+		return (err_msg(PWD_INV_OPT_MSG, args[1]), \
+		mo_shell->les = PWD_INV_OPT_CODE, PWD_INV_OPT_CODE);
 	cwd = getcwd(cwd, DEF_BUF_SIZ);
 	if (cwd == NULL)
 		return (free(cwd), err_msg(PWD_RET_CWD_MSG, NULL), 1);

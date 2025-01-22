@@ -209,7 +209,7 @@ t_error	lexcat_redir_i(t_block **head);
 t_error	lexcat_redir_o(t_block **head);
 // splitters
 t_error	handle_ap(t_block *nav, int *i);
-int		handle_else(t_block *nav, int *i);
+t_error	handle_else(t_block *nav, int *i);
 t_error	handle_hd(t_block *nav, int *i);
 int		handle_ifs(t_block *nav, int *i);
 int		handle_quotes(t_block *nav, int *i);

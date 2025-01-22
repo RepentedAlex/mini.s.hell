@@ -41,7 +41,7 @@ t_error	handle_ap(t_block *nav, int *i)
 	return (NO_ERROR);
 }
 
-int	handle_else(t_block *nav, int *i)
+t_error	handle_else(t_block *nav, int *i)
 {
 	char	*str;
 
@@ -53,6 +53,8 @@ int	handle_else(t_block *nav, int *i)
 		if (nav->str[*i] == ' ' || nav->str[*i] == '\t' || nav->str[*i] == '\n')
 		{
 			str = ft_strdup(&nav->str[*i + 1]);
+			if (!str)
+				return (ERROR);
 			free(nav->str);
 			nav->str = str;
 		}
@@ -63,7 +65,7 @@ int	handle_else(t_block *nav, int *i)
 			nav->str = str;
 		}
 	}
-	return (1);
+	return (NO_ERROR);
 }
 
 t_error	handle_hd(t_block *nav, int *i)

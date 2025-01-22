@@ -54,6 +54,7 @@
 # define CD_TOO_MANY_ARG_CODE 1
 # define EXP_INV_ID_CODE 1
 # define EXP_INV_OPT_CODE 2
+# define PWD_INV_OPT_CODE 2
 ////////////////////////////////////////////////////////////////////////////////
 
 ///ERROR MESSAGES///////////////////////////////////////////////////////////////
@@ -62,6 +63,7 @@
 # define CD_TOO_MANY_ARG_MSG "mini.s.hell: cd: too many arguments\n"
 # define EXP_INV_ID_MSG "mini.s.hell: export: `%s': not a valid identifier\n"
 # define EXP_INV_OPT_MSG "mini.s.hell: export: %s: invalid option\n"
+# define PWD_INV_OPT_MSG "mini.s.hell: pwd: `%s':invalid option\n"
 # define PWD_RET_CWD_MSG "mini.s.hell: pwd: couldn't retrieving current \
 	directory\n"
 # define UNS_INV_ID_MSG "mini.s.hell: unset: `%s': not a invalid identifier\n"
