@@ -47,9 +47,7 @@ int	child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[], \
 		exit(126);
 	handler_dup2(to_launch, pipes);
 	execve(to_launch->cmd, to_launch->args, envp);
-	ft_putstr_fd("mini.s.hell: ", 2);
-	ft_putstr_fd(to_launch->args[0], 2);
-	ft_putstr_fd(": command not found\n", 2);
+	err_msg(CMD_NOT_FOUND_MSG, to_launch->cmd);
 	exit(127);
 }
 
