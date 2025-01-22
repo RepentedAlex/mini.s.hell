@@ -83,7 +83,6 @@ t_error	splitter(t_mo_shell *mo_shell);
 ///CHECKERS/////////////////////////////////////////////////////////////////////
 int		check_after_redir(char *str, int i);
 int		check_if_dirfile_exist(char *path);
-bool	check_if_word_is_quoted(const char *word);
 void	check_in_quotes(char c, int *quotes);
 int		check_input(t_mo_shell *mo_shell);
 int		check_not_dirfile(t_block **head, t_mo_shell *mo_shell);
@@ -182,11 +181,7 @@ int		fork_for_cmd(t_mo_shell *mo_shell, t_cmd *to_launch, \
 	t_pipes *pipes_array, t_pids *pids_array);
 t_error	open_redir_files(t_cmd **cmd_head, t_block **block_head, t_mo_shell \
 	*mo_shell);
-t_error	open_redir_i(t_cmd **cmd_head, t_block **block_head, t_mo_shell \
-	*mo_shell);
-t_error	open_redir_o(t_cmd **cmd_head, t_block **block_head);
 t_error	pipeline_setup(t_mo_shell *mo_shell);
-void	setup_pipes(t_cmd **cmd_head);
 t_cmd	*spltd_in_to_cmd_blocks(t_block **head);
 // exit
 void	close_fds(t_cmd **head);
@@ -202,7 +197,6 @@ char	*unquote_string(char *str);
 bool	ft_string_is_ifs(char *str);
 // heredocs
 void	heredoc_filler(char *delimiter, int fd, t_mo_shell *mo_shell);
-char	*remove_quotes(char *str);
 void	heredoc_handler(t_block *nav_block, t_cmd *nav_cmd, t_mo_shell \
 	*mo_shell);
 // pipe inspection
