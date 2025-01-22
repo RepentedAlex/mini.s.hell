@@ -43,8 +43,13 @@ void	handler_dup2(t_cmd *to_launch, t_pipes *pipes)
 int	child_process_ext(t_cmd *to_launch, t_pipes *pipes, char *envp[], \
 	t_mo_shell *mo_shell)
 {
-	if (check_if_dirfile_exist(to_launch->cmd, mo_shell))
-		exit(126);
+	int	status;
+
+	(void)mo_shell;
+	status = 0;
+	status = check_if_dirfile_exist(to_launch->cmd);
+	if (status)
+		exit(status);
 	handler_dup2(to_launch, pipes);
 	execve(to_launch->cmd, to_launch->args, envp);
 	err_msg(CMD_NOT_FOUND_MSG, to_launch->cmd);
