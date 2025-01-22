@@ -15,7 +15,7 @@
 static char	**get_splash_screen_part1(void)
 {
 	static char	*part1[] = {
-		"\e[0;91m",
+		"\033[0;91m",
 		"   ███   ▒██▒ ▒▒▒▒▒▒ ▒██████▒  ▒▒▒    ██        ▒▒▒▒▒▒  "
 		"▒▒▒▒▒▒    ▒▒▒    █████░",
 		"   ███   ███ ░██████ ███████░ ▒███   ░██       ▒██████ "
@@ -61,11 +61,11 @@ static char	**get_splash_screen_part3(void)
 		"░█                                                       "
 		"                     █▒",
 		"▒█                    "
-		"\e[0;36m"
+		"\033[0;36m"
 		"Made with <3 by apetitco && llabonde"
-		"\e[0;91m"
+		"\033[0;91m"
 		"                    ██",
-		"\e[0;0m",
+		"\033[0;0m",
 		NULL
 	};
 

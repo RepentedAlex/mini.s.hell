@@ -16,11 +16,20 @@
 void	check_in_quotes(const char c, int *quotes)
 {
 	if (*quotes == 0 && c == '\'')
-		return (*quotes = 1, (void)1);
+	{
+		*quotes = 1;
+		return ;
+	}
 	if (*quotes == 0 && c == '"')
-		return (*quotes = 2, (void)2);
-	else if ((*quotes == 1 && c == '\'') || (*quotes == 2 && c == '"'))
-		return (*quotes = 0, (void)0);
+	{
+		*quotes = 2;
+		return ;
+	}
+	if ((*quotes == 1 && c == '\'') || (*quotes == 2 && c == '"'))
+	{
+		*quotes = 0;
+		return ;
+	}
 }
 
 bool	is_valid_variable_name(char *vr_name)
